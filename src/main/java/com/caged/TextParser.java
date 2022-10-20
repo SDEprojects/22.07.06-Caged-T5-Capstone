@@ -12,23 +12,25 @@ class TextParser {
 
 
 
-    public void textParser(String text){
-        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-        try {
-            DictionaryGetter dg =  mapper.readValue(new File("./resources/dictionary.yml"), DictionaryGetter.class);
-            System.out.println(dg.getTake().get(1));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public String[] textParser(String text){
+//        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+//        try {
+//            DictionaryGetter dg =  mapper.readValue(new File("./resources/dictionary.yml"), DictionaryGetter.class);
+//            System.out.println(dg.getTake().get(1));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
 
         text = text.replaceAll("(?i)[^a-z]"," ");
-        System.out.println(text);
+        //System.out.println(text);
         String sentence[] = text.split(" ");
         String verb = sentence[0].toLowerCase();
         String noun = sentence[sentence.length-1].toLowerCase();
-        System.out.println("Verb: " + verb);
-        System.out.println("Noun: " + noun);
+        //System.out.println("Verb: " + verb);
+        //System.out.println("Noun: " + noun);
+        String sentenceArray[] = {verb, noun};
+        return sentenceArray;
     }
 
     public static void main(String[] args){
