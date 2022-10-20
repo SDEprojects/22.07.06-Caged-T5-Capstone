@@ -10,6 +10,9 @@ import java.util.Scanner;
 
 public class GameControl {
 
+    private boolean userInput = false;
+    private Scanner scanner = new Scanner(System.in);
+
     private boolean playGame = true;
     Scanner in = new Scanner(System.in);
     TextParser textParser = new TextParser();
@@ -42,6 +45,20 @@ public class GameControl {
             else {
                 String action[] = textParser.textParser(lowUser);
                 player.playerActions(action[0],action[1]);
+            }
+        }
+    }
+
+    public void newGame() {
+        while (!userInput) {
+            System.out.print("\n>>>> ");
+            String input = scanner.nextLine().toLowerCase();
+            if (input.equals("new game")) {
+                System.out.println(" #### You are CAGED #### ");    //Game starts - starting with Game Intro
+
+            } else {
+                System.out.println("Invalid input, please enter valid input");
+                userInput = true;
             }
         }
     }
