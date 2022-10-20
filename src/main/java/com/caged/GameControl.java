@@ -36,7 +36,7 @@ public class GameControl {
 
     private void playGame(Player player){
         while (playGame){
-            System.out.println("User input:");
+            System.out.println("\n>>>>");
             String userChoice = in.nextLine();
             String lowUser = userChoice.toLowerCase();
             if (lowUser.equals("quit")) {
