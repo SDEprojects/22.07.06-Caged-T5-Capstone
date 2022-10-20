@@ -79,6 +79,7 @@ NPC_Cage2:
   East: Wall
   South: North_Hall
 
+
 East_Hall:
   Phase: 1
   West: North_Hall
