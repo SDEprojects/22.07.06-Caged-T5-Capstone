@@ -7,7 +7,8 @@
     <list default="true" id="872c3267-288b-4439-be1f-e0e8a63a2c17" name="Changes" comment="Completed yamlReader class, AB#22">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/caged/GameControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/caged/GameControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/caged/YAMLReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/caged/YAMLReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/caged/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/caged/MainMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/caged/SplashScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/caged/SplashScreen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,6 +79,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="MainMenu" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.caged.MainMenu" />
+      <module name="22.07.06-Caged" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.caged.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="SplashScreen" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.caged.SplashScreen" />
       <module name="22.07.06-Caged" />
@@ -107,10 +121,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
-        <item itemvalue="Application.TextParser" />
+        <item itemvalue="Application.MainMenu" />
         <item itemvalue="Application.SplashScreen" />
-        <item itemvalue="Application.Main" />
         <item itemvalue="Application.TextParser" />
+        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>

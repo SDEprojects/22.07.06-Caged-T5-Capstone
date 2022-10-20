@@ -5,7 +5,8 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class MainMenu {
-    public static void main(String[] args) {
+
+    public void mainMenu(){
         try {
             File myObj = new File("resources/MainMenu.txt");
             Scanner myReader = new Scanner(myObj);

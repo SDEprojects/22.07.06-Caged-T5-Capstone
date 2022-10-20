@@ -7,7 +7,8 @@ import java.util.Scanner; // Import the Scanner class to read text files
 
 
 public class SplashScreen {
-    public static void main(String[] args) {
+
+    public void splash(){
         try {
             File myObj = new File("resources/cagedsplash.txt");
             Scanner myReader = new Scanner(myObj);
