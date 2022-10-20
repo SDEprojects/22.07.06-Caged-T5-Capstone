@@ -12,10 +12,11 @@ public class GameControl {
 
     private boolean userInput = false;
     private Scanner scanner = new Scanner(System.in);
-
     private boolean playGame = true;
     Scanner in = new Scanner(System.in);
     TextParser textParser = new TextParser();
+    YAMLReader yamlReader = new YAMLReader();
+    //Player player = new Player();
 
     public void runGame() {
 //        Console.clear();
@@ -23,15 +24,17 @@ public class GameControl {
 //        SplashScreen.show();
 //        Intro.show();
 //        Intro.startOption();
-        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-        try {
-            Player player =  mapper.readValue(new File("./resources/player.yml"), Player.class);
-            System.out.println("New player: " + player.getName());
-            playGame(player);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+//        try {
+//            Player player =  mapper.readValue(new File("./resources/player.yml"), Player.class);
+//            System.out.println("New player: " + player.getName());
+//            playGame(player);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
+        yamlReader.introLoader();
+        playGame(yamlReader.playerLoader());
     }
 
     private void playGame(Player player){
@@ -45,6 +48,7 @@ public class GameControl {
             else {
                 String action[] = textParser.textParser(lowUser);
                 player.playerActions(action[0],action[1]);
+                System.out.println("Player name: "+ player.getName());
             }
         }
     }
