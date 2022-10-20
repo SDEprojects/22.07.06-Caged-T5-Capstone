@@ -1,0 +1,102 @@
+---
+Cage1:
+  Phase: 1
+  West: Wall
+  North: Wall
+  East: West_Hall
+  South: South_Hall
+  #  Just listing all these items as placeholder but does not apply in all rooms
+  Inventory:
+    - keys
+    - guard uniform
+    - key card
+    - box
+    - chair
+    - key from supervisor
+
+South_Hall:
+  Phase: 1
+  West: Guard?
+  North: Cage1
+  East: SouthWest_Hall
+  South: NPC_Cage1
+
+NPC_Cage1:
+  Phase: 1
+  West: Wall
+  North: South_Hall
+  East: Storage_Room
+  South: Wall
+  #  Just listing all these items as placeholder but does not apply in all rooms
+  Inventory:
+    - keys
+    - guard uniform
+    - key card
+    - box
+    - chair
+    - key from supervisor
+
+Storage_Room:
+  Phase: 1
+  West: NPC_Cage1
+  North: SouthWest_Hall
+  East: Wall
+  South: Wall
+  #  Just listing all these items as placeholder but does not apply in all rooms
+  Inventory:
+    - keys
+    - guard uniform
+    - key card
+    - box
+    - chair
+    - key from supervisor
+
+SouthWest_Hall:
+  Phase: 1
+  West: West_Hall
+  North: Storage_Room
+  East: Wall
+  South: Storage_Room
+
+West_Hall:
+  Phase: 1
+  West: Cage1
+  North: North_Hall
+  East: Wall
+  South: SouthWest_Hall
+
+North_Hall:
+  Phase: 1
+  West: Wall
+  North: NPC_Cage2
+  East: East_Hall
+  South: West_Hall
+
+NPC_Cage2:
+  Phase: 1
+  West: Wall
+  North: Wall
+  East: Wall
+  South: North_Hall
+
+East_Hall:
+  Phase: 1
+  West: North_Hall
+  North: Wall
+  East: Next Wing
+  South: Wall
+
+Next Wing:
+  Phase: 1
+  West: North_Hall
+  North: Wall
+  East: Next Wing
+  South: Wall
+
+
+
+
+
+
+
+
