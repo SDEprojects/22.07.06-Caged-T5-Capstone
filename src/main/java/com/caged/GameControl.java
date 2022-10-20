@@ -46,9 +46,8 @@ public class GameControl {
                 playGame = false;
             }
             else {
-                String action[] = textParser.textParser(lowUser);
+                String[] action = textParser.textParser(lowUser);
                 player.playerActions(action[0],action[1]);
-                System.out.println("Player name: "+ player.getName());
             }
         }
     }
