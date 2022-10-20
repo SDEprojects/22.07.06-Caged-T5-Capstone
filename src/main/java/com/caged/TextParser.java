@@ -13,29 +13,28 @@ class TextParser {
 
 
     public String[] textParser(String text){
-//        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-//        try {
-//            DictionaryGetter dg =  mapper.readValue(new File("./resources/dictionary.yml"), DictionaryGetter.class);
-//            System.out.println(dg.getTake().get(1));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-
         text = text.replaceAll("(?i)[^a-z]"," ");
-        //System.out.println(text);
         String sentence[] = text.split(" ");
         String verb = sentence[0].toLowerCase();
         String noun = sentence[sentence.length-1].toLowerCase();
-        //System.out.println("Verb: " + verb);
-        //System.out.println("Noun: " + noun);
+        String input = "grab";
+        YAMLReader yamlReader = new YAMLReader();
+        List move = yamlReader.dictionaryLoader().getMove();
+        List take = yamlReader.dictionaryLoader().getTake();
+        if (move.contains(verb)){
+            verb = "move";
+        }
+        else if (take.contains(verb)){
+            verb = "take";
+        }
+        else if (input.equals("help")){
+            //DictionaryGetter.help();
+        }
+        else {
+            System.out.println("Unrecognized Command");
+        }
         String sentenceArray[] = {verb, noun};
         return sentenceArray;
     }
 
-    public static void main(String[] args){
-
-        TextParser textParser = new TextParser();
-        textParser.textParser("grab a key");
-    }
 }
