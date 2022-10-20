@@ -23,7 +23,7 @@ class Player {
     //functions
     public void playerActions(String verb, String noun){
         switch (verb) {
-            case "go":
+            case "move":
                 move(noun);
                 System.out.println("Moving "+ noun +"!");
                 break;
@@ -32,7 +32,6 @@ class Player {
                 System.out.println("Taking "+ noun +"!");
                 break;
             default:
-                System.out.println("Unknown command");
         }
     }
 
