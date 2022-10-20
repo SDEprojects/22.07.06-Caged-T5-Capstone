@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="872c3267-288b-4439-be1f-e0e8a63a2c17" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/caged/YAMLReader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="872c3267-288b-4439-be1f-e0e8a63a2c17" name="Changes" comment="Completed yamlReader class, AB#22">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/caged/GameControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/caged/GameControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/caged/YAMLReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/caged/YAMLReader.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,11 +130,20 @@
       <option name="project" value="LOCAL" />
       <updated>1666288137757</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Built the yamlReader class, AB#22">
+      <created>1666289618314</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1666289618314</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added Main menu and New Game option, AB#12" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Main menu and New Game option, AB#12" />
+    <MESSAGE value="Built the yamlReader class, AB#22" />
+    <MESSAGE value="Completed yamlReader class, AB#22" />
+    <option name="LAST_COMMIT_MESSAGE" value="Completed yamlReader class, AB#22" />
   </component>
 </project>
