@@ -12,18 +12,21 @@ public class GameControl {
     YAMLReader yamlReader = new YAMLReader();
     SplashScreen splashScreen = new SplashScreen();
     MainMenu mainMenu = new MainMenu();
+    Console console = new Console();
 
     public void runGame() {
-//        Console.clear();
+        console.clear();
 //         research clear method
         splashScreen.splash();
         try {
-            Thread.sleep(2000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        console.clear();
         mainMenu.mainMenu();
         mainMenuOptions();
+        console.clear();
         playGame(yamlReader.playerLoader());
     }
 
