@@ -1,8 +1,15 @@
 ---
 move:
+  - "move"
   - "go"
   - "skip"
   - "run"
 take:
+  - "take"
   - "grab"
   - "lift"
+help:
+  - "help"
+  - "assist"
+  - "aid"
+  - "support"

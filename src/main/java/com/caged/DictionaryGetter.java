@@ -5,10 +5,12 @@ import java.util.List;
 class DictionaryGetter {
     private List<String> move;
     private List<String> take;
+    private List<String> help;
 
-    public DictionaryGetter(List<String> move,List<String> take){
+    public DictionaryGetter(List<String> move,List<String> take,List<String> help){
         setMove(move);
         setTake(take);
+        setHelp(help);
     }
 
     public DictionaryGetter(){
@@ -29,5 +31,13 @@ class DictionaryGetter {
 
     public void setTake(List<String> take) {
         this.take = take;
+    }
+
+    public List<String> getHelp() {
+        return help;
+    }
+
+    public void setHelp(List<String> help) {
+        this.help = help;
     }
 }
