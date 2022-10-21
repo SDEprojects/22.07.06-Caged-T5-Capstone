@@ -2,17 +2,23 @@
 room:
   Cage1:
     Phase: 1
+    description: The cage smell bad
     Moves:
       east: "West_Hall"
       south: "South_Hall"
     #  Just listing all these items as placeholder but does not apply in all rooms
     Inventory:
-      - "keys"
-      - "guard uniform"
-      - "key card"
-      - "box"
-      - "chair"
-      - "key from supervisor"
+      window:
+        action: "You look outside and it makes you sad"
+      desk:
+        action: "The desk is mostly broken, but your are able to open the desk"
+        item: "key"
+#      - "keys"
+#      - "guard uniform"
+#      - "key card"
+#      - "box"
+#      - "chair"
+#      - "key from supervisor"
 
   South_Hall:
     Phase: 1

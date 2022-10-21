@@ -53,16 +53,16 @@ public class Intro {
     }
 
 
-    public static void main(String[] args) throws InterruptedException {
-        Intro story = new Intro();
-        String txt = story.storyIntro();
-        for(String word : txt.split("\n")){
-            Thread.sleep(2000);
-            System.out.println(word);
-        }
-        story.helpCommand();
-
-
-    }
+//    public static void main(String[] args) throws InterruptedException {
+//        Intro story = new Intro();
+//        String txt = story.storyIntro();
+//        for(String word : txt.split("\n")){
+//            Thread.sleep(2000);
+//            System.out.println(word);
+//        }
+//        story.helpCommand();
+//
+//
+//    }
 
 }

@@ -17,18 +17,19 @@ class TextParser {
         String sentence[] = text.split(" ");
         String verb = sentence[0].toLowerCase();
         String noun = sentence[sentence.length-1].toLowerCase();
-        String input = "grab";
+        //String input = "grab";
         YAMLReader yamlReader = new YAMLReader();
         List move = yamlReader.dictionaryLoader().getMove();
         List take = yamlReader.dictionaryLoader().getTake();
+        List help = yamlReader.dictionaryLoader().getHelp();
         if (move.contains(verb)){
             verb = "move";
         }
         else if (take.contains(verb)){
             verb = "take";
         }
-        else if (input.equals("help")){
-            //DictionaryGetter.help();
+        else if (help.contains(verb)){
+            verb = "help";
         }
         else {
             System.out.println("Unrecognized Command");
