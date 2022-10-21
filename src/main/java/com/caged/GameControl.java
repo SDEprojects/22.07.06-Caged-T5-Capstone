@@ -57,7 +57,6 @@ public class GameControl<K, V> {
             } else {
                 String[] action = textParser.textParser(lowUser);
                 player.playerActions(action[0], action[1], location);
-
             }
         }
     }
