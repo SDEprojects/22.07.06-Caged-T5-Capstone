@@ -67,7 +67,7 @@ room:
     Phase: 1
     description: "The South hall is similar to the cage, filthy and muggy and it leads
                   to the other halls"
-      Moves:
+    Moves:
       west: South_Hall
       north: West_Hall
       south: Storage_Room
