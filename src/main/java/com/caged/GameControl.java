@@ -67,6 +67,8 @@ public class GameControl<K, V> {
             String input = scanner.nextLine().toLowerCase();
             if (input.equals("new game")) {
                 yamlReader.introLoader();
+                System.out.println("Hit enter to start");
+                String enter = scanner.nextLine().toLowerCase();
                 userInput = true;
             } else if (input.equals("quit")) {
                 quitConfirm();
