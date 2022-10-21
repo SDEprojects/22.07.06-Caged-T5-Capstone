@@ -1,8 +1,17 @@
 package com.caged;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLParser;
+
+import java.lang.reflect.Array;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
-public class GameControl {
+public class GameControl<K, V> {
 
     private boolean userInput = false;
     private final Scanner scanner = new Scanner(System.in);
@@ -13,10 +22,10 @@ public class GameControl {
     SplashScreen splashScreen = new SplashScreen();
     MainMenu mainMenu = new MainMenu();
     Console console = new Console();
+    YAMLMapper mapper = new YAMLMapper();
 
     public void runGame() {
         console.clear();
-//         research clear method
         splashScreen.splash();
         try {
             Thread.sleep(3000);
@@ -27,12 +36,19 @@ public class GameControl {
         mainMenu.mainMenu();
         mainMenuOptions();
         console.clear();
-        playGame(yamlReader.playerLoader());
+        playGame(yamlReader.playerLoader(), yamlReader.locationLoader());
     }
 
-    private void playGame(Player player) {
+    private void playGame(Player player, LocationGetter location) {
         while (playGame) {
-            System.out.print(">>>>");
+            JsonNode node = mapper.valueToTree(location);
+            String playerLocation = player.getCurrentLocation();
+            System.out.println("\nYou are in " + playerLocation);
+            System.out.println("\nItems seen in room: ");
+            System.out.println(node.get("room").get(playerLocation).get("Inventory").toString());
+            System.out.println("\nRooms you can move to: ");
+            System.out.println(node.get("room").get(playerLocation).get("Moves").toString());
+            System.out.print("\n>>>>");
             String userChoice = in.nextLine();
             String lowUser = userChoice.toLowerCase();
             if (lowUser.equals("quit")) {
@@ -40,6 +56,7 @@ public class GameControl {
             } else {
                 String[] action = textParser.textParser(lowUser);
                 player.playerActions(action[0], action[1]);
+
             }
         }
     }

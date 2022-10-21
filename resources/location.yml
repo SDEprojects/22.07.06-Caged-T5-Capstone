@@ -1,101 +1,99 @@
 ---
-Cage1:
-  Phase: 1
-  West: Wall
-  North: Wall
-  East: West_Hall
-  South: South_Hall
-  #  Just listing all these items as placeholder but does not apply in all rooms
-  Inventory:
-    - keys
-    - guard uniform
-    - key card
-    - box
-    - chair
-    - key from supervisor
+room:
+  Cage1:
+    Phase: 1
+    Moves:
+      east: "West_Hall"
+      south: "South_Hall"
+    #  Just listing all these items as placeholder but does not apply in all rooms
+    Inventory:
+      - "keys"
+      - "guard uniform"
+      - "key card"
+      - "box"
+      - "chair"
+      - "key from supervisor"
 
-South_Hall:
-  Phase: 1
-  West: Guard?
-  North: Cage1
-  East: SouthWest_Hall
-  South: NPC_Cage1
+  South_Hall:
+    Phase: 1
+    Moves:
+      west: "Guard?"
+      north: "Cage1"
+      east: "SouthWest_Hall"
+      south: "NPC_Cage1"
+    Inventory: null
 
-NPC_Cage1:
-  Phase: 1
-  West: Wall
-  North: South_Hall
-  East: Storage_Room
-  South: Wall
-  #  Just listing all these items as placeholder but does not apply in all rooms
-  Inventory:
-    - keys
-    - guard uniform
-    - key card
-    - box
-    - chair
-    - key from supervisor
+  NPC_Cage1:
+    Phase: 1
+    Moves:
+      north: "South_Hall"
+      east: "Storage_Room"
+    #  Just listing all these items as placeholder but does not apply in all rooms
+    Inventory:
+      - "keys"
+      - "guard uniform"
+      - "key card"
+      - "box"
+      - "chair"
+      - "key from supervisor"
 
-Storage_Room:
-  Phase: 1
-  West: NPC_Cage1
-  North: SouthWest_Hall
-  East: Wall
-  South: Wall
-  #  Just listing all these items as placeholder but does not apply in all rooms
-  Inventory:
-    - keys
-    - guard uniform
-    - key card
-    - box
-    - chair
-    - key from supervisor
+  Storage_Room:
+    Phase: 1
+    Moves:
+      west: NPC_Cage1
+      north: SouthWest_Hall
+    #  Just listing all these items as placeholder but does not apply in all rooms
+    Inventory:
+      - "keys"
+      - "guard uniform"
+      - "key card"
+      - "box"
+      - "chair"
+      - "key from supervisor"
 
-SouthWest_Hall:
-  Phase: 1
-  West: West_Hall
-  North: Storage_Room
-  East: Wall
-  South: Storage_Room
+  SouthWest_Hall:
+    Phase: 1
+    Moves:
+      west: West_Hall
+      north: Storage_Room
+      south: Storage_Room
+    Inventory: null
 
-West_Hall:
-  Phase: 1
-  West: Cage1
-  North: North_Hall
-  East: Wall
-  South: SouthWest_Hall
+  West_Hall:
+    Phase: 1
+    Moves:
+      west: Cage1
+      north: North_Hall
+      south: SouthWest_Hall
+    Inventory: null
 
-North_Hall:
-  Phase: 1
-  West: Wall
-  North: NPC_Cage2
-  East: East_Hall
-  South: West_Hall
+  North_Hall:
+    Phase: 1
+    Moves:
+      north: NPC_Cage2
+      east: East_Hall
+      south: West_Hall
+    Inventory: null
 
-NPC_Cage2:
-  Phase: 1
-  West: Wall
-  North: Wall
-  East: Wall
-  South: North_Hall
+  NPC_Cage2:
+    Phase: 1
+    Moves:
+      south: North_Hall
+    Inventory: null
 
+  East_Hall:
+    Phase: 1
+    Moves:
+      west: North_Hall
+      east: Next Wing
+    Inventory: null
 
-East_Hall:
-  Phase: 1
-  West: North_Hall
-  North: Wall
-  East: Next Wing
-  South: Wall
-
-Next Wing:
-  Phase: 1
-  West: North_Hall
-  North: Wall
-  East: Next Wing
-  South: Wall
-
-
-
+  Next Wing:
+    Phase: 1
+    Moves:
+      west: North_Hall
+      east: Next Wing
+    Inventory: null
 
 
 
