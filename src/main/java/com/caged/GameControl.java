@@ -43,6 +43,7 @@ public class GameControl<K, V> {
         while (playGame) {
             JsonNode node = mapper.valueToTree(location);
             String playerLocation = player.getCurrentLocation();
+            console.clear();
             System.out.println("\nYou are in " + playerLocation);
             System.out.println("\nItems seen in room: ");
             System.out.println(node.get("room").get(playerLocation).get("Inventory").toString());
@@ -56,7 +57,6 @@ public class GameControl<K, V> {
             } else {
                 String[] action = textParser.textParser(lowUser);
                 player.playerActions(action[0], action[1], location);
-
             }
         }
     }
@@ -87,5 +87,4 @@ public class GameControl<K, V> {
             System.out.println("Didn't say yes...Still caged...");
         }
     }
-
 }
