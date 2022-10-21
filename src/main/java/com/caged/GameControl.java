@@ -87,5 +87,4 @@ public class GameControl<K, V> {
             System.out.println("Didn't say yes...Still caged...");
         }
     }
-
 }
