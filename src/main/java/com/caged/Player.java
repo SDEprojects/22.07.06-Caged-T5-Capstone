@@ -1,5 +1,8 @@
 package com.caged;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
+
 import java.util.List;
 
 class Player {
@@ -8,6 +11,7 @@ class Player {
     private String currentLocation;
     private int HitPoints;
     private List<String> Inventory;
+    YAMLMapper mapper = new YAMLMapper();
 
     public Player(String name,String currentLocation, int HitPoints, List<String> Inventory){
         setInventory(Inventory);
@@ -21,11 +25,10 @@ class Player {
     }
 
     //functions
-    public void playerActions(String verb, String noun){
+    public void playerActions(String verb, String noun, LocationGetter location){
         switch (verb) {
             case "move":
-                move(noun);
-                System.out.println("Moving "+ noun +"!");
+                move(noun, location);
                 break;
             case "take":
                 take(noun);
@@ -35,8 +38,16 @@ class Player {
         }
     }
 
-    public void move(String direction){
-        System.out.println("Player moves " + direction);
+    public void move(String direction, LocationGetter location){
+        JsonNode node = mapper.valueToTree(location);
+        String playerLocation = getCurrentLocation();
+        if (node.get("room").get(playerLocation).get("Moves").has(direction)){
+            System.out.println("Player moves " + direction);
+            setCurrentLocation(node.get("room").get(playerLocation).get("Moves").get(direction).textValue());
+        }
+        else {
+            System.out.println("Direction not available...");
+        }
     }
 
     public void take(String item){
