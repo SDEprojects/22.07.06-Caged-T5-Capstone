@@ -3,7 +3,9 @@ package com.caged;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 class Player {
 
@@ -34,6 +36,9 @@ class Player {
                 take(noun);
                 System.out.println("Taking "+ noun +"!");
                 break;
+            case "help":
+                helpCommand();
+                break;
             default:
         }
     }
@@ -52,6 +57,18 @@ class Player {
 
     public void take(String item){
         System.out.println("Player takes " + item);
+    }
+
+    public void helpCommand(){
+
+        Intro command = new Intro();
+        List<String> action = command.help();
+        List<String> help = new ArrayList<>(action);
+        String values = String.join(", ", help);
+        System.out.println("The available commands are: " + values + ".");
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Hit enter to return to game");
+        String input = scanner.nextLine().toLowerCase();
     }
 
     //getter & setters
