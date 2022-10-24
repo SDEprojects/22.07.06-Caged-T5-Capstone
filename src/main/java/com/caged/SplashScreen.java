@@ -8,18 +8,15 @@ import java.util.Scanner; // Import the Scanner class to read text files
 
 public class SplashScreen {
 
+    FileGetter fileGetter = new FileGetter();
+
     public void splash(){
-        try {
-            File myObj = new File("resources/cagedsplash.txt");
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                System.out.println(data);
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+        //File myObj = new File("./resources/cagedsplash.txt");
+        Scanner myReader = new Scanner(fileGetter.fileGetter("cagedsplash.txt"));
+        while (myReader.hasNextLine()) {
+            String data = myReader.nextLine();
+            System.out.println(data);
         }
+        myReader.close();
     }
 }

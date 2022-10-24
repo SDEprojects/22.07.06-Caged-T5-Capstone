@@ -12,11 +12,13 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Intro {
+    FileGetter fileGetter = new FileGetter();
+
     public String storyIntro(){
         String result = "";
         try {
             ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
-            Information info = objectMapper.readValue(new File("./resources/Game_info.yml"), Information.class);
+            Information info = objectMapper.readValue(new File(String.valueOf(fileGetter.fileGetter("Game_info.yml"))), Information.class);
             result = info.getStory().get(0);
         } catch (IOException e) {
             e.printStackTrace();
@@ -29,7 +31,7 @@ public class Intro {
 
         try {
             ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
-            DictionaryGetter info = objectMapper.readValue(new File("./resources/dictionary.yml"), DictionaryGetter.class);
+            DictionaryGetter info = objectMapper.readValue(new File(String.valueOf(fileGetter.fileGetter("dictionary.yml"))), DictionaryGetter.class);
             List<String> command = (info.getMove());
             command.addAll(info.getTake());
             command.addAll(info.getHelp());
