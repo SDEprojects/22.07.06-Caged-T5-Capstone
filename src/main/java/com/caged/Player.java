@@ -48,8 +48,14 @@ class Player {
             case "quit":
                 quitConfirm();
                 break;
+            case "talk":
+                talk(noun);
             default:
         }
+    }
+
+    private void talk(String talk) {
+        System.out.println("talking");
     }
 
     public void move(String direction, LocationGetter location){

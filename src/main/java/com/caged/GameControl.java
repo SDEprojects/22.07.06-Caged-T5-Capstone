@@ -47,6 +47,7 @@ public class GameControl<K, V> {
             System.out.println("\nYou are in " + playerLocation);
             System.out.println("\nThings seen in room: ");
             KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory"));
+            KeyValueParser.key(node.get("room").get(playerLocation).get("NPCs"));
             System.out.println("\nDirections you can move: ");
             KeyValueParser.keyValue(node.get("room").get(playerLocation).get("Moves"));
             //System.out.println(node.get("room").get(playerLocation).get("Moves").toString());
