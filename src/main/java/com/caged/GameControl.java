@@ -44,7 +44,6 @@ public class GameControl<K, V> {
         while (playGame) {
             JsonNode node = mapper.valueToTree(location);
             String playerLocation = player.getCurrentLocation();
-            console.clear();
             System.out.println("\nYou are in " + playerLocation);
             System.out.println("\nThings seen in room: ");
             KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory"));

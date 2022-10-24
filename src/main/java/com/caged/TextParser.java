@@ -40,7 +40,7 @@ class TextParser {
             verb = "quit";
         }
         else {
-            System.out.println("Unrecognized Command");
+            System.out.println("Unrecognized Command, type help for valid command");
         }
         String sentenceArray[] = {verb, noun};
         return sentenceArray;
