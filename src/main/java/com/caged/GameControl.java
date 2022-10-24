@@ -7,6 +7,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLParser;
 
 import java.lang.reflect.Array;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -45,10 +46,11 @@ public class GameControl<K, V> {
             String playerLocation = player.getCurrentLocation();
             console.clear();
             System.out.println("\nYou are in " + playerLocation);
-            System.out.println("\nItems seen in room: ");
-            System.out.println(node.get("room").get(playerLocation).get("Inventory").toString());
-            System.out.println("\nRooms you can move to: ");
-            System.out.println(node.get("room").get(playerLocation).get("Moves").toString());
+            System.out.println("\nThings seen in room: ");
+            KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory"));
+            System.out.println("\nDirections you can move: ");
+            KeyValueParser.keyValue(node.get("room").get(playerLocation).get("Moves"));
+            //System.out.println(node.get("room").get(playerLocation).get("Moves").toString());
             System.out.print("\n>>>>");
             String userChoice = in.nextLine();
             String lowUser = userChoice.toLowerCase();

@@ -4,6 +4,7 @@ move:
   - "go"
   - "skip"
   - "run"
+  - "head"
 take:
   - "take"
   - "grab"
@@ -13,3 +14,13 @@ help:
   - "assist"
   - "aid"
   - "support"
+  - "hint"
+quit:
+  - "quit"
+  - "exit"
+  - "stop"
+look:
+  - "inspect"
+  - "look"
+  - "touch"
+  - "check"

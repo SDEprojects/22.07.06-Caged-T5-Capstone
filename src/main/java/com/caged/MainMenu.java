@@ -2,22 +2,23 @@ package com.caged;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class MainMenu {
 
+    FileGetter fileGetter = new FileGetter();
+
     public void mainMenu(){
-        try {
-            File myObj = new File("resources/MainMenu.txt");
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                System.out.println(data);
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+        //File myObj = new File(Objects.requireNonNull(this.getClass().getResource("")).getPath());
+        Scanner myReader = new Scanner(fileGetter.fileGetter("MainMenu.txt"));
+        while (myReader.hasNextLine()) {
+            String data = myReader.nextLine();
+            System.out.println(data);
         }
+        myReader.close();
     }
+
+
 }

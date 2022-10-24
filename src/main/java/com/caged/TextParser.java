@@ -21,15 +21,23 @@ class TextParser {
         YAMLReader yamlReader = new YAMLReader();
         List move = yamlReader.dictionaryLoader().getMove();
         List take = yamlReader.dictionaryLoader().getTake();
+        List look = yamlReader.dictionaryLoader().getLook();
         List help = yamlReader.dictionaryLoader().getHelp();
+        List quit = yamlReader.dictionaryLoader().getQuit();
         if (move.contains(verb)){
             verb = "move";
         }
         else if (take.contains(verb)){
             verb = "take";
         }
+        else if (look.contains(verb)){
+            verb = "look";
+        }
         else if (help.contains(verb)){
             verb = "help";
+        }
+        else if (quit.contains(verb)){
+            verb = "quit";
         }
         else {
             System.out.println("Unrecognized Command");

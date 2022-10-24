@@ -14,6 +14,9 @@ class Player {
     private int HitPoints;
     private List<String> Inventory;
     YAMLMapper mapper = new YAMLMapper();
+    private final Scanner scanner = new Scanner(System.in);
+
+
 
     public Player(String name,String currentLocation, int HitPoints, List<String> Inventory){
         setInventory(Inventory);
@@ -36,27 +39,46 @@ class Player {
                 take(noun);
                 System.out.println("Taking "+ noun +"!");
                 break;
+            case "look":
+                look(noun, location);
+                break;
             case "help":
                 helpCommand();
+                break;
+            case "quit":
+                quitConfirm();
                 break;
             default:
         }
     }
 
     public void move(String direction, LocationGetter location){
-        JsonNode node = mapper.valueToTree(location);
         String playerLocation = getCurrentLocation();
+        JsonNode node = mapper.valueToTree(location);
         if (node.get("room").get(playerLocation).get("Moves").has(direction)){
             System.out.println("Player moves " + direction);
             setCurrentLocation(node.get("room").get(playerLocation).get("Moves").get(direction).textValue());
         }
         else {
             System.out.println("Direction not available...");
+            HitEnter.enter();
         }
     }
 
     public void take(String item){
         System.out.println("Player takes " + item);
+    }
+
+    public void look(String thing, LocationGetter location){
+        String playerLocation = getCurrentLocation();
+        JsonNode node = mapper.valueToTree(location);
+        if (node.get("room").get(playerLocation).get("Inventory").has(thing)){
+            System.out.println(node.get("room").get(playerLocation).get("Inventory").get(thing).get("description").textValue());
+        }
+        else {
+            System.out.println("Thing not found...");
+        }
+        HitEnter.enter();
     }
 
     public void helpCommand(){
@@ -67,8 +89,18 @@ class Player {
         String values = String.join(", ", help);
         System.out.println("The available commands are: " + values + ".");
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Hit enter to return to game");
-        String input = scanner.nextLine().toLowerCase();
+        HitEnter.enter();
+    }
+
+    public void quitConfirm(){
+        System.out.println("Do you really want to quit?");
+        String confirm = scanner.nextLine().toLowerCase();
+        if (confirm.equals("yes")){
+            System.exit(0);
+        }
+        else {
+            System.out.println("Didn't say yes...Still caged...");
+        }
     }
 
     //getter & setters
