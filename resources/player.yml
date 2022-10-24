@@ -1,7 +1,6 @@
 ---
 name: "Nicholas Caged"
-currentLocation: "Cage1"
-inventory: Null
+currentLocation: "Cage 1"
+inventory:
+  - "chocolate"
 hitPoints: 20
-
-

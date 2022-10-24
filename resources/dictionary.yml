@@ -24,3 +24,19 @@ look:
   - "look"
   - "touch"
   - "check"
+talk:
+  - "talk"
+  - "speak"
+  - "chat"
+attack:
+  - "attack"
+  - "hit"
+  - "fight"
+  - "kill"
+  - "punch"
+  - "kick"
+use:
+  - "use"
+  - "open"
+  - "unlock"
+  - "consume"

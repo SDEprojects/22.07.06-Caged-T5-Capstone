@@ -10,6 +10,7 @@ room:
       east:
         name: "West Hall"
         key: "brick"
+    NPCs: null
     Inventory:
       window:
         description: "Heavily reinforced metal and cannot open"
@@ -46,17 +47,19 @@ room:
       south:
         name: "NPC Cage 1"
         key: "spring"
+    Inventory: null
     NPCs:
-      name: "Guard Nelly" #example
-      chat:
-        - "How much sense does this make"
-        - "Merry Christmas"
-      Inventory:
-        orange key:
-          name: "orange key"
-          description: "This key must be used to open the orange marked door"
-          location: "Cage1"
-          container: "desk"
+      Benjamin Gates:
+        chat:
+          - "Why are you out of your cell?!"
+          - "Hello comrade, here is the key you asked for. Don't lose it!"
+
+        Inventory:
+          orange key:
+            name: "orange key"
+            description: "This key must be used to open the orange marked door"
+            location: "Cage1"
+            container: "desk"
 
   NPC Cage 1:
     Phase: 1
@@ -67,9 +70,10 @@ room:
       north: "South Hall"
     Inventory: null
     NPCs:
-      name: "Caged person" #example
+      name: "Jack Campbell"
       chat:
-        - "Help me"
+        - "Do you like kids?"
+        - "What's the matter with you!"
 
   Storage Room:
     Phase: 1
@@ -140,6 +144,11 @@ room:
     grid: "a2"
     Moves:
       south: "North Hall"
+    NPCs:
+      name: "Yuri Orlov"
+      chat:
+        - "I saw the guards using a key to open the door"
+        - "Evil prevails when good men...grrr i don't remember...too "
     Inventory: null
 
   East Hall:

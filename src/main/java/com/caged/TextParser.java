@@ -24,6 +24,7 @@ class TextParser {
         List look = yamlReader.dictionaryLoader().getLook();
         List help = yamlReader.dictionaryLoader().getHelp();
         List quit = yamlReader.dictionaryLoader().getQuit();
+        List talk = yamlReader.dictionaryLoader().getTalk();
         if (move.contains(verb)){
             verb = "move";
         }
@@ -38,6 +39,9 @@ class TextParser {
         }
         else if (quit.contains(verb)){
             verb = "quit";
+        }
+        else if (talk.contains(verb)){
+            verb = "talk";
         }
         else {
             System.out.println("Unrecognized Command, type help for valid command");
