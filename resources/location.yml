@@ -1,11 +1,15 @@
 ---
 room:
-  Cage1:
+  Cage 1:
     Phase: 1
+    grid: "c1"
     description: "The cage smells very bad with flickering light and water leaking from the roof"
     Moves:
-      east: "West_Hall"
-      south: "South_Hall"
+      south: "South Hall"
+    Hidden Moves:
+      east:
+        name: "West Hall"
+        key: "brick"
     Inventory:
       window:
         description: "Heavily reinforced metal and cannot open"
@@ -13,106 +17,147 @@ room:
       desk:
         description: "Old worn out wooden desk with a drawer"
         action: "The desk is mostly broken, but your are able to open the desk"
-        item: "key"
       bed:
         description: "Full-size bed sits directly under window with uncomfortable mattress and
                       exposed loose spring. Spring could come in handy... "
         action: "Pluck a spring from the mattress that might help you escape later"
+      Wall:
+        description: "The wall seems to be falling apart"
+        action: "you pick at the wall..."
+        modifiable: true
+        items: #example
+          brick:
+            name: "brick"
+            description: "an old worn brick, durable and could be used for violence."
+            stats:
+              strength: 10
 
-
-  South_Hall:
+  South Hall:
     Phase: 1
+    grid: "d1"
     description: "The South hall is similar to the cage, filthy and muggy and it leads
                   to the other halls"
     Moves:
-      west: "Guard?"
-      north: "Cage1"
-      east: "SouthWest_Hall"
-      south: "NPC_Cage1"
-    Inventory: null
+      east: "Southwest Hall"
+    Blocked Moves:
+      north:
+        name: "Cage 1"
+        key: "spring"
+      south:
+        name: "NPC Cage 1"
+        key: "spring"
+    NPCs:
+      name: "Guard Nelly" #example
+      chat:
+        - "How much sense does this make"
+        - "Merry Christmas"
+      Inventory:
+        orange key:
+          name: "orange key"
+          description: "This key must be used to open the orange marked door"
+          location: "Cage1"
+          container: "desk"
 
-  NPC_Cage1:
+  NPC Cage 1:
     Phase: 1
+    grid: "e1"
     description: "The cage smells very bad with flickering
                   light and water leaking from the roof but with another captive"
     Moves:
-      north: "South_Hall"
-      east: "Storage_Room"
+      north: "South Hall"
     Inventory: null
+    NPCs:
+      name: "Caged person" #example
+      chat:
+        - "Help me"
 
-
-  Storage_Room:
+  Storage Room:
     Phase: 1
+    grid: "e2"
     description: "This room is the building store supply room that has items stacked up on shelves"
     Moves:
-      west: NPC_Cage1
-      north: SouthWest_Hall
+      north: "Southwest Hall"
     Inventory:
-      guard uniform:
-        description: "Dirty guard uniform with a name tag 'Roger'"
-        action: "Take it and put it on to help blend in with other guards and un-friendlies"
+      closet:
+        description: "An old closet"
+        action: "You open the closet"
+        items:
+          guard uniform:
+            description: "Dirty guard uniform with a name tag 'Roger'"
+            action: "Take it and put it on to help blend in with other guards and un-friendlies"
       box:
         description: "Old cubic structure that looks like it could break."
-        action: "Use brick - you break open the the box and walla you get a key"
-        item: "key"
+        action: "You shake the box it rattles"
+        modifiable: true
+        items: #example
+          orange key:
+            name: "orange key"
+            description: "This key must be used to open the orange marked door"
+            location: "Cage1"
+            container: "desk"
       poster:
         description: "Picture seems to be of that from the 1920's"
         action: "Inspect it, but does not yield any result or clues."
       safe:
         description: "Dark gray modern desk that looks like the ones you'd find in a hotel room"
-        action: "Open it, but does not "
+        action: "you try and open it, but does not give..."
 
-
-  SouthWest_Hall:
+  Southwest Hall:
     Phase: 1
+    grid: "d2"
     description: "The South hall is similar to the cage, filthy and muggy and it leads
                   to the other halls"
     Moves:
-      west: South_Hall
-      north: West_Hall
-      south: Storage_Room
+      west: "South Hall"
+      north: "West Hall"
+      south: "Storage Room"
     Inventory: null
 
-  West_Hall:
+  West Hall:
     Phase: 1
+    grid: "c2"
     description: "The South hall is similar to the cage, filthy and muggy and it leads
                   to the other halls"
     Moves:
-      west: Cage1
-      north: North_Hall
-      south: SouthWest_Hall
+      west: "Cage 1"
+      north: "North Hall"
+      south: "Southwest Hall"
     Inventory: null
 
-  North_Hall:
+  North Hall:
     Phase: 1
+    grid: "b2"
     description: "The South hall is similar to the cage, filthy and muggy and it leads
                   to the other halls"
     Moves:
-      north: NPC_Cage2
-      east: East_Hall
-      south: West_Hall
+      north: "NPC Cage 2"
+      east: "East Hall"
+      south: "West Hall"
     Inventory: null
 
-  NPC_Cage2:
+  NPC Cage 2:
     Phase: 1
+    grid: "a2"
     Moves:
-      south: North_Hall
+      south: "North Hall"
     Inventory: null
 
-  East_Hall:
+  East Hall:
     Phase: 1
+    grid: "b3"
     description: "The South hall is similar to the cage, filthy and muggy and it leads
                   to the other halls"
     Moves:
-      west: North_Hall
-      east: Next Wing
+      west: "North Hall"
+      east: "Next Wing"
     Inventory: null
 
   Next Wing:
     Phase: 1
+    grid: "b4"
     Moves:
-      west: North_Hall
-      east: Next Wing
+      west: "North Hall"
+      east: "Next Wing"
     Inventory: null
 
 
