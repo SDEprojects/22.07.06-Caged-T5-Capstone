@@ -50,16 +50,17 @@ room:
         key: "spring"
     Inventory: null
     NPCs:
-      Benjamin Gates:
-        chat:
-          - "Why are you out of your cell?!"
-          - "Hello comrade, here is the key you asked for. Don't lose it!"
-        Inventory:
-          orange key:
-            name: "orange key"
-            description: "This key must be used to open the orange marked door"
-            location: "Cage1"
-            container: "desk"
+      benjamin gates:
+        chat: "Why are you out of your cell?!"
+#      - "Hello comrade, here is the key you asked for. Don't lose it!"
+
+    NPC Inventory:
+      orange key:
+        name: "orange key"
+        description: "This key must be used to open the orange marked door"
+        location: "Cage1"
+        container: "desk"
+
 
   NPC Cage 1:
     Phase: 1
