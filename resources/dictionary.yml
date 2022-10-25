@@ -40,3 +40,12 @@ use:
   - "open"
   - "unlock"
   - "consume"
+inventory:
+  - "inventory"
+  - "inv"
+  - "stash"
+  - "stuff"
+  - "bag"
+  - "things"
+  - "thing"
+  - "items"

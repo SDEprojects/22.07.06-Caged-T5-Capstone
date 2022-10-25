@@ -51,6 +51,8 @@ class Player {
                 break;
             case "talk":
                 talk(noun, nounPrefix, location);
+            case "inventory":
+                checkInventory();
             default:
         }
     }
@@ -149,7 +151,6 @@ class Player {
     }
 
     private void helpCommand(){ //private
-
         Intro command = new Intro();
         List<String> action = command.help();
         List<String> help = new ArrayList<>(action);
@@ -169,6 +170,19 @@ class Player {
             System.out.println("Didn't say yes...Still caged...");
         }
     }
+
+    private void checkInventory(){
+        System.out.println("\u001b[32m* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\u001B[0m");
+        System.out.println("\u001b[36m                           WHAT YOU HAVE IN YOUR STASH\u001B[0m");
+        System.out.println("\u001b[32m* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\u001B[0m");
+
+        for (Item stash : Inventory) {
+            System.out.println("Item: " + stash.getName() + " | Description: " + stash.getDescription() + " | Strength: " + stash.getStrength());
+        }
+    }
+
+
+
 
     //getter & setters
     public String getName() {
