@@ -15,7 +15,7 @@ public class MainMenu {
         Scanner myReader = new Scanner(fileGetter.fileGetter("MainMenu.txt"));
         while (myReader.hasNextLine()) {
             String data = myReader.nextLine();
-            System.out.println(data);
+            System.out.println("\u001b[33;1m" + data + "\u001b[0m");
         }
         myReader.close();
     }

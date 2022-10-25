@@ -15,7 +15,7 @@ public class SplashScreen {
         Scanner myReader = new Scanner(fileGetter.fileGetter("cagedsplash.txt"));
         while (myReader.hasNextLine()) {
             String data = myReader.nextLine();
-            System.out.println(data);
+            System.out.println("\u001b[36m" + data + "\u001b[0m");
         }
         myReader.close();
     }

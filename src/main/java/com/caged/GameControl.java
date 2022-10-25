@@ -44,7 +44,7 @@ public class GameControl<K, V> {
         while (playGame) {
             JsonNode node = mapper.valueToTree(location);
             String playerLocation = player.getCurrentLocation();
-            System.out.println("\nYou are in " + playerLocation);
+            PlayerStatus.currentStatus(player);
             System.out.println("\nThings seen in room: ");
             KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory"));
             System.out.println("\nDirections you can move: ");
@@ -68,7 +68,7 @@ public class GameControl<K, V> {
             String input = scanner.nextLine().toLowerCase();
             if (input.equals("new game")) {
                 yamlReader.introLoader();
-                System.out.println("Hit enter to start");
+                System.out.println("\u001b[36mHit enter to start....\u001b[0m");
                 String enter = scanner.nextLine().toLowerCase();
                 userInput = true;
             } else if (input.equals("quit")) {
@@ -81,7 +81,7 @@ public class GameControl<K, V> {
     }
 
     public void quitConfirm(){
-        System.out.println("Do you really want to quit?");
+        System.out.println("\u001b[36mDo you really want to quit?\u001b[0m");
         String confirm = scanner.nextLine().toLowerCase();
         if (confirm.equals("yes")){
             System.exit(0);
