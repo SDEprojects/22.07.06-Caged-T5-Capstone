@@ -13,16 +13,18 @@ class Player {
     private String currentLocation;
     private int HitPoints;
     private List<String> Inventory;
+    private List<Item> foundItems;
     YAMLMapper mapper = new YAMLMapper();
     private final Scanner scanner = new Scanner(System.in);
 
 
 
-    public Player(String name,String currentLocation, int HitPoints, List<String> Inventory){
+    public Player(String name,String currentLocation, int HitPoints, List<String> Inventory, List<Item> foundItems){
         setInventory(Inventory);
         setHitPoints(HitPoints);
         setCurrentLocation(currentLocation);
         setName(name);
+        setFoundItems(foundItems);
     }
 
     public Player(){
@@ -30,17 +32,20 @@ class Player {
     }
 
     //functions
-    public void playerActions(String verb, String noun, LocationGetter location){
+    public void playerActions(String verb, String noun, String nounPrefix, LocationGetter location){ //add
         switch (verb) {
             case "move":
                 move(noun, location);
                 break;
             case "take":
-                take(noun);
+                take(noun, nounPrefix, location);
                 System.out.println("Taking "+ noun +"!");
                 break;
             case "look":
                 look(noun, location);
+                break;
+            case "use": //new
+                use(noun, nounPrefix, location);
                 break;
             case "help":
                 helpCommand();
@@ -58,7 +63,7 @@ class Player {
         System.out.println("talking");
     }
 
-    public void move(String direction, LocationGetter location){
+    private void move(String direction, LocationGetter location){ //private
         String playerLocation = getCurrentLocation();
         JsonNode node = mapper.valueToTree(location);
         if (node.get("room").get(playerLocation).get("Moves").has(direction)){
@@ -71,11 +76,59 @@ class Player {
         }
     }
 
-    public void take(String item){
-        System.out.println("Player takes " + item);
+    private void take(String item, String itemPrefix, LocationGetter location){ //private
+//        List<String> inventory = getInventory();
+//        String playerLocation = getCurrentLocation();
+//        String compoundItem = itemPrefix+" "+item;
+//        JsonNode node = mapper.valueToTree(location);
+//        if (node.get("items").has(item)) {
+//            inventory.add(node.get("items").get(item).get("name").textValue());
+//            System.out.println("Player takes " + item);
+//        }
+//        else if (node.get("items").has(compoundItem)){
+//            inventory.add(node.get("items").get(compoundItem).get("name").textValue());
+//            System.out.println("Player takes " + compoundItem);
+//        }
+//        else {
+//            System.out.println("Item not found");
+//        }
+//        System.out.println("Players items: " + getInventory());
+        System.out.println("Taking item");
     }
 
-    public void look(String thing, LocationGetter location){
+    private void use(String subThing, String parentThing, LocationGetter location){
+        String playerLocation = getCurrentLocation();
+        JsonNode node = mapper.valueToTree(location);
+        if (node.get("room").get(playerLocation).get("Inventory").has(parentThing)){
+            if (node.get("room").get(playerLocation).get("Inventory").get(parentThing).has(subThing)){
+                System.out.println(node.get("room").get(playerLocation).get("Inventory").get(parentThing).get(subThing).textValue());
+                if (node.get("room").get(playerLocation).get("Inventory").get(parentThing).has("items")){
+                    if (foundItems.contains(node.get("room").get(playerLocation).get("Inventory").get(parentThing).has("items"))){
+                        System.out.println("nothing happens!");
+                    }
+                    else {
+                        System.out.println("Found something!");
+                        KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory").get(parentThing).get("items"));
+                        Item foundItem = new Item("name", "description", 0, "null", "locationFound", false);
+                        foundItems.add(foundItem);
+                        System.out.println(foundItems);
+                    }
+
+                }
+            }
+            else {
+                System.out.println(node.get("room").get(playerLocation).get("Inventory").get(parentThing).get(subThing).textValue()+ " not found!");
+            }
+        }
+        else {
+            System.out.println("Tried to use "+ parentThing +" "+ subThing);
+            System.out.println("Thing not found");
+        }
+
+    }
+
+
+    private void look(String thing, LocationGetter location){ //private
         String playerLocation = getCurrentLocation();
         JsonNode node = mapper.valueToTree(location);
         if (node.get("room").get(playerLocation).get("Inventory").has(thing)){
@@ -87,7 +140,7 @@ class Player {
         HitEnter.enter();
     }
 
-    public void helpCommand(){
+    private void helpCommand(){ //private
 
         Intro command = new Intro();
         List<String> action = command.help();
@@ -98,7 +151,7 @@ class Player {
         HitEnter.enter();
     }
 
-    public void quitConfirm(){
+    private void quitConfirm(){ //private
         System.out.println("Do you really want to quit?");
         String confirm = scanner.nextLine().toLowerCase();
         if (confirm.equals("yes")){
@@ -140,5 +193,13 @@ class Player {
 
     public void setInventory(List<String> inventory) {
         Inventory = inventory;
+    }
+
+    public List<Item> getFoundItems() {
+        return foundItems;
+    }
+
+    public void setFoundItems(List<Item> foundItems) {
+        this.foundItems = foundItems;
     }
 }
