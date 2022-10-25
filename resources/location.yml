@@ -33,6 +33,8 @@ room:
             name: "brick"
             description: "an old worn brick, durable and could be used for violence."
             strength: 10
+            opens: "box"
+
 
   South Hall:
     Phase: 1

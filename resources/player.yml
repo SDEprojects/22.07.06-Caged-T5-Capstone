@@ -1,6 +1,4 @@
 ---
 name: "Nicholas Caged"
 currentLocation: "Cage 1"
-inventory:
-  - "chocolate"
 hitPoints: 20
