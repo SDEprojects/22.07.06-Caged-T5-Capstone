@@ -1,9 +1,12 @@
 package com.caged;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 class YAMLReader {
 
@@ -75,4 +78,19 @@ class YAMLReader {
             e.printStackTrace();
         }
     }
+
+    public List<String> help() {
+        List<String> result = new ArrayList<>();
+        try {
+            DictionaryGetter info = mapper.readValue(fileGetter.yamlGetter("dictionary.yml"), DictionaryGetter.class);
+            JsonNode helpNode = mapper.valueToTree(info);
+            for (JsonNode node : helpNode) {
+                result.add(node.toString());
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }return  result;
+    }
+
 }

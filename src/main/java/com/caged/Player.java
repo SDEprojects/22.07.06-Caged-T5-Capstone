@@ -150,15 +150,21 @@ class Player {
         HitEnter.enter();
     }
 
-    private void helpCommand(){ //private
-        Intro command = new Intro();
-        List<String> action = command.help();
+    private void helpCommand() { //private
+
+        YAMLReader yamlReader = new YAMLReader();
+        List<String> action = yamlReader.help();
         List<String> help = new ArrayList<>(action);
-        String values = String.join(", ", help);
-        System.out.println("The available commands are: " + values + ".");
+        //String values = String.join(", ", help);
+        System.out.println("The available commands are: ");
+        for (String h : help) {
+            System.out.println(h);
+
+        }
         Scanner scanner = new Scanner(System.in);
         HitEnter.enter();
     }
+
 
     private void quitConfirm(){ //private
         System.out.println("\u001b[30m\u001b[41mDo you really want to quit?\u001b[0m");
