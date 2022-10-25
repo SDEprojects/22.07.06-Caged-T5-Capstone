@@ -14,9 +14,16 @@ class TextParser {
 
     public String[] textParser(String text){
         text = text.replaceAll("(?i)[^a-z]"," ");
-        String sentence[] = text.split(" ");
+        String[] sentence = text.split(" ");
         String verb = sentence[0].toLowerCase();
         String noun = sentence[sentence.length-1].toLowerCase();
+        String nounPrefix;
+        if (sentence.length>1){  //new stuff
+            nounPrefix = sentence[sentence.length-2].toLowerCase();
+        }
+        else {
+            nounPrefix = sentence[sentence.length-1].toLowerCase();
+        }
         //String input = "grab";
         YAMLReader yamlReader = new YAMLReader();
         List move = yamlReader.dictionaryLoader().getMove();
@@ -24,7 +31,7 @@ class TextParser {
         List look = yamlReader.dictionaryLoader().getLook();
         List help = yamlReader.dictionaryLoader().getHelp();
         List quit = yamlReader.dictionaryLoader().getQuit();
-        List talk = yamlReader.dictionaryLoader().getTalk();
+        List use = yamlReader.dictionaryLoader().getUse(); //new
         if (move.contains(verb)){
             verb = "move";
         }
@@ -34,20 +41,19 @@ class TextParser {
         else if (look.contains(verb)){
             verb = "look";
         }
+        else if (use.contains(verb)) { //new
+            verb = "use";
+        }
         else if (help.contains(verb)){
             verb = "help";
         }
         else if (quit.contains(verb)){
             verb = "quit";
         }
-        else if (talk.contains(verb)){
-            verb = "talk";
-        }
         else {
             System.out.println("Unrecognized Command, type help for valid command");
         }
-        String sentenceArray[] = {verb, noun};
-        return sentenceArray;
+        return new String[]{verb, noun, nounPrefix};
     }
 
 }

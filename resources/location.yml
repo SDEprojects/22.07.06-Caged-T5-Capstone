@@ -14,24 +14,25 @@ room:
     Inventory:
       window:
         description: "Heavily reinforced metal and cannot open"
-        action: "You look outside, it makes you sad and anxious."
+        # action replaced with sub item for interaction
+        # new idea
+        bars: "You look outside, it makes you sad and anxious."
       desk:
         description: "Old worn out wooden desk with a drawer"
-        action: "The desk is mostly broken, but your are able to open the desk"
+        drawer: "The desk is mostly broken, but your are able to open the desk"
       bed:
         description: "Full-size bed sits directly under window with uncomfortable mattress and
                       exposed loose spring. Spring could come in handy... "
-        action: "Pluck a spring from the mattress that might help you escape later"
-      Wall:
+        frame: "Pluck a spring from the mattress that might help you escape later"
+      wall: ###Check caps!
         description: "The wall seems to be falling apart"
-        action: "you pick at the wall..."
+        brick: "you pick at the wall..."
         modifiable: true
         items: #example
           brick:
             name: "brick"
             description: "an old worn brick, durable and could be used for violence."
-            stats:
-              strength: 10
+            strength: 10
 
   South Hall:
     Phase: 1
@@ -53,7 +54,6 @@ room:
         chat:
           - "Why are you out of your cell?!"
           - "Hello comrade, here is the key you asked for. Don't lose it!"
-
         Inventory:
           orange key:
             name: "orange key"
@@ -81,6 +81,7 @@ room:
     description: "This room is the building store supply room that has items stacked up on shelves"
     Moves:
       north: "Southwest Hall"
+    NPCs: null
     Inventory:
       closet:
         description: "An old closet"
@@ -115,6 +116,7 @@ room:
       west: "South Hall"
       north: "West Hall"
       south: "Storage Room"
+    NPCs: null
     Inventory: null
 
   West Hall:
