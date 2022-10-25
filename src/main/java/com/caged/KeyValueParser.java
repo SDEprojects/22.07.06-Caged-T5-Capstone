@@ -13,7 +13,7 @@ class KeyValueParser {
         Iterator<Map.Entry<String, JsonNode>> nodes = node.fields();
         while (nodes.hasNext()) {
             Map.Entry<String, JsonNode> entry = (Map.Entry<String, JsonNode>) nodes.next();
-            System.out.println(entry.getKey()+"  ---->  "+entry.getValue());
+            System.out.println("\u001b[35m" + entry.getKey() + "\u001b[0m" + "  ---->  "+entry.getValue());
         }
     }
 
@@ -21,7 +21,7 @@ class KeyValueParser {
         Iterator<Map.Entry<String, JsonNode>> nodes = node.fields();
         while (nodes.hasNext()) {
             Map.Entry<String, JsonNode> entry = (Map.Entry<String, JsonNode>) nodes.next();
-            System.out.println(entry.getKey());
+            System.out.println("\u001b[35m" + entry.getKey()+ "\u001b[0m");
         }
     }
 

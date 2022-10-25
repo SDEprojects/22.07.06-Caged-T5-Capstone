@@ -161,7 +161,7 @@ class Player {
     }
 
     private void quitConfirm(){ //private
-        System.out.println("Do you really want to quit?");
+        System.out.println("\u001b[30m\u001b[41mDo you really want to quit?\u001b[0m");
         String confirm = scanner.nextLine().toLowerCase();
         if (confirm.equals("yes")){
             System.exit(0);

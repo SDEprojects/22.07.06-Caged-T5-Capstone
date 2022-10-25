@@ -54,12 +54,8 @@ public class GameControl<K, V> {
             System.out.print("\n>>>>");
             String userChoice = in.nextLine();
             String lowUser = userChoice.toLowerCase();
-            if (lowUser.equals("quit")) {
-                quitConfirm();
-            } else {
-                String[] action = textParser.textParser(lowUser);
-                player.playerActions(action[0], action[1], action[2], location);
-            }
+            String[] action = textParser.textParser(lowUser);
+            player.playerActions(action[0], action[1], action[2], location);
         }
     }
 
@@ -82,7 +78,7 @@ public class GameControl<K, V> {
     }
 
     public void quitConfirm(){
-        System.out.println("\u001b[36mDo you really want to quit?\u001b[0m");
+        System.out.println("\u001b[30m\u001b[41mDo you really want to quit?\u001b[0m");
         String confirm = scanner.nextLine().toLowerCase();
         if (confirm.equals("yes")){
             System.exit(0);
