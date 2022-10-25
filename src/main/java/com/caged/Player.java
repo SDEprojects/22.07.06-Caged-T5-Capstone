@@ -54,14 +54,23 @@ class Player {
                 quitConfirm();
                 break;
             case "talk":
-                talk(noun);
+                talk(noun, nounPrefix, location);
             default:
         }
     }
 
-    private void talk(String talk) {
-        System.out.println("talking");
+    public void talk(String lastName, String firstName, LocationGetter location) {
+        String playerLocation = getCurrentLocation();
+        JsonNode node = mapper.valueToTree(location);
+        try {
+            if (node.get("room").get(playerLocation).get("NPCs").get(firstName + " " + lastName).has("chat")){
+                System.out.println(node.get("room").get(playerLocation).get("NPCs").get(firstName + " " + lastName).get("chat"));
+            }
+        } catch (Exception e) {
+            System.out.println(firstName + " " + lastName + " no response to the that name");
+        }
     }
+
 
     private void move(String direction, LocationGetter location){ //private
         String playerLocation = getCurrentLocation();
