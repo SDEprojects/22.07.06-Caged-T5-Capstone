@@ -31,7 +31,7 @@ public class Intro {
 
         try {
             ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
-            DictionaryGetter info = objectMapper.readValue(new File(String.valueOf(fileGetter.fileGetter("dictionary.yml"))), DictionaryGetter.class);
+            DictionaryGetter info = objectMapper.readValue(fileGetter.fileGetter("dictionary.yml"), DictionaryGetter.class);
             List<String> command = (info.getMove());
             command.addAll(info.getTake());
             command.addAll(info.getHelp());
