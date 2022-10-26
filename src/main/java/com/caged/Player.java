@@ -74,7 +74,7 @@ class Player {
                 rand = newChatList.get(0).split(",");
                 List<String> randText = new ArrayList<>(List.of(rand));
                 Collections.shuffle(randText);
-                System.out.println(randText.get(0));
+                System.out.println(randText.get(0).replaceAll("\\[", "").replaceAll("\\]", ""));
 
                 //System.out.println(node.get("room").get(playerLocation).get("NPCs").get(firstName + " " + lastName).get("chat"));
             }
