@@ -13,23 +13,28 @@ room:
     NPCs: null
     Inventory:
       window:
-        description: "Heavily reinforced metal and cannot open"
+        description: "Heavily reinforced metal, maybe you can wiggle and use the 'window bars'"
         # action replaced with sub item for interaction
         # new idea
-        bars: "You look outside, it makes you sad and anxious."
+        bars: "You check the bars and nothing happens, you then look outside, it makes you sad and anxious."
       desk:
-        description: "Old worn out wooden desk with a drawer"
-        drawer: "The desk is mostly broken, but your are able to open the desk"
+        description: "Old worn out wooden desk with a 'desk drawer'"
+        drawer: "The desk is mostly broken, but your are able to open the drawer... and find nothing"
       bed:
-        description: "Full-size bed sits directly under window with uncomfortable mattress and
-                      exposed loose spring. Spring could come in handy... "
-        frame: "Pluck a spring from the mattress that might help you escape later"
+        description: "Full-size bed sits directly under window with uncomfortable mattress with exposed loose spring. maybe use the 'bed mattress' and get a spring ... "
+        mattress: "You try and pull a spring from the old mattress"
+        items: #example
+          mattress:
+            name: "spring"
+            description: "an old spring from a bed frame, might be used to open things"
+            strength: 1
+            opens: "level one door"
       wall: ###Check caps!
-        description: "The wall seems to be falling apart"
-        brick: "you pick at the wall..."
+        description: "The wall seems to be falling apart, maybe you can use the 'wall rubble' to find something useful."
+        rubble: "you pick at the wall fragments..."
         modifiable: true
         items: #example
-          brick:
+          rubble:
             name: "brick"
             description: "an old worn brick, durable and could be used for violence."
             strength: 10
@@ -87,22 +92,24 @@ room:
     NPCs: null
     Inventory:
       closet:
-        description: "An old closet"
-        action: "You open the closet"
+        description: "An old closet, with a door"
+        door: "You open the closet door"
         items:
-          guard uniform:
+          door:
+            name: "guard uniform"
             description: "Dirty guard uniform with a name tag 'Roger'"
-            action: "Take it and put it on to help blend in with other guards and un-friendlies"
+            strength: 10
+            opens: "box"
       box:
         description: "Old cubic structure that looks like it could break."
         action: "You shake the box it rattles"
         modifiable: true
-        items: #example
-          orange key:
-            name: "orange key"
-            description: "This key must be used to open the orange marked door"
-            location: "Cage1"
-            container: "desk"
+#        items: #example
+#          orange key:
+#            name: "orange key"
+#            description: "This key must be used to open the orange marked door"
+#            location: "Cage1"
+#            container: "desk"
       poster:
         description: "Picture seems to be of that from the 1920's"
         action: "Inspect it, but does not yield any result or clues."
