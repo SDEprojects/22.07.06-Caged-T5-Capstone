@@ -6,15 +6,17 @@ public class Information {
     private List<String> story;
     private List<String> objective;
     private List<String> player;
+    private List<String> chat;
 
     public Information() {
         super();
     }
 
-    public Information(List<String> story, List<String> objective, List<String> player) {
+    public Information(List<String> story, List<String> objective, List<String> player, List<String> chat) {
         setStory(story);
         setObjective(objective);
         setPlayer(player);
+        setChat(chat);
     }
 
     public List<String> getStory() {
@@ -39,5 +41,13 @@ public class Information {
 
     public void setPlayer(List<String> player) {
         this.player = player;
+    }
+
+    public List<String> getChat() {
+        return chat;
+    }
+
+    public void setChat(List<String> chat) {
+        this.chat = chat;
     }
 }

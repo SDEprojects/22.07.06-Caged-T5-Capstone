@@ -93,4 +93,18 @@ class YAMLReader {
         }return  result;
     }
 
+    public List<String> randChat () {
+        List<String> result = new ArrayList<>();
+
+        try {
+            Information chat = mapper.readValue(fileGetter.yamlGetter("Game_info.yml"), Information.class);
+            JsonNode chatNode = mapper.valueToTree(chat);
+            for (JsonNode node : chatNode){
+                result.add(node.toString());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }return result;
+    }
+
 }

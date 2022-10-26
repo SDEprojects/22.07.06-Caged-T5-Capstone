@@ -3,9 +3,8 @@ package com.caged;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 class Player {
 
@@ -51,8 +50,10 @@ class Player {
                 break;
             case "talk":
                 talk(noun, nounPrefix, location);
+                break;
             case "inventory":
                 checkInventory();
+                break;
             default:
         }
     }
@@ -60,9 +61,20 @@ class Player {
     public void talk(String lastName, String firstName, LocationGetter location) {
         String playerLocation = getCurrentLocation();
         JsonNode node = mapper.valueToTree(location);
+        YAMLReader yamlReader = new YAMLReader();
+        List<String> chatList = new ArrayList<>(yamlReader.randChat());
+        String [] rand;
+
+
         try {
             if (node.get("room").get(playerLocation).get("NPCs").get(firstName + " " + lastName).has("chat")){
-                System.out.println(node.get("room").get(playerLocation).get("NPCs").get(firstName + " " + lastName).get("chat"));
+                List<String> newChatList = chatList.subList(3,4);
+                rand = newChatList.get(0).split(",");
+                List<String> randText = new ArrayList<>(List.of(rand));
+                Collections.shuffle(randText);
+                System.out.println(randText.get(0));
+
+                //System.out.println(node.get("room").get(playerLocation).get("NPCs").get(firstName + " " + lastName).get("chat"));
             }
         } catch (Exception e) {
             System.out.println(firstName + " " + lastName + " no response to the that name");
