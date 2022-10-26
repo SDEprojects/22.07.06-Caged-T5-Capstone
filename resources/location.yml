@@ -58,7 +58,7 @@ room:
     Inventory: null
     NPCs:
       benjamin gates:
-#        chat: "Why are you out of your cell?!"
+        chat: "Why are you out of your cell?!"
 #      - "Hello comrade, here is the key you asked for. Don't lose it!"
         NPC Inventory:
           orange key:
@@ -78,7 +78,7 @@ room:
     Inventory: null
     NPCs:
       jack campbell:
-#        chat:
+        chat:
 #          - "Do you like kids?"
 #          - "What's the matter with you!"
 
@@ -159,7 +159,7 @@ room:
       south: "North Hall"
     NPCs:
       yuri orlov:
-#        chat:
+        chat:
 #          - "I saw the guards using a key to open the door"
 #          - "Evil prevails when good men...grrr i don't remember...too "
     Inventory: null
