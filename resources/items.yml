@@ -1,0 +1,36 @@
+---
+items:
+  key:
+    item_location: "Cage1"
+    item_container: "desk"
+    phase: 1
+
+  brick:
+    item_location: "Storage Room"
+    item_container: null
+    phase: 1
+
+  guard_uniform:
+    item_location: "Storage Room"
+    item_container: null
+    phase: 1
+
+  key_card:
+    item_location: "Cage1"
+    item_container: "desk"
+    phase: 1
+
+  box:
+    item_location: "Cage1"
+    item_container: "desk"
+    phase: 1
+
+  chair:
+    item_location: "Cage1"
+    item_container: "desk"
+    phase: 1
+
+  supervisor_key:
+    item_location: "Cage1"
+    item_container: "desk"
+    phase: 1

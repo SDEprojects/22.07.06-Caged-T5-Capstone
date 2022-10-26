@@ -1,0 +1,57 @@
+---
+move:
+  - "move"
+  - "go"
+  - "skip"
+  - "run"
+  - "head"
+take:
+  - "take"
+  - "grab"
+  - "lift"
+  - "pickup"
+help:
+  - "help"
+  - "assist"
+  - "aid"
+  - "support"
+  - "hint"
+quit:
+  - "quit"
+  - "exit"
+  - "stop"
+look:
+  - "inspect"
+  - "look"
+  - "touch"
+  - "check"
+talk:
+  - "talk"
+  - "speak"
+  - "chat"
+attack:
+  - "attack"
+  - "hit"
+  - "fight"
+  - "kill"
+  - "punch"
+  - "kick"
+use:
+  - "use"
+  - "open"
+  - "unlock"
+  - "consume"
+inventory:
+  - "inventory"
+  - "inv"
+  - "stash"
+  - "stuff"
+  - "bag"
+  - "things"
+  - "thing"
+  - "items"
+drop:
+  - "drop"
+  - "leave"
+  - "abandon"
+  - "lose"
