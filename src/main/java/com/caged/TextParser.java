@@ -31,9 +31,10 @@ class TextParser {
         List look = yamlReader.dictionaryLoader().getLook();
         List help = yamlReader.dictionaryLoader().getHelp();
         List quit = yamlReader.dictionaryLoader().getQuit();
-        List use = yamlReader.dictionaryLoader().getUse(); //new
+        List use = yamlReader.dictionaryLoader().getUse();
         List talk = yamlReader.dictionaryLoader().getTalk();
         List inventory = yamlReader.dictionaryLoader().getInventory();
+        List drop = yamlReader.dictionaryLoader().getDrop();
 
         if (move.contains(verb)){
             verb = "move";
@@ -58,6 +59,9 @@ class TextParser {
         }
         else if (inventory.contains(verb)){
             verb = "inventory";
+        }
+        else if (drop.contains(verb)){
+            verb = "drop";
         }
         else {
             System.out.println("Unrecognized Command, type help for valid command");

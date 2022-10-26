@@ -8,14 +8,16 @@ class Item {
     String opens;
     String locationFound;
     boolean isTaken;
+    String currentLocation;
 
-    public Item(String name, String description, int strength, String opens, String locationFound, boolean isTaken) {
+    public Item(String name, String description, int strength, String opens, String locationFound, boolean isTaken, String currentLocation) {
         setName(name);
         setDescription(description);
         setStrength(strength);
         setOpens(opens);
         setLocationFound(locationFound);
         setTaken(isTaken);
+        setCurrentLocation(currentLocation);
     }
 
     public String getLocationFound() {
@@ -66,4 +68,11 @@ class Item {
         this.opens = opens;
     }
 
+    public String getCurrentLocation() {
+        return currentLocation;
+    }
+
+    public void setCurrentLocation(String currentLocation) {
+        this.currentLocation = currentLocation;
+    }
 }

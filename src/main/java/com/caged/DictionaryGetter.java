@@ -12,9 +12,10 @@ class DictionaryGetter {
     private List<String> attack;
     private List<String> use;
     private List<String> inventory;
+    private List<String> drop;
 
 
-    public DictionaryGetter(List<String> move, List<String> take, List<String> help, List<String> look, List<String> quit, List<String> talk, List<String> attack, List<String> use, List<String> inventory){
+    public DictionaryGetter(List<String> move, List<String> take, List<String> help, List<String> look, List<String> quit, List<String> talk, List<String> attack, List<String> use, List<String> inventory, List<String> drop){
         setMove(move);
         setTake(take);
         setHelp(help);
@@ -24,7 +25,7 @@ class DictionaryGetter {
         setAttack(attack);
         setUse(use);
         setInventory(inventory);
-
+        setDrop(drop);
     }
 
     public DictionaryGetter(){
@@ -101,5 +102,13 @@ class DictionaryGetter {
 
     public void setUse(List<String> use) {
         this.use = use;
+    }
+
+    public List<String> getDrop() {
+        return drop;
+    }
+
+    public void setDrop(List<String> drop) {
+        this.drop = drop;
     }
 }
