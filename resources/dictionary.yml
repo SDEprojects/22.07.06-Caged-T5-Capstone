@@ -9,6 +9,7 @@ take:
   - "take"
   - "grab"
   - "lift"
+  - "pickup"
 help:
   - "help"
   - "assist"
