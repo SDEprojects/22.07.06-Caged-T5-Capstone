@@ -97,47 +97,51 @@ class Player {
         }
     }
 
-    private void take(String item, String itemPrefix, LocationGetter location){ //private
+    private void take(String item, String itemPrefix, LocationGetter location) { //private
         String playerLocation = getCurrentLocation();
-        for (Item i :
-                foundItems) {
-            if (i.name.equals(item) && !i.isTaken && i.currentLocation.equals(playerLocation)) {
-                Inventory.add(i);
-                i.setTaken(true);
-                i.setCurrentLocation("Inventory");
-                System.out.println(item + " has been taken!");
+        try {
+            for (Item i :
+                    foundItems) {
+                if (i.name.equals(item) && !i.isTaken && i.currentLocation.equals(playerLocation)) {
+                    Inventory.add(i);
+                    i.setTaken(true);
+                    i.setCurrentLocation("Inventory");
+                    System.out.println(item + " has been taken!");
+                } else if (i.name.equals(itemPrefix + " " + item) && !i.isTaken && i.currentLocation.equals(playerLocation)) {
+                    Inventory.add(i);
+                    i.setTaken(true);
+                    i.setCurrentLocation("Inventory");
+                    System.out.println(itemPrefix + " " + item + " has been taken!");
+                }
             }
-            else if (i.name.equals(itemPrefix + " " + item) && !i.isTaken && i.currentLocation.equals(playerLocation)) {
-                Inventory.add(i);
-                i.setTaken(true);
-                i.setCurrentLocation("Inventory");
-                System.out.println(itemPrefix+" "+item + " has been taken!");
-            }
-            else {System.out.println("You did not see the item");
-            }
+        } catch (Exception e) {
+            System.out.println("You did not see the item");
         }
     }
 
     private void drop(String item, String itemPrefix, LocationGetter location){
         String playerLocation = getCurrentLocation();
-        for (Item i :
-                foundItems) {
-            if (i.name.equals(item) && i.isTaken && i.currentLocation.equals("Inventory")) {
-                Inventory.remove(i);
-                i.setTaken(false);
-                i.setCurrentLocation(playerLocation);
-                System.out.println(item + " has been dropped, in "+ playerLocation+"!");
-            }
-            else if (i.name.equals(itemPrefix+" "+item) && i.isTaken && i.currentLocation.equals("Inventory")) {
+        try {
+            for (Item i :
+                    foundItems) {
+                if (i.name.equals(item) && i.isTaken && i.currentLocation.equals("Inventory")) {
                     Inventory.remove(i);
                     i.setTaken(false);
                     i.setCurrentLocation(playerLocation);
-                    System.out.println(itemPrefix+" " + item + " has been dropped, in "+ playerLocation+"!");
+                    System.out.println(item + " has been dropped, in "+ playerLocation+"!");
+                }
+                else if (i.name.equals(itemPrefix + " " + item) && i.isTaken && i.currentLocation.equals("Inventory")) {
+                        Inventory.remove(i);
+                        i.setTaken(false);
+                        i.setCurrentLocation(playerLocation);
+                        System.out.println(itemPrefix+" " + item + " has been dropped, in "+ playerLocation+"!");
+                }
             }
-            else {System.out.println("You do not have that item!");
-            }
+        } catch (Exception e) {
+            System.out.println("You do not have that item!");
         }
     }
+
 
     private void use(String subThing, String parentThing, LocationGetter location){
         String playerLocation = getCurrentLocation();
