@@ -33,6 +33,8 @@ public class GameControl<K, V> {
         mainMenu.mainMenu();
         mainMenuOptions();
         console.clear();
+        yamlReader.objective();
+        HitEnter.enter();
         playGame(yamlReader.playerLoader(), yamlReader.locationLoader());
     }
 

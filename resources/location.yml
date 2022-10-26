@@ -58,15 +58,14 @@ room:
     Inventory: null
     NPCs:
       benjamin gates:
-        chat: "Why are you out of your cell?!"
+#        chat: "Why are you out of your cell?!"
 #      - "Hello comrade, here is the key you asked for. Don't lose it!"
-
-    NPC Inventory:
-      orange key:
-        name: "orange key"
-        description: "This key must be used to open the orange marked door"
-        location: "Cage1"
-        container: "desk"
+        NPC Inventory:
+          orange key:
+            name: "orange key"
+            description: "This key must be used to open the orange marked door"
+            location: "Cage1"
+            container: "desk"
 
 
   NPC Cage 1:
@@ -78,10 +77,10 @@ room:
       north: "South Hall"
     Inventory: null
     NPCs:
-      name: "Jack Campbell"
-      chat:
-        - "Do you like kids?"
-        - "What's the matter with you!"
+      jack campbell:
+#        chat:
+#          - "Do you like kids?"
+#          - "What's the matter with you!"
 
   Storage Room:
     Phase: 1
@@ -158,10 +157,10 @@ room:
     Moves:
       south: "North Hall"
     NPCs:
-      name: "Yuri Orlov"
-      chat:
-        - "I saw the guards using a key to open the door"
-        - "Evil prevails when good men...grrr i don't remember...too "
+      yuri orlov:
+#        chat:
+#          - "I saw the guards using a key to open the door"
+#          - "Evil prevails when good men...grrr i don't remember...too "
     Inventory: null
 
   East Hall:

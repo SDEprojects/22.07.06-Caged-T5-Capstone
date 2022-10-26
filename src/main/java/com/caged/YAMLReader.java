@@ -79,6 +79,16 @@ class YAMLReader {
         }
     }
 
+    public void objective() {
+        try {
+            Information obj = mapper.readValue(fileGetter.yamlGetter("Game_info.yml"), Information.class);
+            String result = obj.getObjective().get(0);
+            System.out.println(result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public List<String> help() {
         List<String> result = new ArrayList<>();
         try {
