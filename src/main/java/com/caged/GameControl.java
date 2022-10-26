@@ -28,11 +28,7 @@ public class GameControl<K, V> {
     public void runGame() {
         console.clear();
         splashScreen.splash();
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        HitEnter.enter();
         console.clear();
         mainMenu.mainMenu();
         mainMenuOptions();
@@ -65,7 +61,7 @@ public class GameControl<K, V> {
             String input = scanner.nextLine().toLowerCase();
             if (input.equals("new game")) {
                 yamlReader.introLoader();
-                System.out.println("\u001b[36mHit enter to start....\u001b[0m");
+                System.out.println("\n\u001b[36mHit enter to start....\u001b[0m");
                 String enter = scanner.nextLine().toLowerCase();
                 userInput = true;
             } else if (input.equals("quit")) {
