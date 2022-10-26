@@ -50,3 +50,8 @@ inventory:
   - "things"
   - "thing"
   - "items"
+drop:
+  - "drop"
+  - "leave"
+  - "abandon"
+  - "lose"

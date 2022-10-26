@@ -34,12 +34,11 @@ class Player {
                 break;
             case "take":
                 take(noun, nounPrefix, location);
-                System.out.println("Taking "+ noun +"!");
                 break;
             case "look":
                 look(noun, location);
                 break;
-            case "use": //new
+            case "use":
                 use(noun, nounPrefix, location);
                 break;
             case "help":
@@ -53,6 +52,9 @@ class Player {
                 break;
             case "inventory":
                 checkInventory();
+                break;
+            case "drop":
+                drop(noun, nounPrefix, location);
                 break;
             default:
         }
@@ -99,15 +101,40 @@ class Player {
         String playerLocation = getCurrentLocation();
         for (Item i :
                 foundItems) {
-            if (i.name.equals(item) && !i.isTaken && i.locationFound.equals(playerLocation)) {
+            if (i.name.equals(item) && !i.isTaken && i.currentLocation.equals(playerLocation)) {
                 Inventory.add(i);
                 i.setTaken(true);
-                for (Item mine : Inventory
-                ) {
-                    System.out.println("You have a " + mine.name);
-                }
+                i.setCurrentLocation("Inventory");
+                System.out.println(item + " has been taken!");
+            }
+            else if (i.name.equals(itemPrefix + " " + item) && !i.isTaken && i.currentLocation.equals(playerLocation)) {
+                Inventory.add(i);
+                i.setTaken(true);
+                i.setCurrentLocation("Inventory");
+                System.out.println(itemPrefix+" "+item + " has been taken!");
             }
             else {System.out.println("You did not see the item");
+            }
+        }
+    }
+
+    private void drop(String item, String itemPrefix, LocationGetter location){
+        String playerLocation = getCurrentLocation();
+        for (Item i :
+                foundItems) {
+            if (i.name.equals(item) && i.isTaken && i.currentLocation.equals("Inventory")) {
+                Inventory.remove(i);
+                i.setTaken(false);
+                i.setCurrentLocation(playerLocation);
+                System.out.println(item + " has been dropped!");
+            }
+            else if (i.name.equals(itemPrefix+" "+item) && i.isTaken && i.currentLocation.equals("Inventory")) {
+                    Inventory.remove(i);
+                    i.setTaken(false);
+                    i.setCurrentLocation(playerLocation);
+                    System.out.println(itemPrefix+" "+item + " has been dropped!");
+            }
+            else {System.out.println("You do not have that item!");
             }
         }
     }
@@ -127,7 +154,7 @@ class Player {
                     }
                 }
                 if (itemFound == 0) {
-                    Item foundItem = new Item(nodeItem.get("name").textValue(), nodeItem.get("description").textValue(), nodeItem.get("strength").intValue(), nodeItem.get("opens").textValue(), playerLocation, false);
+                    Item foundItem = new Item(nodeItem.get("name").textValue(), nodeItem.get("description").textValue(), nodeItem.get("strength").intValue(), nodeItem.get("opens").textValue(), playerLocation, false, playerLocation);
                     foundItems.add(foundItem);
                     System.out.println("You found " + foundItem.name + "!");
                 }
