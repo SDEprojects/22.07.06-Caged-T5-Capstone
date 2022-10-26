@@ -126,13 +126,13 @@ class Player {
                 Inventory.remove(i);
                 i.setTaken(false);
                 i.setCurrentLocation(playerLocation);
-                System.out.println(item + " has been dropped!");
+                System.out.println(item + " has been dropped, in "+ playerLocation+"!");
             }
             else if (i.name.equals(itemPrefix+" "+item) && i.isTaken && i.currentLocation.equals("Inventory")) {
                     Inventory.remove(i);
                     i.setTaken(false);
                     i.setCurrentLocation(playerLocation);
-                    System.out.println(itemPrefix+" "+item + " has been dropped!");
+                    System.out.println(itemPrefix+" " + item + " has been dropped, in "+ playerLocation+"!");
             }
             else {System.out.println("You do not have that item!");
             }
@@ -160,9 +160,8 @@ class Player {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
             System.out.println("Tried to use " + parentThing + " " + subThing);
-            System.out.println("Thing not found");
+            System.out.println("nothing new found");
         }
     }
 
@@ -175,7 +174,6 @@ class Player {
         else {
             System.out.println("Thing not found...");
         }
-        HitEnter.enter();
     }
 
     private void helpCommand() { //private
