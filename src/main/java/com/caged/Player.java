@@ -115,40 +115,29 @@ class Player {
     private void use(String subThing, String parentThing, LocationGetter location){
         String playerLocation = getCurrentLocation();
         JsonNode node = mapper.valueToTree(location);
-        if (node.get("room").get(playerLocation).get("Inventory").has(parentThing)) {
-            if (node.get("room").get(playerLocation).get("Inventory").get(parentThing).has(subThing)) {
-                System.out.println(node.get("room").get(playerLocation).get("Inventory").get(parentThing).get(subThing).textValue());
-                if (node.get("room").get(playerLocation).get("Inventory").get(parentThing).has("items")) {
-                    JsonNode nodeItem = node.get("room").get(playerLocation).get("Inventory").get(parentThing).get("items");
-                    int itemFound = 0;
-                    for (Item i:
-                            foundItems) {
-                        if (i.name.equals(nodeItem.get("name").textValue())) {
-                            itemFound = 1;
-                        }
+        try {
+            System.out.println(node.get("room").get(playerLocation).get("Inventory").get(parentThing).get(subThing).textValue());
+            JsonNode nodeItem = node.get("room").get(playerLocation).get("Inventory").get(parentThing).get("items").get(subThing);
+            int itemFound = 0;
+            if (node.get("room").get(playerLocation).get("Inventory").get(parentThing).has("items")) {
+                for (Item i :
+                        foundItems) {
+                    if (i.name.equals(nodeItem.get("name").textValue())) {
+                        itemFound = 1;
                     }
-                    if (itemFound == 0) {
-                        Item foundItem = new Item(nodeItem.get("name").textValue(), nodeItem.get("description").textValue(), nodeItem.get("strength").intValue(), nodeItem.get("opens").textValue(), playerLocation, false);
-                        foundItems.add(foundItem);
-                        System.out.println("You found "+ foundItem.name+ "!");
-                    }
-                } else {
-                    System.out.println("Tried to use " + parentThing + " " + subThing);
-                    System.out.println("Thing not found");
                 }
-
+                if (itemFound == 0) {
+                    Item foundItem = new Item(nodeItem.get("name").textValue(), nodeItem.get("description").textValue(), nodeItem.get("strength").intValue(), nodeItem.get("opens").textValue(), playerLocation, false);
+                    foundItems.add(foundItem);
+                    System.out.println("You found " + foundItem.name + "!");
+                }
             }
-            else{
-                System.out.println(parentThing+ " does not have " + subThing);
-            }
-
-        }
-        else {
-            System.out.println(parentThing + "not here!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Tried to use " + parentThing + " " + subThing);
+            System.out.println("Thing not found");
         }
     }
-
-
 
     private void look(String thing, LocationGetter location){ //private
         String playerLocation = getCurrentLocation();
