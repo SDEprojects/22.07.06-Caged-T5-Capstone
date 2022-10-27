@@ -31,4 +31,17 @@ public class Console {
         }while (input < 1 || input > userInput);
         return input;
     }
+
+    public static String readInput(String prompt){
+        String input = "";
+        do {
+            System.out.print(prompt);
+            try {
+                input = scanner.next();
+            } catch (Exception e) {
+                System.out.println("Please enter fight or run");
+            }
+        }while (input == null || input.equals(""));
+        return input;
+    }
 }
