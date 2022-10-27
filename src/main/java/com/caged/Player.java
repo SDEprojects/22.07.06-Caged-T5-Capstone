@@ -26,10 +26,10 @@ class Player {
     }
 
     //functions
-    public void playerActions(String verb, String noun, String nounPrefix, LocationGetter location){ //add
+    public void playerActions(String verb, String noun, String nounPrefix, LocationGetter location, List<Doors> doors){
         switch (verb) {
             case "move":
-                move(noun, location);
+                move(noun, location, doors);
                 break;
             case "take":
                 take(noun, nounPrefix, location);
@@ -57,6 +57,9 @@ class Player {
                 break;
             case "attack":
                 attack(noun, nounPrefix, location);
+                break;
+            case "open":
+                open(noun, nounPrefix, location, doors);
                 break;
             default:
         }
@@ -134,18 +137,67 @@ class Player {
     }
 
 
-    private void move(String direction, LocationGetter location){ //private
+    private void move(String direction, LocationGetter location, List<Doors> doors){
         String playerLocation = getCurrentLocation();
         JsonNode node = mapper.valueToTree(location);
-        if (node.get("room").get(playerLocation).get("Moves").has(direction)){
-            System.out.println("Player moves " + direction);
-            setCurrentLocation(node.get("room").get(playerLocation).get("Moves").get(direction).textValue());
-        }
-        else {
+        try {
+            JsonNode doorNode =node.get("room").get(playerLocation).get("Moves").get(direction).get("door");
+            if (!doorNode.isNull()) {
+                Doors door = doors.stream().filter(doorSeek -> doorSeek.getDoorName().equals(doorNode.textValue())).findFirst().orElse(null);
+                if (door.isLocked()){
+                    System.out.println("door is locked!");
+                }
+                else {
+                    setCurrentLocation(node.get("room").get(playerLocation).get("Moves").get(direction).get("location").textValue());
+                    System.out.println("Player moves " + direction);
+                }
+            }
+            else {
+                setCurrentLocation(node.get("room").get(playerLocation).get("Moves").get(direction).get("location").textValue());
+                System.out.println("Player moves " + direction);
+            }
+        } catch (Exception e) {
             System.out.println("Direction not available...");
             HitEnter.enter();
         }
     }
+
+    public void open(String target, String direction, LocationGetter location,  List<Doors> doors) {
+        try {
+            String playerLocation = getCurrentLocation();
+            JsonNode node = mapper.valueToTree(location);
+            JsonNode doorNode = null;
+            try {
+                doorNode = node.get("room").get(playerLocation).get("Moves").get(direction).get("door");
+            } catch (Exception e) {
+                System.out.println("There is no locked door to open there... \nTo open a door type 'open [direction] door' against valid locked door direction!");
+                return;
+            }
+            JsonNode finalDoorNode = doorNode;
+            Doors door = doors.stream().filter(doorSeek -> doorSeek.getDoorName().equals(finalDoorNode.textValue())).findFirst().orElse(null);
+            assert door != null;
+            List<String> keys = door.getKeys();
+            for (String key : keys
+            ) {
+                try {
+                    Item item = getInventory().stream().filter(i -> i.getName().equals(key)).findFirst().orElse(null);
+                    assert item != null;
+                    if (item.name.equals(key)) {
+                        door.setLocked(false);
+                        System.out.println("Door unlocked using the " + key + "!");
+                        break;
+                    }
+                } catch (Exception ignored) {
+                }
+            }
+            if (door.isLocked()) {
+                System.out.println("Unable to open... \nMust be missing something to unlock the door with!");
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("Couldn't open door, maybe wrong command!");
+        }
+    }
+
 
     private void take(String item, String itemPrefix, LocationGetter location) { //private
         String playerLocation = getCurrentLocation();

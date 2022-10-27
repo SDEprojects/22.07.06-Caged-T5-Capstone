@@ -35,10 +35,10 @@ public class GameControl<K, V> {
         console.clear();
         yamlReader.objective();
         HitEnter.enter();
-        playGame(yamlReader.playerLoader(), yamlReader.locationLoader());
+        playGame(yamlReader.playerLoader(), yamlReader.locationLoader(), yamlReader.doorLoader());
     }
 
-    private void playGame(Player player, LocationGetter location) {
+    private void playGame(Player player, LocationGetter location, List<Doors> doors) {
         while (playGame) {
             JsonNode node = mapper.valueToTree(location);
             String playerLocation = player.getCurrentLocation();
@@ -47,13 +47,13 @@ public class GameControl<K, V> {
             KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory"));
             KeyValueParser.key(node.get("room").get(playerLocation).get("NPCs"));
             System.out.println("\nDirections you can move: ");
-            KeyValueParser.keyValue(node.get("room").get(playerLocation).get("Moves"));
+            KeyValueParser.locationKeyValue(node.get("room").get(playerLocation).get("Moves"), player, doors);
             //System.out.println(node.get("room").get(playerLocation).get("Moves").toString());
             System.out.print("\n>>>>");
             String userChoice = in.nextLine();
             String lowUser = userChoice.toLowerCase();
             String[] action = textParser.textParser(lowUser);
-            player.playerActions(action[0], action[1], action[2], location);
+            player.playerActions(action[0], action[1], action[2], location, doors);
         }
     }
 
