@@ -76,12 +76,12 @@ class Player {
         try {
             if(node.get("room").get(playerLocation).get("NPCs").get(lastName + " " + firstName).has("enemy")){
                 System.out.println("You attacked " + lastName + " " + firstName + "\u001B[31m\u001B[1m \nPrepare for battle!!\u001b[0m");
-                System.out.println("press 1 to fight\npress 2 to flee");
+                System.out.println("Type fight to battle\nType run to run away");
                 int playerHp = (player.getHp() + player.defence() * 5);
                 int npcHp = (enemy.getHp() + enemy.defence() * 5);
                 while (true){
-                    int userInput = Console.readInput(">>>>", 3);
-                    if (userInput == 1){
+                    String userInput = Console.readInput(">>>>");
+                    if (Objects.equals(userInput, "fight")){
                         System.out.println("Players HP: " + playerHp);
                         System.out.println("NPC HP: " + npcHp);
                         console.clear();
@@ -95,7 +95,7 @@ class Player {
                             break;
                         }
                     }
-                    if (userInput == 2){
+                    if (Objects.equals(userInput, "run")){
                         if(flee > Math.random()) {
                             System.out.println("You have successfully ran away!");
                             break;
