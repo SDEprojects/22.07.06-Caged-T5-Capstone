@@ -65,10 +65,42 @@ class Player {
     private void attack(String firstName, String lastName, LocationGetter location) {
         String playerLocation = getCurrentLocation();
         JsonNode node = mapper.valueToTree(location);
+        CharacterPlayer player = new CharacterPlayer(getHitPoints());
+        CharacterEnemy enemy = new CharacterEnemy(20);
+        Console console = new Console();
+        double flee = 0.2;
 
         try {
             if(node.get("room").get(playerLocation).get("NPCs").get(lastName + " " + firstName).has("enemy")){
                 System.out.println("You attacked " + lastName + " " + firstName + "\u001B[31m\u001B[1m \nPrepare for battle!!\u001b[0m");
+                System.out.println("press 1 to fight\npress 2 to flee");
+                int playerHp = (player.getHp() + player.defence() * 5);
+                int npcHp = (enemy.getHp() + enemy.defence() * 5);
+                while (true){
+                    int userInput = Console.readInput(">>>>", 3);
+                    if (userInput == 1){
+                        System.out.println("Players HP: " + playerHp);
+                        System.out.println("NPC HP: " + npcHp);
+                        console.clear();
+                        playerHp = playerHp - enemy.attack();
+                        npcHp = npcHp - enemy.attack();
+                        if (npcHp < 0){
+                            System.out.println("\u001b[36mYou won the battle!");
+                            break;
+                        }if (playerHp < 0){
+                            System.out.println("\u001B[31m\u001B[1mYou LOSE!\u001b[0m");
+                            break;
+                        }
+                    }
+                    if (userInput == 2){
+                        if(flee > Math.random()) {
+                            System.out.println("You have successfully ran away!");
+                            break;
+                        }else{
+                            System.out.println("You failed to escape the fight. Good luck on your battle!");
+                        }
+                    }
+                }
             }else{
                 System.out.println("You can't attack that!");
             }
