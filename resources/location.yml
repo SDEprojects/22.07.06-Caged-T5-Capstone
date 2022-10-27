@@ -185,6 +185,169 @@ room:
     Inventory: null
     NPCs: null
 
+#####################################################################
+#        PHASE 2 MAP- LOCATION
+#####################################################################
+West Hall - 2F:
+  Phase: 2
+  grid: "d1"
+  description: "This is the entry to the second floor and slightly more lit than the floor before, the is also an opening above you that looks like a vent"
+  Moves:
+    east: "South West Hall - 2F"
+  Hidden Moves:
+    north:
+      name: "West Vent"
+      key: "ladder"
+  NPCs: null
+  Inventory:
+    rack:
+      description: "Rusty metal rack mounted on the wall"
+      ladder: "Against the wall, hooked on the rack is a ladder that could be useful somewhere in this room"
+
+West Vent:
+  Phase: 2
+  grid: "c1"
+  description: "This could be another way to get out of here"
+  Moves:
+    east: "South West Hall - 2F"
+  Hidden Moves:
+    north:
+      name: "Storage Room"
+      key: "ladder"
+  NPCs: null
+  Inventory: null
+
+Storage Room - 2F:
+  Phase: 2
+  grid: "b1"
+  description: "This room is the building store supply room that has items stacked up on shelves."
+  Moves:
+    east: "South West Hall - 2F"
+  Hidden Moves:
+    north:
+      name: "West Vent"
+      key: "ladder"
+  NPCs: null
+  Inventory:
+    key card:
+      description: "Shinny white plastic key card with the sign 'Caged' printed in red on one side"
+
+
+
+North Vent:
+  Phase: 2
+  grid: "a1"
+  description: "This could be another way to get out of here"
+  Moves:
+    east: "South West Hall - 2F"
+  Hidden Moves:
+    north:
+      name: "West Vent"
+      key: "ladder"
+  NPCs: null
+  Inventory: null
+
+North West Vent:
+  Phase: 2
+  grid: "a2"
+  description: "This could be another way to get out of here"
+  Moves:
+    east: "South West Hall - 2F"
+  Hidden Moves:
+    north:
+      name: "West Vent"
+      key: "ladder"
+  NPCs: null
+  Inventory: null
+
+North East Vent:
+  Phase: 2
+  grid: "a3"
+  description: "This could be another way to get out of here"
+  Moves:
+    east: "South West Hall - 2F"
+  Hidden Moves:
+    north:
+      name: "West Vent"
+      key: "ladder"
+  NPCs: null
+  Inventory: null
+
+South West Hall - 2F:
+  Phase: 2
+  grid: "d2"
+  description: "This is connected to the West Hall, the break room and the north west hall. Slightly more lit than the floor before."
+  Moves:
+    south: "Break Room"
+    north: "North West Hall - 2F"
+    west: "West Hall - 2F"
+  Hidden Moves:
+    north:
+      name: "West Vent"
+      key: "ladder"
+  NPCs: null
+  Inventory: null
+
+
+############################################
+Break Room - 2F:
+  Phase: 2
+  grid: "e2"
+  description: "The break room looks like most break rooms with a couple of dinning room tables and chairs with a fridge to your left "
+  Moves:
+    north: "South West Hall - 2F"
+  Hidden Moves:
+#    north:
+#      name: "West Vent"
+#      key: "ladder"
+  NPCs: null
+  Inventory: null
+
+
+
+North West Hall - 2F:
+  Phase: 2
+  grid: "c2"
+  description: "This is connected to The break room and the north west hall. Slightly more lit than the floor before."
+  Moves:
+    south: "South West Hall - 2F"
+  Hidden Moves:
+#    north:
+#      name: "West Vent"
+#      key: "ladder"
+  NPCs: null
+  Inventory: null
+
+North Hall - 2F:
+  Phase: 2
+  grid: "b2"
+  description: "This is connected to the Storage room, North West Hall, and the North East Hall. Slightly more lit than the first floor before."
+  Moves:
+    west: "Storage room"
+    south: "North West Hall - 2F"
+    east: "North East Hall - 2F"
+  Hidden Moves:
+  #    north:
+  #      name: "West Vent"
+  #      key: "ladder"
+  NPCs: null
+  Inventory: null
+
+
+North East Hall - 2F:
+  Phase: 2
+  grid: "b3"
+  description: "This is connected to the North Hall, and the Escape room. Slightly more lit than the floor before."
+  Moves:
+    west: "North Hall - 2F"
+    east: "Escape room"
+  Hidden Moves:
+  #    north:
+  #      name: "West Vent"
+  #      key: "ladder"
+  NPCs: null
+  Inventory: null
+
 
 
 
