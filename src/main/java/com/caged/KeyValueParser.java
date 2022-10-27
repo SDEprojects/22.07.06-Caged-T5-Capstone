@@ -39,7 +39,6 @@ class KeyValueParser {
         List<Item> items = player.getFoundItems();
         while (nodes.hasNext()) {
             Map.Entry<String, JsonNode> entry = (Map.Entry<String, JsonNode>) nodes.next();
-            String reaction = node.get(entry.getKey()).get("reaction").textValue();
             String location = node.get(entry.getKey()).get("location").textValue();
             if (!node.get(entry.getKey()).get("hidden").booleanValue()) {
                 if (node.get(entry.getKey()).get("door").isNull()){
@@ -59,6 +58,7 @@ class KeyValueParser {
                 for (Item i :
                         items) {
                     if (i.name.equals(node.get(entry.getKey()).get("key").textValue())) {
+                        String reaction = node.get(entry.getKey()).get("reaction").textValue();
                         System.out.println("\u001b[35m" + entry.getKey() + "\u001b[0m" + "  ---->  " + reaction);
                     }
                 }
