@@ -6,7 +6,9 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 class YAMLReader {
 
@@ -101,6 +103,29 @@ class YAMLReader {
         } catch (IOException e) {
             e.printStackTrace();
         }return  result;
+    }
+
+    public List<Doors> doorLoader() {
+        List<Doors> result = new ArrayList<>();
+        DoorGetter doors = null;
+        try {
+            doors = mapper.readValue(fileGetter.yamlGetter("doors.yml"), DoorGetter.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        JsonNode node = mapper.valueToTree(doors);
+        JsonNode doorNode = node.get("doors");
+        for (JsonNode door : doorNode) {
+            List<String> keys= new ArrayList<>();
+            Iterator<Map.Entry<String, JsonNode>> nodes = door.get("keys").fields();
+            while (nodes.hasNext()) {
+                Map.Entry<String, JsonNode> entry = (Map.Entry<String, JsonNode>) nodes.next();
+                keys.add(entry.getValue().textValue());
+            }
+            Doors newDoor = new Doors(door.get("name").textValue(), door.get("locked").booleanValue(), keys);
+            result.add(newDoor);
+        }
+        return result;
     }
 
     public List<String> randChat () {
