@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 class Player {
 
@@ -56,17 +55,34 @@ class Player {
             case "drop":
                 drop(noun, nounPrefix, location);
                 break;
+            case "attack":
+                attack(noun, nounPrefix, location);
+                break;
             default:
         }
     }
 
-    public void talk(String lastName, String firstName, LocationGetter location) {
+    private void attack(String firstName, String lastName, LocationGetter location) {
+        String playerLocation = getCurrentLocation();
+        JsonNode node = mapper.valueToTree(location);
+
+        try {
+            if(node.get("room").get(playerLocation).get("NPCs").get(lastName + " " + firstName).has("enemy")){
+                System.out.println("You attacked " + lastName + " " + firstName + "\u001B[31m\u001B[1m \nPrepare for battle!!\u001b[0m");
+            }else{
+                System.out.println("You can't attack that!");
+            }
+        } catch (Exception e) {
+            System.out.println("Nothing happen...");;
+        }
+    }
+
+    private void talk(String lastName, String firstName, LocationGetter location) {
         String playerLocation = getCurrentLocation();
         JsonNode node = mapper.valueToTree(location);
         YAMLReader yamlReader = new YAMLReader();
         List<String> chatList = new ArrayList<>(yamlReader.randChat());
         String [] rand;
-
 
         try {
             if (node.get("room").get(playerLocation).get("NPCs").get(firstName + " " + lastName).has("chat")){
@@ -75,6 +91,8 @@ class Player {
                 List<String> randText = new ArrayList<>(List.of(rand));
                 Collections.shuffle(randText);
                 System.out.println(randText.get(0).replaceAll("\\[", "").replaceAll("\\]", ""));
+
+
 
                 //System.out.println(node.get("room").get(playerLocation).get("NPCs").get(firstName + " " + lastName).get("chat"));
             }
