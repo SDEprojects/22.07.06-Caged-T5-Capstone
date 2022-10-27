@@ -39,8 +39,6 @@ attack:
   - "kick"
 use:
   - "use"
-  - "open"
-  - "unlock"
   - "consume"
 inventory:
   - "inventory"
@@ -56,3 +54,7 @@ drop:
   - "leave"
   - "abandon"
   - "lose"
+open:
+  - "pick"
+  - "open"
+  - "unlock"

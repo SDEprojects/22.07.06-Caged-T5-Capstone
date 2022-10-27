@@ -1,0 +1,25 @@
+---
+doors:
+  cage 1 door:
+    name: "cage 1 door"
+    locked: true
+    keys:
+      name: "spring"
+      orange key: "orange key"
+  npc cage 1 door:
+    name: "npc cage 1 door"
+    locked: true
+    keys:
+      name: "spring"
+      orange key: "orange key"
+  south hall door:
+    name: "south hall door"
+    locked: true
+    keys:
+      name: "spring"
+      orange key: "orange key"
+  vent door:
+    name: “vent “door
+    locked: true
+    keys:
+      name: “ladder”
