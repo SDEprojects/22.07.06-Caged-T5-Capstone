@@ -35,6 +35,7 @@ class TextParser {
         List talk = yamlReader.dictionaryLoader().getTalk();
         List inventory = yamlReader.dictionaryLoader().getInventory();
         List drop = yamlReader.dictionaryLoader().getDrop();
+        List attack = yamlReader.dictionaryLoader().getAttack();
 
         if (move.contains(verb)){
             verb = "move";
@@ -62,6 +63,9 @@ class TextParser {
         }
         else if (drop.contains(verb)){
             verb = "drop";
+        }
+        else if (attack.contains(verb)){
+            verb = "attack";
         }
         else {
             System.out.println("Unrecognized Command, type help for valid command");

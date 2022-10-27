@@ -59,6 +59,7 @@ room:
     NPCs:
       benjamin gates:
         chat: "Why are you out of your cell?!"
+        enemy:
 #      - "Hello comrade, here is the key you asked for. Don't lose it!"
         NPC Inventory:
           orange key:
