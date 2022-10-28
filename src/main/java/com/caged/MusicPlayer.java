@@ -20,6 +20,10 @@ class MusicPlayer {
         clip.open(audioStream);
 
         clip.start();
+        System.out.println("Hit enter to stop");
+        HitEnter.enter();
+        clip.stop();
+
 
         String response = scanner.next();
     }

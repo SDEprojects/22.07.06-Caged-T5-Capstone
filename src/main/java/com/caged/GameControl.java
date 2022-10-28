@@ -24,6 +24,7 @@ public class GameControl<K, V> {
     MainMenu mainMenu = new MainMenu();
     Console console = new Console();
     YAMLMapper mapper = new YAMLMapper();
+    GameMap playerMap = new GameMap();
 
     public void runGame() {
         console.clear();
@@ -35,6 +36,7 @@ public class GameControl<K, V> {
         console.clear();
         yamlReader.objective();
         HitEnter.enter();
+        playerMap.build();
         playGame(yamlReader.playerLoader(), yamlReader.locationLoader(), yamlReader.doorLoader());
     }
 
@@ -43,17 +45,17 @@ public class GameControl<K, V> {
             JsonNode node = mapper.valueToTree(location);
             String playerLocation = player.getCurrentLocation();
             PlayerStatus.currentStatus(player);
+            playerMap.positionUpdate(player, location);
             System.out.println("\nThings seen in room: ");
             KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory"));
             KeyValueParser.key(node.get("room").get(playerLocation).get("NPCs"));
             System.out.println("\nDirections you can move: ");
             KeyValueParser.locationKeyValue(node.get("room").get(playerLocation).get("Moves"), player, doors);
-            //System.out.println(node.get("room").get(playerLocation).get("Moves").toString());
             System.out.print("\n>>>>");
             String userChoice = in.nextLine();
             String lowUser = userChoice.toLowerCase();
             String[] action = textParser.textParser(lowUser);
-            player.playerActions(action[0], action[1], action[2], location, doors);
+            player.playerActions(action[0], action[1], action[2], location, doors, playerMap);
         }
     }
 
