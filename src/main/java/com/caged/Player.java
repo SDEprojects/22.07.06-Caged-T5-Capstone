@@ -16,7 +16,6 @@ class Player {
     private List<Item> foundItems = new ArrayList<>();
     YAMLMapper mapper = new YAMLMapper();
     private final Scanner scanner = new Scanner(System.in);
-    MusicPlayer  newMusic = new MusicPlayer();
 
     public Player(String name, String currentLocation, int HitPoints, String equipment, String weapon) {
         setHitPoints(HitPoints);
@@ -71,6 +70,7 @@ class Player {
                 break;
             case "equip":
                 equip();
+                break;
             case "play":
                 playMusic(music);
                 break;
@@ -93,12 +93,12 @@ class Player {
     }
 
     private void playMusic(MusicPlayer music){
-        music.unpause();
+        music.play();
         System.out.println("Play music");
     }
 
     private void stopMusic(MusicPlayer music){
-        music.pause();
+        music.turnOff();
         System.out.println("pause music");
     }
 

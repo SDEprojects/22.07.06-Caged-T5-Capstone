@@ -1,8 +1,7 @@
 package com.caged;
 
 import javax.sound.sampled.*;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 import java.io.File;
 import java.io.IOException;
@@ -18,54 +17,39 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 
-class MusicPlayer extends Thread{
+class MusicPlayer{
     FileGetter fileGetter = new FileGetter();
     Scanner scanner = new Scanner(System.in);
     File file = new File("");
     boolean playCompleted;
-    boolean pause;
-    boolean unpause;
 
-    @Override
-    public void run() {
-        play();
-    }
 
-    void play() {
+    public void play() {
 
         try {
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(fileGetter.fileGetter("bgmusic.wav"));
-            AudioFormat format = audioStream.getFormat();
-            DataLine.Info info = new DataLine.Info(Clip.class, format);
-            Clip audioClip = (Clip) AudioSystem.getLine(info);
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(new BufferedInputStream(fileGetter.fileGetter("bgmusic.wav")));
+            //AudioFormat format = audioStream.getFormat();
+            //DataLine.Info info = new DataLine.Info(Clip.class, format);
+            Clip audioClip = AudioSystem.getClip();
             audioClip.open(audioStream);
             audioClip.loop(Clip.LOOP_CONTINUOUSLY);
-
-
-            while (!playCompleted) {
-                try {
-                    Thread.sleep(1000);
-                    while (pause) {
-//                        long clipTime;
-//                        clipTime = audioClip.getMicrosecondLength();
-                        audioClip.stop();
+            playCompleted = false;
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (!playCompleted) {
                         try {
                             Thread.sleep(1000);
+
                         } catch (InterruptedException ex) {
                             ex.printStackTrace();
                         }
-                        if (unpause){
-//                            audioClip.setMicrosecondPosition(clipTime);
-                            audioClip.loop(Clip.LOOP_CONTINUOUSLY);
-                            pause=false;
-                        }
                     }
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
+                    audioClip.close();
                 }
-                pause=false;
-            }
-            audioClip.close();
+            });
+            thread.start();
+
         } catch (UnsupportedAudioFileException | LineUnavailableException | IOException ex) {
             ex.printStackTrace();
         }
@@ -79,14 +63,6 @@ class MusicPlayer extends Thread{
 
     public void turnOff() {
         playCompleted = true;
-    }
-
-    public void pause(){
-        pause = true;
-    }
-
-    public void unpause(){
-        unpause = true;
     }
 
 }
