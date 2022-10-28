@@ -25,6 +25,8 @@ public class GameControl<K, V> {
     Console console = new Console();
     YAMLMapper mapper = new YAMLMapper();
     GameMap playerMap = new GameMap();
+    MusicPlayer music = new MusicPlayer();
+
 
     public void runGame() {
         console.clear();
@@ -37,6 +39,7 @@ public class GameControl<K, V> {
         yamlReader.objective();
         HitEnter.enter();
         playerMap.build();
+        music.start();
         playGame(yamlReader.playerLoader(), yamlReader.locationLoader(), yamlReader.doorLoader());
     }
 
@@ -55,7 +58,7 @@ public class GameControl<K, V> {
             String userChoice = in.nextLine();
             String lowUser = userChoice.toLowerCase();
             String[] action = textParser.textParser(lowUser);
-            player.playerActions(action[0], action[1], action[2], location, doors, playerMap);
+            player.playerActions(action[0], action[1], action[2], location, doors, playerMap, music);
         }
     }
 

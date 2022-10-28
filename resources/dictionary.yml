@@ -24,7 +24,6 @@ map:
 quit:
   - "quit"
   - "exit"
-  - "stop"
 look:
   - "inspect"
   - "look"
@@ -65,3 +64,9 @@ open:
 equip:
   - "equip"
   - "wear"
+play:
+  - "start"
+  - "play"
+stop:
+  - "stop"
+  - "turnoff"

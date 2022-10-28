@@ -16,6 +16,7 @@ class Player {
     private List<Item> foundItems = new ArrayList<>();
     YAMLMapper mapper = new YAMLMapper();
     private final Scanner scanner = new Scanner(System.in);
+    MusicPlayer  newMusic = new MusicPlayer();
 
     public Player(String name, String currentLocation, int HitPoints, String equipment, String weapon) {
         setHitPoints(HitPoints);
@@ -30,7 +31,7 @@ class Player {
     }
 
     //functions
-    public void playerActions(String verb, String noun, String nounPrefix, LocationGetter location, List<Doors> doors, GameMap playerMap){
+    public void playerActions(String verb, String noun, String nounPrefix, LocationGetter location, List<Doors> doors, GameMap playerMap, MusicPlayer music){
         switch (verb) {
             case "move":
                 move(noun, location, doors);
@@ -70,6 +71,12 @@ class Player {
                 break;
             case "equip":
                 equip();
+            case "play":
+                playMusic(music);
+                break;
+            case "stop":
+                stopMusic(music);
+                break;
             default:
         }
     }
@@ -83,6 +90,16 @@ class Player {
                 setWeapon(item.getName());
             }
         }
+    }
+
+    private void playMusic(MusicPlayer music){
+        music.unpause();
+        System.out.println("Play music");
+    }
+
+    private void stopMusic(MusicPlayer music){
+        music.pause();
+        System.out.println("pause music");
     }
 
     private void attack(String firstName, String lastName, LocationGetter location) {
