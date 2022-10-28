@@ -30,6 +30,7 @@ class TextParser {
             List take = yamlReader.dictionaryLoader().getTake();
             List look = yamlReader.dictionaryLoader().getLook();
             List help = yamlReader.dictionaryLoader().getHelp();
+            List map = yamlReader.dictionaryLoader().getMap();
             List quit = yamlReader.dictionaryLoader().getQuit();
             List use = yamlReader.dictionaryLoader().getUse();
             List talk = yamlReader.dictionaryLoader().getTalk();

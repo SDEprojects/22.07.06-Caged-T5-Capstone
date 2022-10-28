@@ -8,6 +8,7 @@ class DictionaryGetter {
     private List<String> help;
     private List<String> look;
     private List<String> quit;
+    private List<String> map;
     private List<String> talk;
     private List<String> attack;
     private List<String> use;
@@ -17,12 +18,13 @@ class DictionaryGetter {
 
 
 
-    public DictionaryGetter(List<String> move, List<String> take, List<String> help, List<String> look, List<String> quit, List<String> talk, List<String> attack, List<String> use, List<String> inventory, List<String> drop, List<String> open){
+    public DictionaryGetter(List<String> move, List<String> take, List<String> help, List<String> map, List<String> look, List<String> quit, List<String> talk, List<String> attack, List<String> use, List<String> inventory, List<String> drop, List<String> open){
         setMove(move);
         setTake(take);
         setHelp(help);
         setLook(look);
         setQuit(quit);
+        setMap(map);
         setTalk(talk);
         setAttack(attack);
         setUse(use);
@@ -57,6 +59,14 @@ class DictionaryGetter {
 
     public void setHelp(List<String> help) {
         this.help = help;
+    }
+
+    public List<String> getMap() {
+        return map;
+    }
+
+    public void setMap(List<String> map) {
+        this.map = map;
     }
 
     public List<String> getLook() {

@@ -43,6 +43,9 @@ class Player {
             case "help":
                 helpCommand();
                 break;
+            case "map":
+                mapCommand();
+                break;
             case "quit":
                 quitConfirm();
                 break;
@@ -295,6 +298,12 @@ class Player {
         }
         Scanner scanner = new Scanner(System.in);
         HitEnter.enter();
+    }
+
+    private void mapCommand(){
+        System.out.println("\n\u001b[47m\u001b[30m- - - - - - - - - - - Current Position(MAP) - - - - - - - - - - -\u001b[0m\n" +
+                "\n           Map will be here....\n" +
+                "\n\u001b[47m\u001b[30m- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\u001b[0m");
     }
 
 
