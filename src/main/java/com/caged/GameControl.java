@@ -39,7 +39,7 @@ public class GameControl<K, V> {
         yamlReader.objective();
         HitEnter.enter();
         playerMap.build();
-        music.start();
+        music.play();
         playGame(yamlReader.playerLoader(), yamlReader.locationLoader(), yamlReader.doorLoader());
     }
 
