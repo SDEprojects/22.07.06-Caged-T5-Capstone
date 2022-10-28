@@ -30,7 +30,7 @@ class Player {
     }
 
     //functions
-    public void playerActions(String verb, String noun, String nounPrefix, LocationGetter location, List<Doors> doors){
+    public void playerActions(String verb, String noun, String nounPrefix, LocationGetter location, List<Doors> doors, GameMap playerMap){
         switch (verb) {
             case "move":
                 move(noun, location, doors);
@@ -48,7 +48,7 @@ class Player {
                 helpCommand();
                 break;
             case "map":
-                mapCommand();
+                mapCommand(playerMap);
                 break;
             case "quit":
                 quitConfirm();
@@ -313,10 +313,10 @@ class Player {
         HitEnter.enter();
     }
 
-    private void mapCommand(){
-        System.out.println("\n\u001b[47m\u001b[30m- - - - - - - - - - - Current Position(MAP) - - - - - - - - - - -\u001b[0m\n" +
-                "\n           Map will be here....\n" +
-                "\n\u001b[47m\u001b[30m- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\u001b[0m");
+    private void mapCommand(GameMap playerMap){
+        System.out.println("\n\u001b[47m\u001b[30m- - - - - - - - - - - Current Position(MAP) - - - - - - - - - - -\u001b[0m\n");
+        playerMap.show();
+        System.out.println("\n\u001b[47m\u001b[30m- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\u001b[0m");
     }
 
 
