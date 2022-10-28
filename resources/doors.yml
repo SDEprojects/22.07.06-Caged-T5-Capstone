@@ -4,22 +4,48 @@ doors:
     name: "cage 1 door"
     locked: true
     keys:
-      name: "spring"
+      boss key: "boss key"
+      spring: "spring"
       orange key: "orange key"
   npc cage 1 door:
     name: "npc cage 1 door"
     locked: true
     keys:
-      name: "spring"
+      boss key: "boss key"
+      spring: "spring"
       orange key: "orange key"
   south hall door:
     name: "south hall door"
     locked: true
     keys:
-      name: "spring"
+      boss key: "boss key"
+      spring: "spring"
       orange key: "orange key"
-  vent door:
-    name: “vent “door
+  npc cage 2 door:
+    name: "npc cage 2 door"
     locked: true
     keys:
-      name: “ladder”
+      boss key: "boss key"
+      orange key: "purple key"
+  wing 1 door:
+    name: "wing 1 door"
+    locked: true
+    keys:
+      boss key: "boss key"
+      orange key: "orange key"
+  storage Room 2 door:
+    name: "Wing 1 door"
+    locked: true
+    keys:
+      boss key: "boss key"
+  vent door:
+    name: "vent door"
+    locked: true
+    keys:
+      name: "ladder"
+  wing 2 door:
+    name: "wing 1 door"
+    locked: true
+    keys:
+      boss key: "boss key"
+      orange key: "green key"
