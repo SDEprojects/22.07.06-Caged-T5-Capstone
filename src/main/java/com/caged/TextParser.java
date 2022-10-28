@@ -55,6 +55,9 @@ class TextParser {
             else if (help.contains(verb)){
                 verb = "help";
             }
+            else if (map.contains(verb)){
+                verb = "map";
+            }
             else if (quit.contains(verb)){
                 verb = "quit";
             }
