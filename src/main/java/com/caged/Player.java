@@ -16,6 +16,7 @@ class Player {
     private List<Item> foundItems = new ArrayList<>();
     YAMLMapper mapper = new YAMLMapper();
     private final Scanner scanner = new Scanner(System.in);
+    private String lastAction = "crying in cage";
 
     public Player(String name, String currentLocation, int HitPoints, String equipment, String weapon) {
         setHitPoints(HitPoints);
@@ -30,7 +31,7 @@ class Player {
     }
 
     //functions
-    public void playerActions(String verb, String noun, String nounPrefix, LocationGetter location, List<Doors> doors, GameMap playerMap, MusicPlayer music){
+    public void playerActions(String verb, String noun, String nounPrefix, LocationGetter location, List<Doors> doors, GameMap playerMap, MusicPlayer music, String lastAction){
         switch (verb) {
             case "move":
                 move(noun, location, doors);
@@ -85,21 +86,26 @@ class Player {
         for (Item item : Inventory) {
             if (item.getName().contains("guard uniform")){
                 setEquipment(item.getName());
+                lastAction = "Equipped the guard uniform!";
             }
             if (item.getName().contains("brick")){
                 setWeapon(item.getName());
+                lastAction = "Equipped the brick!";
             }
+
         }
     }
 
     private void playMusic(MusicPlayer music){
         music.play();
         System.out.println("Play music");
+        lastAction = "Playing music";
     }
 
     private void stopMusic(MusicPlayer music){
         music.turnOff();
-        System.out.println("pause music");
+        System.out.println("quit music");
+        lastAction = "Turned off music";
     }
 
     private void attack(String firstName, String lastName, LocationGetter location) {
@@ -137,15 +143,20 @@ class Player {
                         npcHp = npcHp - player.attack(multiplier);
                         if (npcHp < 0){
                             System.out.println("\u001b[36mYou won the battle!");
+                            lastAction = "Tried to fight...\"\\u001b[36mYou won the battle!\"...";
                             break;
                         }if (playerHp < 0){
                             System.out.println("\u001B[31m\u001B[1mYou LOSE!\u001b[0m");
+                            setCurrentLocation("Cage 1");
+                            setHitPoints(20);
+                            lastAction = "Tried to fight...you lost!...back to crying in cage...";
                             break;
                         }
                     }
                     if (Objects.equals(userInput, "run")){
                         if(flee > Math.random()) {
                             System.out.println("You have successfully ran away!");
+                            lastAction = "Tried to fight...\"You have successfully ran away!\"...";
                             break;
                         }else{
                             System.out.println("You failed to escape the fight. Good luck on your battle!");
@@ -155,9 +166,11 @@ class Player {
                 }
             }else{
                 System.out.println("You can't attack that!");
+                lastAction = "Tried to fight...\"You can't attack that!\"...";
             }
         } catch (Exception e) {
-            System.out.println("Nothing happen...");;
+            System.out.println("Nothing happened...");
+            lastAction = "Tried to fight...Nothing happened...";
         }
     }
 
@@ -174,10 +187,13 @@ class Player {
                 rand = newChatList.get(0).split(",");
                 List<String> randText = new ArrayList<>(List.of(rand));
                 Collections.shuffle(randText);
-                System.out.println(randText.get(0).replaceAll("\\[", "").replaceAll("\\]", ""));
+                String chat = randText.get(0).replaceAll("\\[", "").replaceAll("\\]", "");
+                System.out.println(chat);
+                lastAction = "Chatted with "+node.get("room").get(playerLocation).get("NPCs").get(firstName + " " + lastName).textValue()+", they responded: "+chat;
             }
         } catch (Exception e) {
             System.out.println(firstName + " " + lastName + " no response to the that name");
+            lastAction = firstName + " " + lastName + " no response to the that name";
         }
     }
 
@@ -190,18 +206,22 @@ class Player {
                 Doors door = doors.stream().filter(doorSeek -> doorSeek.getDoorName().equals(doorNode.textValue())).findFirst().orElse(null);
                 if (door.isLocked()){
                     System.out.println("door is locked!");
+                    lastAction = "door is locked!";
                 }
                 else {
                     setCurrentLocation(node.get("room").get(playerLocation).get("Moves").get(direction).get("location").textValue());
                     System.out.println("Player moves " + direction);
+                    lastAction = "Player moves " + direction;
                 }
             }
             else {
                 setCurrentLocation(node.get("room").get(playerLocation).get("Moves").get(direction).get("location").textValue());
                 System.out.println("Player moves " + direction);
+                lastAction = "Player moves " + direction;
             }
         } catch (Exception e) {
             System.out.println("Direction not available...");
+            lastAction = "Direction not available...";
             HitEnter.enter();
         }
     }
@@ -215,6 +235,7 @@ class Player {
                 doorNode = node.get("room").get(playerLocation).get("Moves").get(direction).get("door");
             } catch (Exception e) {
                 System.out.println("There is no locked door to open there... \nTo open a door type 'open [direction] door' against valid locked door direction!");
+                lastAction = "There is no locked door to open there... \nTo open a door type 'open [direction] door' against valid locked door direction!";
                 return;
             }
             JsonNode finalDoorNode = doorNode;
@@ -229,6 +250,7 @@ class Player {
                     if (item.name.equals(key)) {
                         door.setLocked(false);
                         System.out.println("Door unlocked using the " + key + "!");
+                        lastAction = "Door unlocked using the " + key + "!";
                         break;
                     }
                 } catch (Exception ignored) {
@@ -236,9 +258,11 @@ class Player {
             }
             if (door.isLocked()) {
                 System.out.println("Unable to open... \nMust be missing something to unlock the door with!");
+                lastAction = "Unable to open... \nMust be missing something to unlock the door with!";
             }
         } catch (IllegalArgumentException e) {
             System.out.println("Couldn't open door, maybe wrong command!");
+            lastAction = "Couldn't open door, maybe wrong command!";
         }
     }
 
@@ -252,15 +276,18 @@ class Player {
                     i.setTaken(true);
                     i.setCurrentLocation("Inventory");
                     System.out.println(item + " has been taken!");
+                    lastAction = item + " has been taken!";
                 } else if (i.name.equals(itemPrefix + " " + item) && !i.isTaken && i.currentLocation.equals(playerLocation)) {
                     Inventory.add(i);
                     i.setTaken(true);
                     i.setCurrentLocation("Inventory");
                     System.out.println(itemPrefix + " " + item + " has been taken!");
+                    lastAction = itemPrefix + " " + item + " has been taken!";
                 }
             }
         } catch (Exception e) {
             System.out.println("You did not see the item");
+            lastAction = "You did not see the item";
         }
     }
 
@@ -274,16 +301,19 @@ class Player {
                     i.setTaken(false);
                     i.setCurrentLocation(playerLocation);
                     System.out.println(item + " has been dropped, in "+ playerLocation+"!");
+                    lastAction = item + " has been dropped, in "+ playerLocation+"!";
                 }
                 else if (i.name.equals(itemPrefix + " " + item) && i.isTaken && i.currentLocation.equals("Inventory")) {
                         Inventory.remove(i);
                         i.setTaken(false);
                         i.setCurrentLocation(playerLocation);
                         System.out.println(itemPrefix+" " + item + " has been dropped, in "+ playerLocation+"!");
+                    lastAction = itemPrefix+" " + item + " has been dropped, in "+ playerLocation+"!";
                 }
             }
         } catch (Exception e) {
             System.out.println("You do not have that item!");
+            lastAction = "You do not have that item!";
         }
     }
 
@@ -306,11 +336,13 @@ class Player {
                     Item foundItem = new Item(nodeItem.get("name").textValue(), nodeItem.get("description").textValue(), nodeItem.get("strength").intValue(), nodeItem.get("opens").textValue(), playerLocation, false, playerLocation);
                     foundItems.add(foundItem);
                     System.out.println("You found " + foundItem.name + "!");
+                    lastAction = "You found " + foundItem.name + "!";
                 }
             }
         } catch (Exception e) {
             System.out.println("Tried to use " + parentThing + " " + subThing);
             System.out.println("nothing new found");
+            lastAction = "nothing new found";
         }
     }
 
@@ -319,9 +351,11 @@ class Player {
         JsonNode node = mapper.valueToTree(location);
         if (node.get("room").get(playerLocation).get("Inventory").has(thing)){
             System.out.println(node.get("room").get(playerLocation).get("Inventory").get(thing).get("description").textValue());
+            lastAction = node.get("room").get(playerLocation).get("Inventory").get(thing).get("description").textValue();
         }
         else {
             System.out.println("Thing not found...");
+            lastAction = "Thing not found...";
         }
     }
 
@@ -423,5 +457,13 @@ class Player {
 
     public void setFoundItems(List<Item> foundItems) {
         this.foundItems = foundItems;
+    }
+
+    public String getLastAction() {
+        return lastAction;
+    }
+
+    public void setLastAction(String lastAction) {
+        this.lastAction = lastAction;
     }
 }

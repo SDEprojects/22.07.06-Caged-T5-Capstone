@@ -26,6 +26,7 @@ public class GameControl<K, V> {
     YAMLMapper mapper = new YAMLMapper();
     GameMap playerMap = new GameMap();
     MusicPlayer music = new MusicPlayer();
+    String lastAction = "";
 
 
     public void runGame() {
@@ -45,20 +46,22 @@ public class GameControl<K, V> {
 
     private void playGame(Player player, LocationGetter location, List<Doors> doors) {
         while (playGame) {
+            console.clear();
+            PlayerStatus.currentStatus(player);
             JsonNode node = mapper.valueToTree(location);
             String playerLocation = player.getCurrentLocation();
-            PlayerStatus.currentStatus(player);
             playerMap.positionUpdate(player, location);
             System.out.println("\nThings seen in room: ");
             KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory"));
             KeyValueParser.key(node.get("room").get(playerLocation).get("NPCs"));
             System.out.println("\nDirections you can move: ");
             KeyValueParser.locationKeyValue(node.get("room").get(playerLocation).get("Moves"), player, doors);
-            System.out.print("\n>>>>");
+            System.out.println("\nLast action taken: "+player.getLastAction());
+            System.out.print(">>>>");
             String userChoice = in.nextLine();
             String lowUser = userChoice.toLowerCase();
             String[] action = textParser.textParser(lowUser);
-            player.playerActions(action[0], action[1], action[2], location, doors, playerMap, music);
+            player.playerActions(action[0], action[1], action[2], location, doors, playerMap, music, lastAction);
         }
     }
 

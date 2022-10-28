@@ -45,7 +45,6 @@ room:
             strength: 10
             opens: "box"
 
-
   South Hall:
     Phase: 1
     grid: "d0"
@@ -91,7 +90,8 @@ room:
     NPCs:
       jack campbell:
         chat:
-    enemy:
+        enemy:
+        hp: 30
   #          - "Do you like kids?"
   #          - "What's the matter with you!"
 
@@ -206,10 +206,10 @@ room:
     NPCs:
       yuri orlov:
         chat:
-    enemy:
+        enemy:
       #          - "I saw the guards using a key to open the door"
       #          - "Evil prevails when good men...grrr i don't remember...too "
-      Inventory: null
+    Inventory: null
 
   East Hall:
     Phase: 1
@@ -346,7 +346,7 @@ room:
         hidden: false
         door: null
     NPCs:
-      terence mcDonagh:
+      terence mcdonagh:
         chat: "Yo"
         enemy:
         hp: 30
