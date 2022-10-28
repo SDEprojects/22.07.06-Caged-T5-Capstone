@@ -106,16 +106,26 @@ class Player {
         String playerLocation = getCurrentLocation();
         JsonNode node = mapper.valueToTree(location);
         CharacterPlayer player = new CharacterPlayer(getHitPoints());
-        CharacterEnemy enemy = new CharacterEnemy(30);
+        int hp = node.get("room").get(playerLocation).get("NPCs").get(lastName + " " + firstName).get("hp").intValue();
+        Item item = Inventory.stream()
+                .filter(i -> i.getName().equals("brick"))
+                .findFirst()
+                .orElse(null);
+        int multiplier = 1;
+        if (weapon.equals("brick")) {
+            multiplier = item.strength;
+        }
+
+        CharacterEnemy enemy = new CharacterEnemy(hp);
         Console console = new Console();
-        double flee = 0.2;
-        //Integer.parseInt(node.get("room").get(playerLocation).get("NPCs").get(lastName + " " + firstName).get("hp").textValue())
+        double flee = 0.6;
+
         try {
             if(node.get("room").get(playerLocation).get("NPCs").get(lastName + " " + firstName).has("enemy")){
                 System.out.println("You attacked " + lastName + " " + firstName + "\u001B[31m\u001B[1m \nPrepare for battle!!\u001b[0m");
                 System.out.println("Type fight to battle\nType run to run away");
-                int playerHp = (player.getHp() + player.defence() * 5);
-                int npcHp = (enemy.getHp() + enemy.defence() * 5);
+                int playerHp = player.getHp();
+                int npcHp = enemy.getHp();
                 while (true){
                     console.clear();
                     String userInput = Console.readInput(">>>>");
@@ -123,8 +133,8 @@ class Player {
                         System.out.println("Players HP: " + playerHp);
                         System.out.println("NPC HP: " + npcHp);
                         console.clear();
-                        playerHp = playerHp - enemy.attack();
-                        npcHp = npcHp - enemy.attack();
+                        playerHp = playerHp - enemy.attack(1);
+                        npcHp = npcHp - player.attack(multiplier);
                         if (npcHp < 0){
                             System.out.println("\u001b[36mYou won the battle!");
                             break;
