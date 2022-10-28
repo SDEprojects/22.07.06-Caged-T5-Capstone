@@ -69,6 +69,7 @@ room:
       benjamin gates:
         chat: "Why are you out of your cell?!"
         enemy:
+        hp: 30
         #      - "Hello comrade, here is the key you asked for. Don't lose it!"
         NPC Inventory:
           orange key:
@@ -308,7 +309,11 @@ room:
         location: "North East Vent"
         hidden: false
         door: null
-    NPCs: null
+    NPCs:
+      memphis raines:
+        chat: "Why are you out of your cell?!"
+        enemy:
+        hp: 40
     Inventory: null
 
   North East Vent:
@@ -340,7 +345,11 @@ room:
         location: "South West Hall - 2F"
         hidden: false
         door: null
-    NPCs: null
+    NPCs:
+      terence mcDonagh:
+        chat: "Yo"
+        enemy:
+        hp: 30
     Inventory: null
 
   Break Room - 2F:
@@ -352,7 +361,11 @@ room:
         location: "South Hall - 2F"
         hidden: false
         door: null
-    NPCs: null
+    NPCs:
+      sailor ripley:
+        chat: "Yo"
+        enemy:
+        hp: 30
     Inventory: null
 
   Central Corridor - 2F:

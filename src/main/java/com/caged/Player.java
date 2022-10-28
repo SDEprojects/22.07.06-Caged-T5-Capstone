@@ -9,16 +9,20 @@ class Player {
 
     private String name;
     private String currentLocation;
+    private String equipment;
+    private String weapon;
     private int HitPoints;
     private List<Item> Inventory = new ArrayList<>();
     private List<Item> foundItems = new ArrayList<>();
     YAMLMapper mapper = new YAMLMapper();
     private final Scanner scanner = new Scanner(System.in);
 
-    public Player(String name, String currentLocation, int HitPoints) {
+    public Player(String name, String currentLocation, int HitPoints, String equipment, String weapon) {
         setHitPoints(HitPoints);
         setCurrentLocation(currentLocation);
         setName(name);
+        setEquipment(equipment);
+        setWeapon(weapon);
     }
 
     public Player(){
@@ -64,7 +68,20 @@ class Player {
             case "open":
                 open(noun, nounPrefix, location, doors);
                 break;
+            case "equip":
+                equip();
             default:
+        }
+    }
+
+    private void equip() {
+        for (Item item : Inventory) {
+            if (item.getName().contains("guard uniform")){
+                setEquipment(item.getName());
+            }
+            if (item.getName().contains("brick")){
+                setWeapon(item.getName());
+            }
         }
     }
 
@@ -72,10 +89,10 @@ class Player {
         String playerLocation = getCurrentLocation();
         JsonNode node = mapper.valueToTree(location);
         CharacterPlayer player = new CharacterPlayer(getHitPoints());
-        CharacterEnemy enemy = new CharacterEnemy(20);
+        CharacterEnemy enemy = new CharacterEnemy(30);
         Console console = new Console();
         double flee = 0.2;
-
+        //Integer.parseInt(node.get("room").get(playerLocation).get("NPCs").get(lastName + " " + firstName).get("hp").textValue())
         try {
             if(node.get("room").get(playerLocation).get("NPCs").get(lastName + " " + firstName).has("enemy")){
                 System.out.println("You attacked " + lastName + " " + firstName + "\u001B[31m\u001B[1m \nPrepare for battle!!\u001b[0m");
@@ -83,6 +100,7 @@ class Player {
                 int playerHp = (player.getHp() + player.defence() * 5);
                 int npcHp = (enemy.getHp() + enemy.defence() * 5);
                 while (true){
+                    console.clear();
                     String userInput = Console.readInput(">>>>");
                     if (Objects.equals(userInput, "fight")){
                         System.out.println("Players HP: " + playerHp);
@@ -106,6 +124,7 @@ class Player {
                             System.out.println("You failed to escape the fight. Good luck on your battle!");
                         }
                     }
+                    setHitPoints(playerHp);
                 }
             }else{
                 System.out.println("You can't attack that!");
@@ -129,16 +148,11 @@ class Player {
                 List<String> randText = new ArrayList<>(List.of(rand));
                 Collections.shuffle(randText);
                 System.out.println(randText.get(0).replaceAll("\\[", "").replaceAll("\\]", ""));
-
-
-
-                //System.out.println(node.get("room").get(playerLocation).get("NPCs").get(firstName + " " + lastName).get("chat"));
             }
         } catch (Exception e) {
             System.out.println(firstName + " " + lastName + " no response to the that name");
         }
     }
-
 
     private void move(String direction, LocationGetter location, List<Doors> doors){
         String playerLocation = getCurrentLocation();
@@ -200,7 +214,6 @@ class Player {
             System.out.println("Couldn't open door, maybe wrong command!");
         }
     }
-
 
     private void take(String item, String itemPrefix, LocationGetter location) { //private
         String playerLocation = getCurrentLocation();
@@ -328,9 +341,6 @@ class Player {
         }
     }
 
-
-
-
     //getter & setters
     public String getName() {
         return name;
@@ -354,6 +364,22 @@ class Player {
 
     public void setHitPoints(int hitPoints) {
         HitPoints = hitPoints;
+    }
+
+    public String getEquipment() {
+        return equipment;
+    }
+
+    public void setEquipment(String equipment) {
+        this.equipment = equipment;
+    }
+
+    public String getWeapon() {
+        return weapon;
+    }
+
+    public void setWeapon(String weapon) {
+        this.weapon = weapon;
     }
 
     public List<Item> getInventory() {

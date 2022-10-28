@@ -6,9 +6,9 @@ class PlayerStatus {
 
         System.out.println("\n\u001b[32m* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\u001B[0m" +
                 "\n\u001b[36mLocation: " + player.getCurrentLocation() +
-                "     Weapon: " + "()" +
+                "     Weapon: " + player.getWeapon() +
                 "     HP: " + player.getHitPoints() +
-                "     Disguised: " + "()\u001B[0m" +
+                "     Disguised: " + player.getEquipment() + "\u001B[0m" +
                 "\n\u001b[32m* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\u001B[0m");
         System.out.println("\nYou are in " + player.getCurrentLocation());
     }

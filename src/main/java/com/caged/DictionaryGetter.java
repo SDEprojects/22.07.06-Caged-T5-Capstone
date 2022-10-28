@@ -15,10 +15,11 @@ class DictionaryGetter {
     private List<String> inventory;
     private List<String> drop;
     private List<String> open;
+    private List<String> equip;
 
 
 
-    public DictionaryGetter(List<String> move, List<String> take, List<String> help, List<String> map, List<String> look, List<String> quit, List<String> talk, List<String> attack, List<String> use, List<String> inventory, List<String> drop, List<String> open){
+    public DictionaryGetter(List<String> move, List<String> take, List<String> help, List<String> map, List<String> look, List<String> quit, List<String> talk, List<String> attack, List<String> use, List<String> inventory, List<String> drop, List<String> open, List<String> equip){
         setMove(move);
         setTake(take);
         setHelp(help);
@@ -31,6 +32,7 @@ class DictionaryGetter {
         setInventory(inventory);
         setDrop(drop);
         setOpen(open);
+        setEquip(equip);
     }
 
     public DictionaryGetter(){
@@ -131,5 +133,13 @@ class DictionaryGetter {
 
     public void setOpen(List<String> open) {
         this.open = open;
+    }
+
+    public List<String> getEquip() {
+        return equip;
+    }
+
+    public void setEquip(List<String> equip) {
+        this.equip = equip;
     }
 }
