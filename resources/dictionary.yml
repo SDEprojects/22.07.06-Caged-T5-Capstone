@@ -62,3 +62,6 @@ open:
   - "pick"
   - "open"
   - "unlock"
+equip:
+  - "equip"
+  - "wear"
