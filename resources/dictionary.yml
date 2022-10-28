@@ -17,6 +17,10 @@ help:
   - "aid"
   - "support"
   - "hint"
+map:
+  - "map"
+  - "location"
+  - "position"
 quit:
   - "quit"
   - "exit"
