@@ -70,3 +70,6 @@ play:
 stop:
   - "stop"
   - "turnoff"
+log:
+  - "log"
+  - "journal"

@@ -8,11 +8,13 @@ class Doors {
     private String doorName;
     private boolean isLocked;
     private List<String> keys;
+    private String description;
 
-    public Doors(String doorName, boolean isLocked, List<String> keys) {
+    public Doors(String doorName, boolean isLocked, List<String> keys, String description) {
         setDoorName(doorName);
         setLocked(isLocked);
         setKeys(keys);
+        setDescription(description);
     }
 
     public String getDoorName() {
@@ -37,5 +39,13 @@ class Doors {
 
     public void setKeys(List<String> keys) {
         this.keys = keys;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

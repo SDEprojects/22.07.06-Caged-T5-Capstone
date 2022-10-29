@@ -16,22 +16,23 @@ class Player {
     private List<Item> foundItems = new ArrayList<>();
     YAMLMapper mapper = new YAMLMapper();
     private final Scanner scanner = new Scanner(System.in);
-    private String lastAction = "crying in cage";
+    private List<String> lastAction = new ArrayList<>();
 
-    public Player(String name, String currentLocation, int HitPoints, String equipment, String weapon) {
+    public Player(String name, String currentLocation, int HitPoints, String equipment,String weapon, List<String> lastAction) {
         setHitPoints(HitPoints);
         setCurrentLocation(currentLocation);
         setName(name);
         setEquipment(equipment);
         setWeapon(weapon);
+        setLastAction(lastAction);
     }
 
-    public Player(){
+    public Player() {
 
     }
 
     //functions
-    public void playerActions(String verb, String noun, String nounPrefix, LocationGetter location, List<Doors> doors, GameMap playerMap, MusicPlayer music, String lastAction){
+    public void playerActions(String verb, String noun, String nounPrefix, LocationGetter location, List<Doors> doors, GameMap playerMap, MusicPlayer music) {
         switch (verb) {
             case "move":
                 move(noun, location, doors);
@@ -78,34 +79,37 @@ class Player {
             case "stop":
                 stopMusic(music);
                 break;
+            case "log":
+                log();
+                break;
             default:
         }
     }
 
     private void equip() {
         for (Item item : Inventory) {
-            if (item.getName().contains("guard uniform")){
+            if (item.getName().contains("guard uniform")) {
                 setEquipment(item.getName());
-                lastAction = "Equipped the guard uniform!";
+                lastAction.add("Equipped the guard uniform!");
             }
-            if (item.getName().contains("brick")){
+            if (item.getName().contains("brick")) {
                 setWeapon(item.getName());
-                lastAction = "Equipped the brick!";
+                lastAction.add("Equipped the brick!");
             }
 
         }
     }
 
-    private void playMusic(MusicPlayer music){
+    private void playMusic(MusicPlayer music) {
         music.play();
         System.out.println("Play music");
-        lastAction = "Playing music";
+        lastAction.add("Playing music");
     }
 
-    private void stopMusic(MusicPlayer music){
+    private void stopMusic(MusicPlayer music) {
         music.turnOff();
         System.out.println("quit music");
-        lastAction = "Turned off music";
+        lastAction.add("Turned off music");
     }
 
     private void attack(String firstName, String lastName, LocationGetter location) {
@@ -126,48 +130,58 @@ class Player {
         double flee = 0.6;
 
         try {
-            if(node.get("room").get(playerLocation).get("NPCs").get(lastName + " " + firstName).has("enemy")){
+            if (node.get("room").get(playerLocation).get("NPCs").get(lastName + " " + firstName).has("enemy")) {
                 System.out.println("You attacked " + lastName + " " + firstName + "\u001B[31m\u001B[1m \nPrepare for battle!!\u001b[0m");
                 System.out.println("Type fight to battle\nType run to run away");
                 int playerHp = player.getHp();
                 int npcHp = enemy.getHp();
-                while (true){
+                while (true) {
                     String userInput = Console.readInput(">>>>");
-                    if (Objects.equals(userInput, "fight")){
+                    if (Objects.equals(userInput, "fight")) {
                         System.out.println("Players HP: " + playerHp);
                         System.out.println("NPC HP: " + npcHp);
                         playerHp = playerHp - enemy.attack(1);
                         npcHp = npcHp - player.attack(multiplier);
-                        if (npcHp < 0){
+                        if (npcHp < 0) {
                             System.out.println("\u001b[36mYou won the battle!");
-                            lastAction = "Tried to fight...\"\\u001b[36mYou won the battle!\"...";
+                            lastAction.add("Tried to fight...You won the battle!...");
+                            try {
+                                JsonNode nodeItem = node.get("room").get(playerLocation).get("NPCs").get(lastName + " " + firstName).get("NPC Inventory");
+                                Item foundItem = new Item(nodeItem.get("name").textValue(), nodeItem.get("description").textValue(), nodeItem.get("strength").intValue(), nodeItem.get("opens").textValue(), playerLocation, false, playerLocation);
+                                foundItems.add(foundItem);
+                                System.out.println(lastName + " " + firstName + " dropped " + foundItem.name + "!");
+                                lastAction.add("You won the battle!... " + lastName + " " + firstName + " was knocked out and dropped " + foundItem.name + "!");
+                            } catch (Exception ignored) {
+
+                            }
                             break;
-                        }if (playerHp < 0){
+                        }
+                        if (playerHp < 0) {
                             System.out.println("\u001B[31m\u001B[1mYou LOSE!\u001b[0m");
                             setCurrentLocation("Cage 1");
-                            setHitPoints(20);
-                            lastAction = "Tried to fight...you lost!...back to crying in cage...";
+                            setHitPoints(1);
+                            lastAction.add("Tried to fight...you lost and were thrown back into the cage!...back to crying in cage...");
                             break;
                         }
                     }
-                    if (Objects.equals(userInput, "run")){
-                        if(flee > Math.random()) {
+                    if (Objects.equals(userInput, "run")) {
+                        if (flee > Math.random()) {
                             System.out.println("You have successfully ran away!");
-                            lastAction = "Tried to fight...\"You have successfully ran away!\"...";
+                            lastAction.add("Tried to fight...\"You have successfully ran away!\"...");
                             break;
-                        }else{
+                        } else {
                             System.out.println("You failed to escape the fight. Good luck on your battle!");
                         }
                     }
                     setHitPoints(playerHp);
                 }
-            }else{
+            } else {
                 System.out.println("You can't attack that!");
-                lastAction = "Tried to fight...\"You can't attack that!\"...";
+                lastAction.add("Tried to fight...\"You can't attack that!\"...");
             }
         } catch (Exception e) {
             System.out.println("Nothing happened...");
-            lastAction = "Tried to fight...Nothing happened...";
+            lastAction.add("Tried to fight...Nothing happened...");
         }
     }
 
@@ -176,54 +190,52 @@ class Player {
         JsonNode node = mapper.valueToTree(location);
         YAMLReader yamlReader = new YAMLReader();
         List<String> chatList = new ArrayList<>(yamlReader.randChat());
-        String [] rand;
+        String[] rand;
 
         try {
-            if (node.get("room").get(playerLocation).get("NPCs").get(firstName + " " + lastName).has("chat")){
-                List<String> newChatList = chatList.subList(3,4);
+            if (node.get("room").get(playerLocation).get("NPCs").get(firstName + " " + lastName).has("chat")) {
+                List<String> newChatList = chatList.subList(3, 4);
                 rand = newChatList.get(0).split(",");
                 List<String> randText = new ArrayList<>(List.of(rand));
                 Collections.shuffle(randText);
                 String chat = randText.get(0).replaceAll("\\[", "").replaceAll("\\]", "");
                 System.out.println(chat);
-                lastAction = "Chatted with "+node.get("room").get(playerLocation).get("NPCs").get(firstName + " " + lastName).textValue()+", they responded: "+chat;
+                lastAction.add("Chatted with " + node.get("room").get(playerLocation).get("NPCs").get(firstName + " " + lastName).textValue() + ", they responded: " + chat);
             }
         } catch (Exception e) {
             System.out.println(firstName + " " + lastName + " no response to the that name");
-            lastAction = firstName + " " + lastName + " no response to the that name";
+            lastAction.add(firstName + " " + lastName + " no response to the that name");
         }
     }
 
-    private void move(String direction, LocationGetter location, List<Doors> doors){
+    private void move(String direction, LocationGetter location, List<Doors> doors) {
         String playerLocation = getCurrentLocation();
         JsonNode node = mapper.valueToTree(location);
         try {
-            JsonNode doorNode =node.get("room").get(playerLocation).get("Moves").get(direction).get("door");
+            JsonNode doorNode = node.get("room").get(playerLocation).get("Moves").get(direction).get("door");
             if (!doorNode.isNull()) {
                 Doors door = doors.stream().filter(doorSeek -> doorSeek.getDoorName().equals(doorNode.textValue())).findFirst().orElse(null);
-                if (door.isLocked()){
-                    System.out.println("door is locked!");
-                    lastAction = "door is locked!";
-                }
-                else {
+                if (door.isLocked()) {
+                    System.out.println("door is locked... try 'open [direction] door' to find out more...");
+                    lastAction.add("door is locked... try 'open [direction] door' to find out more...");
+                } else {
                     setCurrentLocation(node.get("room").get(playerLocation).get("Moves").get(direction).get("location").textValue());
                     System.out.println("Player moves " + direction);
-                    lastAction = "Player moves " + direction;
+                    lastAction.add("Player moves " + direction);
                 }
-            }
-            else {
+            } else {
                 setCurrentLocation(node.get("room").get(playerLocation).get("Moves").get(direction).get("location").textValue());
                 System.out.println("Player moves " + direction);
-                lastAction = "Player moves " + direction;
+                lastAction.add("Player moves " + direction);
             }
         } catch (Exception e) {
             System.out.println("Direction not available...");
-            lastAction = "Direction not available...";
+            lastAction.add("Direction not available...");
             HitEnter.enter();
         }
     }
 
-    public void open(String target, String direction, LocationGetter location,  List<Doors> doors) {
+    public void open(String target, String direction, LocationGetter location, List<Doors> doors) {
         try {
             String playerLocation = getCurrentLocation();
             JsonNode node = mapper.valueToTree(location);
@@ -232,13 +244,14 @@ class Player {
                 doorNode = node.get("room").get(playerLocation).get("Moves").get(direction).get("door");
             } catch (Exception e) {
                 System.out.println("There is no locked door to open there... \nTo open a door type 'open [direction] door' against valid locked door direction!");
-                lastAction = "There is no locked door to open there... \nTo open a door type 'open [direction] door' against valid locked door direction!";
+                lastAction.add("There is no locked door to open there... \nTo open a door type 'open [direction] door' against valid locked door direction!");
                 return;
             }
             JsonNode finalDoorNode = doorNode;
             Doors door = doors.stream().filter(doorSeek -> doorSeek.getDoorName().equals(finalDoorNode.textValue())).findFirst().orElse(null);
             assert door != null;
             List<String> keys = door.getKeys();
+            String doorDescription = door.getDescription();
             for (String key : keys
             ) {
                 try {
@@ -247,19 +260,19 @@ class Player {
                     if (item.name.equals(key)) {
                         door.setLocked(false);
                         System.out.println("Door unlocked using the " + key + "!");
-                        lastAction = "Door unlocked using the " + key + "!";
+                        lastAction.add("Door unlocked using the " + key + "!");
                         break;
                     }
                 } catch (Exception ignored) {
                 }
             }
             if (door.isLocked()) {
-                System.out.println("Unable to open... \nMust be missing something to unlock the door with!");
-                lastAction = "Unable to open... \nMust be missing something to unlock the door with!";
+                System.out.println("Unable to open... "+ doorDescription);
+                lastAction.add("Unable to open... "+ doorDescription);
             }
         } catch (IllegalArgumentException e) {
             System.out.println("Couldn't open door, maybe wrong command!");
-            lastAction = "Couldn't open door, maybe wrong command!";
+            lastAction.add("Couldn't open door, maybe wrong command!");
         }
     }
 
@@ -273,22 +286,22 @@ class Player {
                     i.setTaken(true);
                     i.setCurrentLocation("Inventory");
                     System.out.println(item + " has been taken!");
-                    lastAction = item + " has been taken!";
+                    lastAction.add(item + " has been taken!");
                 } else if (i.name.equals(itemPrefix + " " + item) && !i.isTaken && i.currentLocation.equals(playerLocation)) {
                     Inventory.add(i);
                     i.setTaken(true);
                     i.setCurrentLocation("Inventory");
                     System.out.println(itemPrefix + " " + item + " has been taken!");
-                    lastAction = itemPrefix + " " + item + " has been taken!";
+                    lastAction.add(itemPrefix + " " + item + " has been taken!");
                 }
             }
         } catch (Exception e) {
             System.out.println("You did not see the item");
-            lastAction = "You did not see the item";
+            lastAction.add("You did not see the item");
         }
     }
 
-    private void drop(String item, String itemPrefix, LocationGetter location){
+    private void drop(String item, String itemPrefix, LocationGetter location) {
         String playerLocation = getCurrentLocation();
         try {
             for (Item i :
@@ -297,25 +310,24 @@ class Player {
                     Inventory.remove(i);
                     i.setTaken(false);
                     i.setCurrentLocation(playerLocation);
-                    System.out.println(item + " has been dropped, in "+ playerLocation+"!");
-                    lastAction = item + " has been dropped, in "+ playerLocation+"!";
-                }
-                else if (i.name.equals(itemPrefix + " " + item) && i.isTaken && i.currentLocation.equals("Inventory")) {
-                        Inventory.remove(i);
-                        i.setTaken(false);
-                        i.setCurrentLocation(playerLocation);
-                        System.out.println(itemPrefix+" " + item + " has been dropped, in "+ playerLocation+"!");
-                    lastAction = itemPrefix+" " + item + " has been dropped, in "+ playerLocation+"!";
+                    System.out.println(item + " has been dropped, in " + playerLocation + "!");
+                    lastAction.add(item + " has been dropped, in " + playerLocation + "!");
+                } else if (i.name.equals(itemPrefix + " " + item) && i.isTaken && i.currentLocation.equals("Inventory")) {
+                    Inventory.remove(i);
+                    i.setTaken(false);
+                    i.setCurrentLocation(playerLocation);
+                    System.out.println(itemPrefix + " " + item + " has been dropped, in " + playerLocation + "!");
+                    lastAction.add(itemPrefix + " " + item + " has been dropped, in " + playerLocation + "!");
                 }
             }
         } catch (Exception e) {
             System.out.println("You do not have that item!");
-            lastAction = "You do not have that item!";
+            lastAction.add("You do not have that item!");
         }
     }
 
 
-    private void use(String subThing, String parentThing, LocationGetter location){
+    private void use(String subThing, String parentThing, LocationGetter location) {
         String playerLocation = getCurrentLocation();
         JsonNode node = mapper.valueToTree(location);
         try {
@@ -333,26 +345,25 @@ class Player {
                     Item foundItem = new Item(nodeItem.get("name").textValue(), nodeItem.get("description").textValue(), nodeItem.get("strength").intValue(), nodeItem.get("opens").textValue(), playerLocation, false, playerLocation);
                     foundItems.add(foundItem);
                     System.out.println("You found " + foundItem.name + "!");
-                    lastAction = "You found " + foundItem.name + "!";
+                    lastAction.add(node.get("room").get(playerLocation).get("Inventory").get(parentThing).get(subThing).textValue()+ "...You found " + foundItem.name + "!");
                 }
             }
         } catch (Exception e) {
             System.out.println("Tried to use " + parentThing + " " + subThing);
             System.out.println("nothing new found");
-            lastAction = "nothing new found";
+            lastAction.add(node.get("room").get(playerLocation).get("Inventory").get(parentThing).get(subThing).textValue() + "...nothing new found");
         }
     }
 
-    private void look(String thing, LocationGetter location){ //private
+    private void look(String thing, LocationGetter location) { //private
         String playerLocation = getCurrentLocation();
         JsonNode node = mapper.valueToTree(location);
-        if (node.get("room").get(playerLocation).get("Inventory").has(thing)){
+        if (node.get("room").get(playerLocation).get("Inventory").has(thing)) {
             System.out.println(node.get("room").get(playerLocation).get("Inventory").get(thing).get("description").textValue());
-            lastAction = node.get("room").get(playerLocation).get("Inventory").get(thing).get("description").textValue();
-        }
-        else {
+            lastAction.add(node.get("room").get(playerLocation).get("Inventory").get(thing).get("description").textValue());
+        } else {
             System.out.println("Thing not found...");
-            lastAction = "Thing not found...";
+            lastAction.add("Thing not found...");
         }
     }
 
@@ -371,9 +382,17 @@ class Player {
         HitEnter.enter();
     }
 
-    private void mapCommand(GameMap playerMap){
+    private void log() {
+        for (String log:getLastAction()
+             ) {
+            System.out.println(log);
+        }
+        HitEnter.enter();
+    }
+
+    private void mapCommand(GameMap playerMap) {
         System.out.println("\n\u001b[47m\u001b[30m- - - - - - - - - - - Current Position(MAP) - - - - - - - - - - -\u001b[0m\n");
-        System.out.println("Player is currently in "+ getCurrentLocation());
+        System.out.println("Player is currently in " + getCurrentLocation());
         System.out.println();
         playerMap.show();
         System.out.println("\nMap Key:");
@@ -383,18 +402,17 @@ class Player {
     }
 
 
-    private void quitConfirm(){ //private
+    private void quitConfirm() { //private
         System.out.println("\u001b[30m\u001b[41mDo you really want to quit?\u001b[0m");
         String confirm = scanner.nextLine().toLowerCase();
-        if (confirm.equals("yes")){
+        if (confirm.equals("yes")) {
             System.exit(0);
-        }
-        else {
+        } else {
             System.out.println("Didn't say yes...Still caged...");
         }
     }
 
-    private void checkInventory(){
+    private void checkInventory() {
         System.out.println("\u001b[32m* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\u001B[0m");
         System.out.println("\u001b[36m                           WHAT YOU HAVE IN YOUR STASH\u001B[0m");
         System.out.println("\u001b[32m* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\u001B[0m");
@@ -462,11 +480,11 @@ class Player {
         this.foundItems = foundItems;
     }
 
-    public String getLastAction() {
+    public List<String> getLastAction() {
         return lastAction;
     }
 
-    public void setLastAction(String lastAction) {
+    public void setLastAction(List<String> lastAction) {
         this.lastAction = lastAction;
     }
 }
