@@ -123,7 +123,6 @@ class Player {
         }
 
         CharacterEnemy enemy = new CharacterEnemy(hp);
-        Console console = new Console();
         double flee = 0.6;
 
         try {
@@ -133,12 +132,10 @@ class Player {
                 int playerHp = player.getHp();
                 int npcHp = enemy.getHp();
                 while (true){
-                    console.clear();
                     String userInput = Console.readInput(">>>>");
                     if (Objects.equals(userInput, "fight")){
                         System.out.println("Players HP: " + playerHp);
                         System.out.println("NPC HP: " + npcHp);
-                        console.clear();
                         playerHp = playerHp - enemy.attack(1);
                         npcHp = npcHp - player.attack(multiplier);
                         if (npcHp < 0){
@@ -376,8 +373,13 @@ class Player {
 
     private void mapCommand(GameMap playerMap){
         System.out.println("\n\u001b[47m\u001b[30m- - - - - - - - - - - Current Position(MAP) - - - - - - - - - - -\u001b[0m\n");
+        System.out.println("Player is currently in "+ getCurrentLocation());
+        System.out.println();
         playerMap.show();
+        System.out.println("\nMap Key:");
+        System.out.println("Places been: \u001b[36m\u001b[46m[O]\u001b[0m Current Location:\u001b[32m\u001b[42m[X]\u001b[0m");
         System.out.println("\n\u001b[47m\u001b[30m- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\u001b[0m");
+        HitEnter.enter();
     }
 
 
@@ -400,6 +402,7 @@ class Player {
         for (Item stash : Inventory) {
             System.out.println("Item: " + stash.getName() + " | Description: " + stash.getDescription() + " | Strength: " + stash.getStrength());
         }
+        HitEnter.enter();
     }
 
     //getter & setters
