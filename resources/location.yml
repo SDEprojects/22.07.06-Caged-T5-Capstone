@@ -113,21 +113,20 @@ room:
             strength: 10
             opens: "box"
       box:
-        description: "Old cubic structure that looks like it could break."
-        action: "You shake the box it rattles"
-        modifiable: true
-      #        items: #example
-      #          orange key:
-      #            name: "orange key"
-      #            description: "This key must be used to open the orange marked door"
-      #            location: "Cage1"
-      #            container: "desk"
+        description: "Old cubic wooden structure, kinda looks like you could 'make' the 'box break'."
+        break: "You are able to break into the box"
+        items: #example
+          break:
+            name: "orange key"
+            description: "This key must be used to open the orange marked door"
+            strength: 1
+            opens: "orange doors"
       poster:
-        description: "Picture seems to be of that from the 1920's"
+        description: "Picture seems to be of that from the 1920's, it's pretty stuck to the wall"
         action: "Inspect it, but does not yield any result or clues."
       safe:
-        description: "Dark gray modern desk that looks like the ones you'd find in a hotel room"
-        action: "you try and open it, but does not give..."
+        description: "Dark gray modern safe that looks like the ones you'd find in a hotel room, maybe you can use the safe door"
+        door: "you try and open it, but does not give..."
 
   Southwest Hall:
     Phase: 1
@@ -244,10 +243,8 @@ room:
         hidden: false
         door: "vent door"
     NPCs: null
-    Inventory:
-      rack:
-        description: "Rusty metal rack mounted on the wall"
-        ladder: "Against the wall, hooked on the rack is a ladder that could be useful somewhere in this room"
+    Inventory: null
+
 
   West Vent:
     Phase: 2
@@ -255,7 +252,7 @@ room:
     description: "This could be another way to get out of here"
     Moves:
       north:
-        location: "Storage Room"
+        location: "Storage Room - 2F"
         hidden: false
         door: "vent door"
       south:
@@ -284,8 +281,24 @@ room:
         door: "vent door"
     NPCs: null
     Inventory:
-      key card:
-        description: "Shinny white plastic key card with the sign 'Caged' printed in red on one side"
+      rack:
+        description: "Rusty metal rack mounted on the wall, hooked on the rack is a ladder that could be useful somewhere"
+        ladder: "You fuss with the storage rack"
+        items: #example
+          ladder:
+            name: "ladder"
+            description: "An old ladder, might be used to open things up high"
+            strength: 1
+            opens: "vent"
+      computer:
+        description: "A nicer looking computer, it looks like there is a key card 'printer' attached to it"
+        printer: "You check the key card printer feed"
+        items:
+          printer:
+            name: "green key"
+            description: "Shinny green key card with the sign 'Caged' printed in red on one side"
+            strength: 1
+            opens: "exit"
 
   North West Vent:
     Phase: 2
@@ -316,11 +329,7 @@ room:
         location: "North East Vent"
         hidden: false
         door: null
-    NPCs:
-      memphis raines:
-        chat: "Why are you out of your cell?!"
-        enemy:
-        hp: 40
+    NPCs: null
     Inventory: null
 
   North East Vent:
@@ -361,6 +370,11 @@ room:
         chat: "Yo"
         enemy:
         hp: 30
+        NPC Inventory:
+          name: "Chocolate"
+          description: "mmmm chocolate warmed by the pockets of another"
+          strength: 1
+          opens: null
     Inventory: null
 
   Break Room - 2F:
@@ -377,8 +391,39 @@ room:
         chat: "Yo"
         enemy:
         hp: 30
-    Inventory: null
-
+        NPC Inventory:
+          name: "Wallet"
+          description: "Usual things, ID card, some wallet size photos, and a little cash... do you really need this?"
+          strength: 1
+          opens: null
+    Inventory:
+      rack:
+        description: "Rusty metal rack mounted on the wall, hooked on the rack is a ladder that could be useful somewhere"
+        ladder: "You fuss with the storage rack"
+        items: #example
+          ladder:
+            name: "ladder"
+            description: "An old ladder, might be used to open things up high"
+            strength: 1
+            opens: "vent"
+      fridge:
+        description: "An old fridge hums in the corner of the room, the door could be used"
+        door: "You open up the door, not much in there and smells like pickled herring..."
+        items: #example
+          door:
+            name: "S Cola"
+            description: "I wonder what the 's' stands for"
+            strength: 1
+            opens: null
+      wall:
+        description: "You see a cabinet you could use and possibly find something"
+        cabinet: "you open the cabinet doors and sift through whats there"
+        items: #example
+          cabinet:
+            name: "purple key"
+            description: "This could be used to open doors marked purple"
+            strength: 1
+            opens: "NPC cage 2"
   Central Corridor - 2F:
     Phase: 2
     grid: "c1"
@@ -412,10 +457,17 @@ room:
         location: "North East Hall - 2F"
         hidden: false
         door: null
-    NPCs: null
+    NPCs:
+      memphis raines:
+        chat: "Why are you out of your cell?!"
+        enemy:
+        hp: 40
+        NPC Inventory:
+          name: "boss key"
+          description: "This key looks like it could open most doors"
+          strength: 1
+          opens: "Most rooms"
     Inventory: null
-
-
   North East Hall - 2F:
     Phase: 2
     grid: "b2"
@@ -429,5 +481,20 @@ room:
         location: "Escape room"
         hidden: false
         door: "wing 2 door"
+      north:
+        location: "North East Vent"
+        hidden: false
+        door: "vent door"
+    NPCs: null
+    Inventory: null
+  Escape room:
+    Phase: 2
+    grid: "b3"
+    description: ""
+    Moves:
+      west:
+        location: "North East Hall - 2F"
+        hidden: false
+        door: null
     NPCs: null
     Inventory: null
