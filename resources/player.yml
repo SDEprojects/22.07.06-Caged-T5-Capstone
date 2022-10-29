@@ -4,3 +4,5 @@ currentLocation: "Cage 1"
 hitPoints: 20
 equipment: "prison clothing"
 weapon: "nothing"
+lastAction:
+  - "You awaken and found yourself crying in the cage..."

@@ -41,6 +41,7 @@ class TextParser {
             List play = yamlReader.dictionaryLoader().getPlay();
             List stop = yamlReader.dictionaryLoader().getStop();
             List equip = yamlReader.dictionaryLoader().getEquip();
+            List log = yamlReader.dictionaryLoader().getLog();
 
             if (move.contains(verb)){
                 verb = "move";
@@ -86,6 +87,9 @@ class TextParser {
             }
             else if (equip.contains(verb)){
                 verb = "equip";
+            }
+            else if (log.contains(verb)){
+                verb = "log";
             }
             else {
                 System.out.println("Unrecognized Command, type help for valid command");

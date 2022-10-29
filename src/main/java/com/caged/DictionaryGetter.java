@@ -18,11 +18,12 @@ class DictionaryGetter {
     private List<String> equip;
     private List<String> play;
     private List<String> stop;
+    private List<String> log;
 
 
 
 
-    public DictionaryGetter(List<String> move, List<String> take, List<String> help, List<String> map, List<String> look, List<String> quit, List<String> talk, List<String> attack, List<String> use, List<String> inventory, List<String> drop, List<String> open, List<String> equip, List<String> play, List<String> stop){
+    public DictionaryGetter(List<String> move, List<String> take, List<String> help, List<String> map, List<String> look, List<String> quit, List<String> talk, List<String> attack, List<String> use, List<String> inventory, List<String> drop, List<String> open, List<String> equip, List<String> play, List<String> stop, List<String> log){
         setMove(move);
         setTake(take);
         setHelp(help);
@@ -38,6 +39,7 @@ class DictionaryGetter {
         setEquip(equip);
         setPlay(play);
         setStop(stop);
+        setLog(log);
     }
 
     public DictionaryGetter(){
@@ -162,5 +164,13 @@ class DictionaryGetter {
 
     public void setStop(List<String> stop) {
         this.stop = stop;
+    }
+
+    public List<String> getLog() {
+        return log;
+    }
+
+    public void setLog(List<String> log) {
+        this.log = log;
     }
 }

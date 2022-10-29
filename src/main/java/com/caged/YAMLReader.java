@@ -122,7 +122,7 @@ class YAMLReader {
                 Map.Entry<String, JsonNode> entry = (Map.Entry<String, JsonNode>) nodes.next();
                 keys.add(entry.getValue().textValue());
             }
-            Doors newDoor = new Doors(door.get("name").textValue(), door.get("locked").booleanValue(), keys);
+            Doors newDoor = new Doors(door.get("name").textValue(), door.get("locked").booleanValue(), keys, door.get("description").textValue());
             result.add(newDoor);
         }
         return result;

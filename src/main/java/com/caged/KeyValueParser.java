@@ -40,12 +40,13 @@ class KeyValueParser {
         while (nodes.hasNext()) {
             Map.Entry<String, JsonNode> entry = (Map.Entry<String, JsonNode>) nodes.next();
             String location = node.get(entry.getKey()).get("location").textValue();
+            Doors door = doors.stream().filter(doorSeek -> doorSeek.getDoorName().equals(node.get(entry.getKey()).get("door").textValue())).findFirst().orElse(null);
             if (!node.get(entry.getKey()).get("hidden").booleanValue()) {
                 if (node.get(entry.getKey()).get("door").isNull()){
                     System.out.println("\u001b[35m" + entry.getKey() + "\u001b[0m" + "  ---->  " + location);
                 }
                 else {
-                    Doors door = doors.stream().filter(doorSeek -> doorSeek.getDoorName().equals(node.get(entry.getKey()).get("door").textValue())).findFirst().orElse(null);
+                    //Doors door = doors.stream().filter(doorSeek -> doorSeek.getDoorName().equals(node.get(entry.getKey()).get("door").textValue())).findFirst().orElse(null);
                     if (door.isLocked()){
                         System.out.println("\u001b[35m" + entry.getKey() + "\u001b[0m" + "  ---->  " + location + "  ---->  ***DOOR LOCKED***");
                     }
@@ -58,6 +59,7 @@ class KeyValueParser {
                 for (Item i :
                         items) {
                     if (i.name.equals(node.get(entry.getKey()).get("key").textValue())) {
+                        door.setLocked(false);
                         String reaction = node.get(entry.getKey()).get("reaction").textValue();
                         System.out.println("\u001b[35m" + entry.getKey() + "\u001b[0m" + "  ---->  " + reaction);
                     }

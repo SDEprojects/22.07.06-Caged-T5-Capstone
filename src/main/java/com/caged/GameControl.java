@@ -53,15 +53,16 @@ public class GameControl<K, V> {
             playerMap.positionUpdate(player, location);
             System.out.println("\nThings seen in room: ");
             KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory"));
+            System.out.println("\nPeople seen in room: ");
             KeyValueParser.key(node.get("room").get(playerLocation).get("NPCs"));
             System.out.println("\nDirections you can move: ");
             KeyValueParser.locationKeyValue(node.get("room").get(playerLocation).get("Moves"), player, doors);
-            System.out.println("\nLast action taken: "+player.getLastAction());
+            System.out.println("\nLast action taken: "+player.getLastAction().get(player.getLastAction().size()-1));
             System.out.print(">>>>");
             String userChoice = in.nextLine();
             String lowUser = userChoice.toLowerCase();
             String[] action = textParser.textParser(lowUser);
-            player.playerActions(action[0], action[1], action[2], location, doors, playerMap, music, lastAction);
+            player.playerActions(action[0], action[1], action[2], location, doors, playerMap, music);
         }
     }
 
