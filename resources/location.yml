@@ -446,7 +446,7 @@ room:
     description: "This is connected to the Storage room, North West Hall, and the North East Hall. Slightly more lit than the first floor before."
     Moves:
       west:
-        location: "Storage room"
+        location: "Storage Room - 2F"
         hidden: false
         door: "storage Room 2 door"
       south:
@@ -478,7 +478,7 @@ room:
         hidden: false
         door: null
       east:
-        location: "Escape room"
+        location: "Exit"
         hidden: false
         door: "wing 2 door"
       north:
@@ -487,7 +487,7 @@ room:
         door: "vent door"
     NPCs: null
     Inventory: null
-  Escape room:
+  Exit:
     Phase: 2
     grid: "b3"
     description: ""

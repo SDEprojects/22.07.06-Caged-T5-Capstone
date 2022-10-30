@@ -12,6 +12,7 @@ class Player {
     private String equipment;
     private String weapon;
     private int HitPoints;
+    private boolean playGame = true;
     private List<Item> Inventory = new ArrayList<>();
     private List<Item> foundItems = new ArrayList<>();
     YAMLMapper mapper = new YAMLMapper();
@@ -32,7 +33,7 @@ class Player {
     }
 
     //functions
-    public void playerActions(String verb, String noun, String nounPrefix, LocationGetter location, List<Doors> doors, GameMap playerMap, MusicPlayer music) {
+    public void playerActions(String verb, String noun, String nounPrefix, LocationGetter location, List<Doors> doors, GameMap playerMap1,GameMap playerMap2, MusicPlayer music) {
         switch (verb) {
             case "move":
                 move(noun, location, doors);
@@ -50,7 +51,7 @@ class Player {
                 helpCommand();
                 break;
             case "map":
-                mapCommand(playerMap);
+                mapCommand(location, playerMap1, playerMap2);
                 break;
             case "quit":
                 quitConfirm();
@@ -233,6 +234,10 @@ class Player {
             lastAction.add("Direction not available...");
             HitEnter.enter();
         }
+        if (getCurrentLocation().equals("Exit")){
+            playGame=false;
+            HitEnter.enter();
+        }
     }
 
     public void open(String target, String direction, LocationGetter location, List<Doors> doors) {
@@ -332,9 +337,10 @@ class Player {
         JsonNode node = mapper.valueToTree(location);
         try {
             System.out.println(node.get("room").get(playerLocation).get("Inventory").get(parentThing).get(subThing).textValue());
-            JsonNode nodeItem = node.get("room").get(playerLocation).get("Inventory").get(parentThing).get("items").get(subThing);
+            lastAction.add(node.get("room").get(playerLocation).get("Inventory").get(parentThing).get(subThing).textValue());
             int itemFound = 0;
             if (node.get("room").get(playerLocation).get("Inventory").get(parentThing).has("items")) {
+                JsonNode nodeItem = node.get("room").get(playerLocation).get("Inventory").get(parentThing).get("items").get(subThing);
                 for (Item i :
                         foundItems) {
                     if (i.name.equals(nodeItem.get("name").textValue())) {
@@ -349,9 +355,8 @@ class Player {
                 }
             }
         } catch (Exception e) {
-            System.out.println("Tried to use " + parentThing + " " + subThing);
-            System.out.println("nothing new found");
-            lastAction.add(node.get("room").get(playerLocation).get("Inventory").get(parentThing).get(subThing).textValue() + "...nothing new found");
+            System.out.println("Wrong command, when using thing say 'use [target] [target thing]'! hint: target thing is revealed by looking at target!");
+            lastAction.add("Wrong command, when using thing say 'use [target] [target thing]'! hint: target thing is revealed by looking at target!");
         }
     }
 
@@ -390,11 +395,18 @@ class Player {
         HitEnter.enter();
     }
 
-    private void mapCommand(GameMap playerMap) {
+    private void mapCommand(LocationGetter location, GameMap playerMap1, GameMap playerMap2) {
+        JsonNode node = mapper.valueToTree(location);
+        String playerLocation = getCurrentLocation();
         System.out.println("\n\u001b[47m\u001b[30m- - - - - - - - - - - Current Position(MAP) - - - - - - - - - - -\u001b[0m\n");
-        System.out.println("Player is currently in " + getCurrentLocation());
+        System.out.println("Player is currently in " + getCurrentLocation() + ", in wing " + node.get("room").get(playerLocation).get("Phase").intValue()+"!");
         System.out.println();
-        playerMap.show();
+        if (node.get("room").get(playerLocation).get("Phase").intValue()==1){
+            playerMap1.show();
+        }
+        else {
+            playerMap2.show();
+        }
         System.out.println("\nMap Key:");
         System.out.println("Places been: \u001b[36m\u001b[46m[O]\u001b[0m Current Location:\u001b[32m\u001b[42m[X]\u001b[0m");
         System.out.println("\n\u001b[47m\u001b[30m- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\u001b[0m");
@@ -486,5 +498,13 @@ class Player {
 
     public void setLastAction(List<String> lastAction) {
         this.lastAction = lastAction;
+    }
+
+    public boolean isPlayGame() {
+        return playGame;
+    }
+
+    public void setPlayGame(boolean playGame) {
+        this.playGame = playGame;
     }
 }
