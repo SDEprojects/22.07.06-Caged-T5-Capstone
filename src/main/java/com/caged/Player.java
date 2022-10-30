@@ -68,8 +68,8 @@ class Player {
             case "attack":
                 attack(noun, nounPrefix, location);
                 break;
-            case "open":
-                open(noun, nounPrefix, location, doors);
+            case "unlock":
+                unlock(noun, nounPrefix, location, doors);
                 break;
             case "equip":
                 equip();
@@ -201,7 +201,7 @@ class Player {
                 Collections.shuffle(randText);
                 String chat = randText.get(0).replaceAll("\\[", "").replaceAll("\\]", "");
                 System.out.println(chat);
-                lastAction.add("Chatted with " + node.get("room").get(playerLocation).get("NPCs").get(firstName + " " + lastName).textValue() + ", they responded: " + chat);
+                lastAction.add("Chatted with " + firstName + " " + lastName + ", they responded: " + chat);
             }
         } catch (Exception e) {
             System.out.println(firstName + " " + lastName + " no response to the that name");
@@ -217,8 +217,8 @@ class Player {
             if (!doorNode.isNull()) {
                 Doors door = doors.stream().filter(doorSeek -> doorSeek.getDoorName().equals(doorNode.textValue())).findFirst().orElse(null);
                 if (door.isLocked()) {
-                    System.out.println("door is locked... try 'open [direction] door' to find out more...");
-                    lastAction.add("door is locked... try 'open [direction] door' to find out more...");
+                    System.out.println("door is locked... try 'unlock [direction] door' to find out more...");
+                    lastAction.add("door is locked... try 'unlock [direction] door' to find out more...");
                 } else {
                     setCurrentLocation(node.get("room").get(playerLocation).get("Moves").get(direction).get("location").textValue());
                     System.out.println("Player moves " + direction);
@@ -240,7 +240,7 @@ class Player {
         }
     }
 
-    public void open(String target, String direction, LocationGetter location, List<Doors> doors) {
+    public void unlock(String target, String direction, LocationGetter location, List<Doors> doors) {
         try {
             String playerLocation = getCurrentLocation();
             JsonNode node = mapper.valueToTree(location);
@@ -248,8 +248,8 @@ class Player {
             try {
                 doorNode = node.get("room").get(playerLocation).get("Moves").get(direction).get("door");
             } catch (Exception e) {
-                System.out.println("There is no locked door to open there... \nTo open a door type 'open [direction] door' against valid locked door direction!");
-                lastAction.add("There is no locked door to open there... \nTo open a door type 'open [direction] door' against valid locked door direction!");
+                System.out.println("There is no locked door to open there... \nTo open a door type 'unlock [direction] door' against valid locked door direction!");
+                lastAction.add("There is no locked door to open there... \nTo open a door type 'unlock [direction] door' against valid locked door direction!");
                 return;
             }
             JsonNode finalDoorNode = doorNode;
@@ -272,12 +272,12 @@ class Player {
                 }
             }
             if (door.isLocked()) {
-                System.out.println("Unable to open... "+ doorDescription);
-                lastAction.add("Unable to open... "+ doorDescription);
+                System.out.println("Unable to unlock... "+ doorDescription);
+                lastAction.add("Unable to unlock... "+ doorDescription);
             }
         } catch (IllegalArgumentException e) {
-            System.out.println("Couldn't open door, maybe wrong command!");
-            lastAction.add("Couldn't open door, maybe wrong command!");
+            System.out.println("Couldn't unlock door, maybe wrong command!");
+            lastAction.add("Couldn't unlock door, maybe wrong command!");
         }
     }
 
