@@ -52,7 +52,7 @@ doors:
       boss key: "boss key"
   vent door:
     name: "vent door"
-    description: "Maybe a ladder would help you get this vent open!"
+    description: "The vent is pretty high, but could be opened if you could reach it!"
     locked: true
     keys:
       name: "ladder"
@@ -61,5 +61,4 @@ doors:
     description: "To get out of the building you need to find the green key!"
     locked: true
     keys:
-      boss key: "boss key"
       orange key: "green key"

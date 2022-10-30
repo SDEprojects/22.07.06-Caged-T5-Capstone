@@ -43,6 +43,7 @@ attack:
 use:
   - "use"
   - "consume"
+  - "make"
 inventory:
   - "inventory"
   - "inv"
