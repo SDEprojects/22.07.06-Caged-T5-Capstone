@@ -20,11 +20,30 @@ class GameMap {
     }
 
     public void show(){
-        System.out.println(getA().toString());
-        System.out.println(getB().toString());
-        System.out.println(getC().toString());
-        System.out.println(getD().toString());
-        System.out.println(getE().toString());
+        for (String i : getA()){
+            System.out.print(i);
+        }
+        System.out.println();
+        for (String i : getB()){
+            System.out.print(i);
+        }
+        System.out.println();
+        for (String i : getC()){
+            System.out.print(i);
+        }
+        System.out.println();
+        for (String i : getD()){
+            System.out.print(i);
+        }
+        System.out.println();
+        for (String i : getE()){
+            System.out.print(i);
+        }
+//        System.out.println(getA().toString());
+//        System.out.println(getB().toString());
+//        System.out.println(getC().toString());
+//        System.out.println(getD().toString());
+//        System.out.println(getE().toString());
     }
 
     public void build(){

@@ -117,14 +117,21 @@ class Player {
         String playerLocation = getCurrentLocation();
         JsonNode node = mapper.valueToTree(location);
         CharacterPlayer player = new CharacterPlayer(getHitPoints());
-        int hp = node.get("room").get(playerLocation).get("NPCs").get(lastName + " " + firstName).get("hp").intValue();
+        int hp = 0;
+        try {
+            hp = node.get("room").get(playerLocation).get("NPCs").get(lastName + " " + firstName).get("hp").intValue();
+        } catch (Exception e) {
+            System.out.println("Use help command for valid entry.");
+        }
         Item item = Inventory.stream()
                 .filter(i -> i.getName().equals("brick"))
                 .findFirst()
                 .orElse(null);
         int multiplier = 1;
         if (weapon.equals("brick")) {
-            multiplier = item.strength;
+            if (item != null) {
+                multiplier = item.strength;
+            }
         }
 
         CharacterEnemy enemy = new CharacterEnemy(hp);
@@ -136,13 +143,15 @@ class Player {
                 System.out.println("Type fight to battle\nType run to run away");
                 int playerHp = player.getHp();
                 int npcHp = enemy.getHp();
+                System.out.println("Players initial HP: " + playerHp);
+                System.out.println("NPC initial HP: " + npcHp);
                 while (true) {
                     String userInput = Console.readInput(">>>>");
                     if (Objects.equals(userInput, "fight")) {
-                        System.out.println("Players HP: " + playerHp);
-                        System.out.println("NPC HP: " + npcHp);
                         playerHp = playerHp - enemy.attack(1);
                         npcHp = npcHp - player.attack(multiplier);
+                        System.out.println("Players HP: " + playerHp);
+                        System.out.println("NPC HP: " + npcHp);
                         if (npcHp < 0) {
                             System.out.println("\u001b[36mYou won the battle!");
                             lastAction.add("Tried to fight...You won the battle!...");
@@ -160,7 +169,9 @@ class Player {
                         if (playerHp < 0) {
                             System.out.println("\u001B[31m\u001B[1mYou LOSE!\u001b[0m");
                             setCurrentLocation("Cage 1");
-                            setHitPoints(1);
+                            setEquipment("prison clothing");
+                            setHitPoints(20);
+                            setWeapon("nothing");
                             lastAction.add("Tried to fight...you lost and were thrown back into the cage!...back to crying in cage...");
                             break;
                         }
@@ -171,6 +182,7 @@ class Player {
                             lastAction.add("Tried to fight...\"You have successfully ran away!\"...");
                             break;
                         } else {
+                            playerHp = playerHp - 1;
                             System.out.println("You failed to escape the fight. Good luck on your battle!");
                         }
                     }
@@ -401,6 +413,7 @@ class Player {
         System.out.println("\n\u001b[47m\u001b[30m- - - - - - - - - - - Current Position(MAP) - - - - - - - - - - -\u001b[0m\n");
         System.out.println("Player is currently in " + getCurrentLocation() + ", in wing " + node.get("room").get(playerLocation).get("Phase").intValue()+"!");
         System.out.println();
+        System.out.println("  ^ north ^");
         if (node.get("room").get(playerLocation).get("Phase").intValue()==1){
             playerMap1.show();
         }
