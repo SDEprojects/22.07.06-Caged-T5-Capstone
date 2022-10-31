@@ -8,24 +8,38 @@ class DictionaryGetter {
     private List<String> help;
     private List<String> look;
     private List<String> quit;
+    private List<String> map;
     private List<String> talk;
     private List<String> attack;
     private List<String> use;
     private List<String> inventory;
     private List<String> drop;
+    private List<String> unlock;
+    private List<String> equip;
+    private List<String> play;
+    private List<String> stop;
+    private List<String> log;
 
 
-    public DictionaryGetter(List<String> move, List<String> take, List<String> help, List<String> look, List<String> quit, List<String> talk, List<String> attack, List<String> use, List<String> inventory, List<String> drop){
+
+
+    public DictionaryGetter(List<String> move, List<String> take, List<String> help, List<String> map, List<String> look, List<String> quit, List<String> talk, List<String> attack, List<String> use, List<String> inventory, List<String> drop, List<String> unlock, List<String> equip, List<String> play, List<String> stop, List<String> log){
         setMove(move);
         setTake(take);
         setHelp(help);
         setLook(look);
         setQuit(quit);
+        setMap(map);
         setTalk(talk);
         setAttack(attack);
         setUse(use);
         setInventory(inventory);
         setDrop(drop);
+        setUnlock(unlock);
+        setEquip(equip);
+        setPlay(play);
+        setStop(stop);
+        setLog(log);
     }
 
     public DictionaryGetter(){
@@ -54,6 +68,14 @@ class DictionaryGetter {
 
     public void setHelp(List<String> help) {
         this.help = help;
+    }
+
+    public List<String> getMap() {
+        return map;
+    }
+
+    public void setMap(List<String> map) {
+        this.map = map;
     }
 
     public List<String> getLook() {
@@ -110,5 +132,45 @@ class DictionaryGetter {
 
     public void setDrop(List<String> drop) {
         this.drop = drop;
+    }
+
+    public List<String> getUnlock() {
+        return unlock;
+    }
+
+    public void setUnlock(List<String> unlock) {
+        this.unlock = unlock;
+    }
+
+    public List<String> getEquip() {
+        return equip;
+    }
+
+    public void setEquip(List<String> equip) {
+        this.equip = equip;
+    }
+
+    public List<String> getPlay() {
+        return play;
+    }
+
+    public void setPlay(List<String> play) {
+        this.play = play;
+    }
+
+    public List<String> getStop() {
+        return stop;
+    }
+
+    public void setStop(List<String> stop) {
+        this.stop = stop;
+    }
+
+    public List<String> getLog() {
+        return log;
+    }
+
+    public void setLog(List<String> log) {
+        this.log = log;
     }
 }
