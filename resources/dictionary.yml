@@ -44,6 +44,7 @@ use:
   - "use"
   - "consume"
   - "make"
+  - "open"
 inventory:
   - "inventory"
   - "inv"
@@ -58,9 +59,8 @@ drop:
   - "leave"
   - "abandon"
   - "lose"
-open:
+unlock:
   - "pick"
-  - "open"
   - "unlock"
 equip:
   - "equip"

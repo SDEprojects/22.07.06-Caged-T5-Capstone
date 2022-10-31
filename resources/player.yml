@@ -5,4 +5,4 @@ hitPoints: 20
 equipment: "prison clothing"
 weapon: "nothing"
 lastAction:
-  - "You awaken and found yourself crying in the cage..."
+  - "You awaken and found yourself crying in the cage...type 'help' for a list of actions"

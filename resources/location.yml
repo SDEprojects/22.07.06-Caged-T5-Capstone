@@ -234,6 +234,10 @@ room:
     grid: "d0"
     description: "This is the entry to the second floor and slightly more lit than the floor before, the is also an opening above you that looks like a vent"
     Moves:
+      west:
+        location: "East Hall"
+        hidden: false
+        door: "wing 1 door"
       east:
         location: "South Hall - 2F"
         hidden: false
@@ -371,7 +375,7 @@ room:
         enemy:
         hp: 30
         NPC Inventory:
-          name: "Chocolate"
+          name: "chocolate"
           description: "mmmm chocolate warmed by the pockets of another"
           strength: 1
           opens: null
@@ -392,7 +396,7 @@ room:
         enemy:
         hp: 30
         NPC Inventory:
-          name: "Wallet"
+          name: "wallet"
           description: "Usual things, ID card, some wallet size photos, and a little cash... do you really need this?"
           strength: 1
           opens: null
@@ -411,7 +415,7 @@ room:
         door: "You open up the door, not much in there and smells like pickled herring..."
         items: #example
           door:
-            name: "S Cola"
+            name: "s cola"
             description: "I wonder what the 's' stands for"
             strength: 1
             opens: null
@@ -446,7 +450,7 @@ room:
     description: "This is connected to the Storage room, North West Hall, and the North East Hall. Slightly more lit than the first floor before."
     Moves:
       west:
-        location: "Storage room"
+        location: "Storage Room - 2F"
         hidden: false
         door: "storage Room 2 door"
       south:
@@ -478,7 +482,7 @@ room:
         hidden: false
         door: null
       east:
-        location: "Escape room"
+        location: "Exit"
         hidden: false
         door: "wing 2 door"
       north:
@@ -487,7 +491,7 @@ room:
         door: "vent door"
     NPCs: null
     Inventory: null
-  Escape room:
+  Exit:
     Phase: 2
     grid: "b3"
     description: ""

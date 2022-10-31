@@ -36,7 +36,7 @@ class TextParser {
             List talk = yamlReader.dictionaryLoader().getTalk();
             List inventory = yamlReader.dictionaryLoader().getInventory();
             List drop = yamlReader.dictionaryLoader().getDrop();
-            List open = yamlReader.dictionaryLoader().getOpen();
+            List unlock = yamlReader.dictionaryLoader().getUnlock();
             List attack = yamlReader.dictionaryLoader().getAttack();
             List play = yamlReader.dictionaryLoader().getPlay();
             List stop = yamlReader.dictionaryLoader().getStop();
@@ -73,8 +73,8 @@ class TextParser {
             else if (drop.contains(verb)){
                 verb = "drop";
             }
-            else if (open.contains(verb)){
-                verb = "open";
+            else if (unlock.contains(verb)){
+                verb = "unlock";
             }
             else if (attack.contains(verb)){
                 verb = "attack";
