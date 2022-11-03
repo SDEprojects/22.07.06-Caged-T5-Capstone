@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-class LocationGetter<K, V> {
+public class LocationGetter<K, V> {
     private Map<K,V> room;
 
     public LocationGetter(Map<K,V> room) {

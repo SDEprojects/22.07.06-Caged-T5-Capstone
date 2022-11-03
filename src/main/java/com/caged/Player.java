@@ -5,7 +5,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
 import java.util.*;
 
-class Player {
+public class Player {
 
     private String name;
     private String currentLocation;

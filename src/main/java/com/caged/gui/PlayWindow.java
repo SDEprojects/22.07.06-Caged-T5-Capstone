@@ -1,5 +1,10 @@
 package com.caged.gui;
 
+import com.caged.Doors;
+import com.caged.LocationGetter;
+import com.caged.Player;
+import com.caged.YAMLReader;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,6 +12,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 
 public class PlayWindow implements ActionListener {
+
+    // GUI VARIABLES
     JFrame frame;
     JPanel topPanel;
     JPanel centerPanel;
@@ -31,11 +38,15 @@ public class PlayWindow implements ActionListener {
 
     JToggleButton volume;
 
+    // GAME VARIABLES
+    YAMLReader yamlReader = new YAMLReader(); //initiates the yaml loader
+    Player player = yamlReader.playerLoader(); //sets default player stats
+    LocationGetter locationVar = yamlReader.locationLoader(); //TODO: used for map update
+    //List<Doors> doors = yamlReader.doorLoader(); // TODO: used for viewable paths
 
     public void execute() {
         mainLabel();
-        createLabels();
-        createTextFields();
+        createLabels(player);
         createHelpBtn();
         createMusicToggleBtn();
         createQuitBtn();
@@ -65,8 +76,6 @@ public class PlayWindow implements ActionListener {
         displayImage = new ImageIcon("resources/MainGameDisplay.jpg");
         label = new JLabel(displayImage);
         label.setBounds(0, 0, 1200, 900);
-
-
     }
 
     public void createTopPanel() {
@@ -75,15 +84,10 @@ public class PlayWindow implements ActionListener {
         topPanel.setOpaque(false);
         topPanel.add(volume);
         topPanel.add(location);
-        topPanel.add(locationField);
         topPanel.add(weapon);
-        topPanel.add(weaponField);
         topPanel.add(HP);
-        topPanel.add(HPField);
         topPanel.add(disguised);
-        topPanel.add(disguisedField);
         topPanel.add(help);
-
     }
 
     public void createCenterPanel() {
@@ -93,7 +97,6 @@ public class PlayWindow implements ActionListener {
         centerPanel.setLayout(null);
         centerPanel.setBorder(BorderFactory.createLineBorder(Color.RED, 1, true));
         centerPanel.add(compassLabel);
-
     }
 
     public void createBottomPanel() {
@@ -103,16 +106,16 @@ public class PlayWindow implements ActionListener {
         bottomPanel.add(quitBtn);
     }
 
-    public void createLabels() {
-        location = new JLabel("Location");
-        location.setForeground(Color.ORANGE);
-        weapon = new JLabel("Weapon");
-        weapon.setForeground(Color.ORANGE);
-        HP = new JLabel("HP");
-        HP.setForeground(Color.ORANGE);
-        disguised = new JLabel("Disguised");
-        disguised.setForeground(Color.ORANGE);
 
+    public void createLabels(Player player) {
+        location = new JLabel("Location: " + player.getCurrentLocation());
+        location.setForeground(Color.ORANGE);
+        weapon = new JLabel("Weapon: " + player.getWeapon());
+        weapon.setForeground(Color.ORANGE);
+        HP = new JLabel("HP: " + player.getHitPoints());
+        HP.setForeground(Color.ORANGE);
+        disguised = new JLabel("Disguised: " + player.getEquipment());
+        disguised.setForeground(Color.ORANGE);
     }
 
     public void createHelpBtn() {
@@ -126,7 +129,6 @@ public class PlayWindow implements ActionListener {
 
     public void createMusicToggleBtn() {
         volume = new JToggleButton("Music ON");
-
     }
 
     public void createTextFields() {
@@ -141,10 +143,13 @@ public class PlayWindow implements ActionListener {
         compassImage = new ImageIcon("resources/compass.jpeg");
         compassLabel = new JLabel(compassImage);
         compassLabel.setBounds(970, 200, 200, 200);
-
-
     }
 
+    public void actionPerformed(ActionEvent e){
+        if (e.getSource() == quitBtn){
+            System.exit(1);
+        }
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {

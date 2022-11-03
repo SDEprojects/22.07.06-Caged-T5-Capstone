@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-class YAMLReader {
+public class YAMLReader {
 
     ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
     FileGetter fileGetter = new FileGetter();

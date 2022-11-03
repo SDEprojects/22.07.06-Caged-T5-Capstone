@@ -3,7 +3,7 @@ package com.caged;
 import java.security.PrivateKey;
 import java.util.List;
 
-class Doors {
+public class Doors {
 
     private String doorName;
     private boolean isLocked;
