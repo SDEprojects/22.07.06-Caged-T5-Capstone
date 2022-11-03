@@ -1,10 +1,17 @@
 package com.caged.gui;
 
+import com.caged.Doors;
+import com.caged.LocationGetter;
+import com.caged.Player;
+import com.caged.YAMLReader;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ItemListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class PlayWindow {
+public class PlayWindow implements ActionListener {
+    // GUI VARIABLES
     JFrame frame;
     JPanel topPanel;
     JPanel centerPanel;
@@ -29,12 +36,15 @@ public class PlayWindow {
 
     JToggleButton volume;
 
+    // GAME VARIABLES
+    YAMLReader yamlReader = new YAMLReader(); //initiates the yaml loader
+    Player player = yamlReader.playerLoader(); //sets default player stats
+    LocationGetter locationVar = yamlReader.locationLoader(); //TODO: used for map update
+    //List<Doors> doors = yamlReader.doorLoader(); // TODO: used for viewable paths
 
-
-    public void execute(){
+    public void execute() {
         mainLabel();
-        createLabels();
-        createTextFields();
+        createLabels(player);
         createHelpBtn();
         createMusicToggleBtn();
         createQuitBtn();
@@ -46,7 +56,7 @@ public class PlayWindow {
 
     }
 
-    public void createFrame(){
+    public void createFrame() {
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("The Caged");
@@ -59,83 +69,75 @@ public class PlayWindow {
         frame.setVisible(true);
 
     }
-    public void mainLabel(){
+
+    public void mainLabel() {
         displayImage = new ImageIcon("resources/MainGameDisplay.jpg");
         label = new JLabel(displayImage);
-        label.setBounds(0,0, 1200, 900);
-
-
+        label.setBounds(0, 0, 1200, 900);
     }
-    public void createTopPanel(){
+
+    public void createTopPanel() {
         topPanel = new JPanel();
         topPanel.setBounds(0, 20, 1200, 50);
         topPanel.setOpaque(false);
         topPanel.add(volume);
         topPanel.add(location);
-        topPanel.add(locationField);
         topPanel.add(weapon);
-        topPanel.add(weaponField);
         topPanel.add(HP);
-        topPanel.add(HPField);
         topPanel.add(disguised);
-        topPanel.add(disguisedField);
         topPanel.add(help);
-
     }
 
-    public void createCenterPanel(){
+    public void createCenterPanel() {
         centerPanel = new JPanel();
         centerPanel.setBounds(0, 70, 1200, 600);
         centerPanel.setOpaque(false);
         centerPanel.setLayout(null);
         centerPanel.setBorder(BorderFactory.createLineBorder(Color.RED, 1, true));
         centerPanel.add(compassLabel);
-
     }
 
-    public void createBottomPanel(){
+    public void createBottomPanel() {
         bottomPanel = new JPanel();
         bottomPanel.setBounds(0, 700, 1200, 90);
         bottomPanel.setOpaque(false);
         bottomPanel.add(quitBtn);
     }
-    public void createLabels(){
-        location = new JLabel("Location");
-        location.setForeground(Color.ORANGE);
-        weapon = new JLabel("Weapon");
-        weapon.setForeground(Color.ORANGE);
-        HP = new JLabel("HP");
-        HP.setForeground(Color.ORANGE);
-        disguised = new JLabel("Disguised");
-        disguised.setForeground(Color.ORANGE);
 
+    public void createLabels(Player player) {
+        location = new JLabel("Location: " + player.getCurrentLocation());
+        location.setForeground(Color.ORANGE);
+        weapon = new JLabel("Weapon: " + player.getWeapon());
+        weapon.setForeground(Color.ORANGE);
+        HP = new JLabel("HP: " + player.getHitPoints());
+        HP.setForeground(Color.ORANGE);
+        disguised = new JLabel("Disguised: " + player.getEquipment());
+        disguised.setForeground(Color.ORANGE);
     }
-    public void createHelpBtn(){
+
+    public void createHelpBtn() {
         help = new JButton("Help");
     }
-    public void createQuitBtn(){
+
+    public void createQuitBtn() {
         quitBtn = new JButton("Quit Game");
+        quitBtn.addActionListener(this);
     }
 
-    public void createMusicToggleBtn(){
+    public void createMusicToggleBtn() {
         volume = new JToggleButton("Music ON");
-
     }
 
-    public void createTextFields(){
-        locationField = new JTextField(5);
-        weaponField = new JTextField(5);
-        HPField = new JTextField(5);
-        disguisedField = new JTextField(5);
-
-    }
-    public void createCompass(){
+    public void createCompass() {
         compassImage = new ImageIcon("resources/compass.jpeg");
         compassLabel = new JLabel(compassImage);
         compassLabel.setBounds(970, 200, 200, 200);
-
-
     }
 
+    public void actionPerformed(ActionEvent e){
+        if (e.getSource() == quitBtn){
+            System.exit(1);
+        }
+    }
 
 }

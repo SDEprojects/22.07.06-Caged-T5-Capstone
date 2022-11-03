@@ -2,14 +2,16 @@ package com.caged.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class MainWindow {
+public class MainWindow implements ActionListener {
     JFrame frame;
     JButton newGameBtn;
     JButton quitBtn;
     ImageIcon displayImage;
     JLabel label;
-
+    PlayWindow play = new PlayWindow();
 
     public void execute (){
         createBtns();
@@ -33,6 +35,8 @@ public class MainWindow {
 
         newGameBtn = new JButton("New Game");
         quitBtn  = new JButton("Quit");
+        quitBtn.addActionListener(this);
+        newGameBtn.addActionListener(this);
         newGameBtn.setBounds(380, 400, 100, 50);
         quitBtn.setBounds(500, 400, 100 ,50);
 
@@ -47,5 +51,13 @@ public class MainWindow {
 
     }
 
+    public void actionPerformed(ActionEvent e){
+        if (e.getSource() == quitBtn){
+            System.exit(1);
+        }else if(e.getSource() == newGameBtn){
+            frame.dispose();
+            play.execute();
+        }
+    }
 
 }

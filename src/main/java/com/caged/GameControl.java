@@ -18,8 +18,8 @@ public class GameControl<K, V> {
     private final Scanner scanner = new Scanner(System.in);
     private boolean playGame = true;
     Scanner in = new Scanner(System.in);
-    TextParser textParser = new TextParser();
-    YAMLReader yamlReader = new YAMLReader();
+    TextParser textParser = new TextParser(); // unnecessary?
+    YAMLReader yamlReader = new YAMLReader(); //migrated
     SplashScreen splashScreen = new SplashScreen();
     MainMenu mainMenu = new MainMenu();
     Console console = new Console();
@@ -83,6 +83,7 @@ public class GameControl<K, V> {
             System.out.println("\nPeople seen in room: ");
             KeyValueParser.key(node.get("room").get(playerLocation).get("NPCs"));
             System.out.println("\nDirections you can move: ");
+            // TODO: provides movable directions to screen:
             KeyValueParser.locationKeyValue(node.get("room").get(playerLocation).get("Moves"), player, doors);
             System.out.println("\nLast action taken: "+player.getLastAction().get(player.getLastAction().size()-1));
             System.out.print(">>>>");
