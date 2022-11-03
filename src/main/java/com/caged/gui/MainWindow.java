@@ -22,8 +22,9 @@ public class MainWindow {
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("The Caged");
-        frame.setSize(900, 500);
+        frame.setSize(900, 600);
         frame.setLayout(null);
+        frame.setLocationRelativeTo(null);
         frame.add(label);
         frame.setVisible(true);
     }
@@ -38,9 +39,9 @@ public class MainWindow {
     }
 
     public void createLabel(){
-        displayImage = new ImageIcon("./resources/gamedisplay.jpeg");
+        displayImage = new ImageIcon("./resources/MainGameDisplay.jpg");
         label = new JLabel(displayImage);
-        label.setBounds(0,0, 900, 500);
+        label.setBounds(0,0, 900, 600);
         label.add(newGameBtn);
         label.add(quitBtn);
 
