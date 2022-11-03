@@ -9,8 +9,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 
 public class PlayWindow implements ActionListener {
+
     // GUI VARIABLES
     JFrame frame;
     JPanel topPanel;
@@ -104,6 +106,7 @@ public class PlayWindow implements ActionListener {
         bottomPanel.add(quitBtn);
     }
 
+
     public void createLabels(Player player) {
         location = new JLabel("Location: " + player.getCurrentLocation());
         location.setForeground(Color.ORANGE);
@@ -128,6 +131,14 @@ public class PlayWindow implements ActionListener {
         volume = new JToggleButton("Music ON");
     }
 
+    public void createTextFields() {
+        locationField = new JTextField(5);
+        weaponField = new JTextField(5);
+        HPField = new JTextField(5);
+        disguisedField = new JTextField(5);
+
+    }
+
     public void createCompass() {
         compassImage = new ImageIcon("resources/compass.jpeg");
         compassLabel = new JLabel(compassImage);
@@ -140,4 +151,13 @@ public class PlayWindow implements ActionListener {
         }
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == quitBtn) {
+            int userInput = JOptionPane.showConfirmDialog(frame, "Are you your you want to quit?", "Caged", JOptionPane.YES_NO_OPTION);
+            if (userInput == 0) {
+                frame.dispose();
+            }
+        }
+    }
 }

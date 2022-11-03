@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 
 public class MainWindow implements ActionListener {
     JFrame frame;
@@ -11,7 +12,7 @@ public class MainWindow implements ActionListener {
     JButton quitBtn;
     ImageIcon displayImage;
     JLabel label;
-    PlayWindow play = new PlayWindow();
+    JLabel confirmLabel;
 
     public void execute (){
         createBtns();
@@ -34,9 +35,9 @@ public class MainWindow implements ActionListener {
     public void createBtns (){
 
         newGameBtn = new JButton("New Game");
+        newGameBtn.addActionListener(this);
         quitBtn  = new JButton("Quit");
         quitBtn.addActionListener(this);
-        newGameBtn.addActionListener(this);
         newGameBtn.setBounds(380, 400, 100, 50);
         quitBtn.setBounds(500, 400, 100 ,50);
 
@@ -57,6 +58,21 @@ public class MainWindow implements ActionListener {
         }else if(e.getSource() == newGameBtn){
             frame.dispose();
             play.execute();
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == newGameBtn){
+            frame.dispose();
+            PlayWindow play = new PlayWindow();
+            play.execute();
+        }
+        if(e.getSource() == quitBtn){
+           int userInput=  JOptionPane.showConfirmDialog(frame, "Are you your you want to quit?", "Caged", JOptionPane.YES_NO_OPTION);
+           if(userInput == 0){
+               frame.dispose();
+           }
         }
     }
 
