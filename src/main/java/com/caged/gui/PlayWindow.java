@@ -145,12 +145,6 @@ public class PlayWindow implements ActionListener {
         compassLabel.setBounds(970, 200, 200, 200);
     }
 
-    public void actionPerformed(ActionEvent e){
-        if (e.getSource() == quitBtn){
-            System.exit(1);
-        }
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == quitBtn) {

@@ -52,15 +52,6 @@ public class MainWindow implements ActionListener {
 
     }
 
-    public void actionPerformed(ActionEvent e){
-        if (e.getSource() == quitBtn){
-            System.exit(1);
-        }else if(e.getSource() == newGameBtn){
-            frame.dispose();
-            play.execute();
-        }
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == newGameBtn){
