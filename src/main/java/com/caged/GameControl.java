@@ -29,27 +29,45 @@ public class GameControl<K, V> {
     MusicPlayer music = new MusicPlayer();
     String lastAction = "";
 
-
+    // Primary game run function - fires from Main
     public void runGame() {
+        // Title screen
         console.clear();
         splashScreen.splash();
         HitEnter.enter();
+        //**************************/
+
+        // Main menu screen - Play or Quit
         console.clear();
         mainMenu.mainMenu();
         mainMenuOptions();
+        //**************************/
+
+        // Initializes game 'framework' - only runs if quitConfirm is not true from mainMenuOptions
         console.clear();
         yamlReader.objective();
         HitEnter.enter();
         playerMap1.build();
         playerMap2.build();
         music.play();
+        //**************************/
+
+
+        // Pass framework variables to the playGame method for gameplay
         playGame(yamlReader.playerLoader(), yamlReader.locationLoader(), yamlReader.doorLoader());
     }
 
+    // Driving method for 'turns'
     private void playGame(Player player, LocationGetter location, List<Doors> doors) {
+        // Game Loop
         while (player.isPlayGame()) {
             console.clear();
+
+            // This is the banner display at the top of the terminal screen
             PlayerStatus.currentStatus(player);
+
+            // Create JSON nodes, create player location and check for 'phase' (i.e. floor)
+            // then update the map1/map2 appropriately
             JsonNode node = mapper.valueToTree(location);
             String playerLocation = player.getCurrentLocation();
             if (node.get("room").get(playerLocation).get("Phase").intValue()==1){
@@ -58,6 +76,8 @@ public class GameControl<K, V> {
             else {
                 playerMap2.positionUpdate(player, location);
             }
+
+            // This will become a JPanels w/ text field output (remove println portions)
             System.out.println("\nThings seen in room: ");
             KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory"));
             System.out.println("\nPeople seen in room: ");
@@ -66,9 +86,13 @@ public class GameControl<K, V> {
             KeyValueParser.locationKeyValue(node.get("room").get(playerLocation).get("Moves"), player, doors);
             System.out.println("\nLast action taken: "+player.getLastAction().get(player.getLastAction().size()-1));
             System.out.print(">>>>");
-            String userChoice = in.nextLine();
-            String lowUser = userChoice.toLowerCase();
+            String userChoice = in.nextLine(); // obsolete - becomes event handling
+            String lowUser = userChoice.toLowerCase(); // obsolete - restrict input to event handling
+
+            // Input action
             String[] action = textParser.textParser(lowUser);
+
+            // Update function
             player.playerActions(action[0], action[1], action[2], location, doors, playerMap1, playerMap2, music);
         }
         System.out.println("Congrats you made it to the " + player.getCurrentLocation() + "!");
@@ -82,12 +106,15 @@ public class GameControl<K, V> {
         while (!userInput) {
             System.out.print("\n>>>> ");
             String input = scanner.nextLine().toLowerCase();
+            // Runs the introduction and pauses (goes back to runGame line
             if (input.equals("new game")) {
                 yamlReader.introLoader();
                 System.out.println("\n\u001b[36mHit enter to start....\u001b[0m");
                 String enter = scanner.nextLine().toLowerCase();
                 userInput = true;
-            } else if (input.equals("quit")) {
+            }
+            //**************************/
+            else if (input.equals("quit")) {
                 quitConfirm();
             }
             else {
