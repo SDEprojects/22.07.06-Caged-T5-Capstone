@@ -1,5 +1,5 @@
 package com.caged;
 
 public interface Character {
-    public int attack(int attck);
+    public int attack(int attack);
 }

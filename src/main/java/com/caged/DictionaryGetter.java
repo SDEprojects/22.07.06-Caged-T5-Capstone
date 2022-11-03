@@ -19,11 +19,16 @@ class DictionaryGetter {
     private List<String> play;
     private List<String> stop;
     private List<String> log;
+    private List<String> heal;
 
 
-
-
-    public DictionaryGetter(List<String> move, List<String> take, List<String> help, List<String> map, List<String> look, List<String> quit, List<String> talk, List<String> attack, List<String> use, List<String> inventory, List<String> drop, List<String> unlock, List<String> equip, List<String> play, List<String> stop, List<String> log){
+    public DictionaryGetter(
+            List<String> move, List<String> take, List<String> help, List<String> map,
+            List<String> look, List<String> quit, List<String> talk, List<String> attack,
+            List<String> use, List<String> inventory, List<String> drop, List<String> unlock,
+            List<String> equip, List<String> play, List<String> stop, List<String> log,
+            List<String> heal
+    ) {
         setMove(move);
         setTake(take);
         setHelp(help);
@@ -40,9 +45,11 @@ class DictionaryGetter {
         setPlay(play);
         setStop(stop);
         setLog(log);
+        // TODO: added heal for testing - JS
+        setHeal(heal);
     }
 
-    public DictionaryGetter(){
+    public DictionaryGetter() {
 
     }
 
@@ -172,5 +179,13 @@ class DictionaryGetter {
 
     public void setLog(List<String> log) {
         this.log = log;
+    }
+    // TODO: added heal for testing - JS
+    public List<String> getHeal() {
+        return heal;
+    }
+
+    public void setHeal(List<String> heal) {
+        this.heal = heal;
     }
 }

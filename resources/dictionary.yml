@@ -74,3 +74,5 @@ stop:
 log:
   - "log"
   - "journal"
+heal:
+  - "heal"
