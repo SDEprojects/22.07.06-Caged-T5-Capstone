@@ -11,12 +11,6 @@ class Main {
     public static void main(String[] args) {
         LoadingScreen main = new LoadingScreen();
         main.mainFrame();
-
-//        PlayWindow play = new PlayWindow();
-//        play.execute();
-
-
-
     }
 
 }

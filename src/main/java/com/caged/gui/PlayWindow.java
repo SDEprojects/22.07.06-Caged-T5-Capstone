@@ -2,9 +2,11 @@ package com.caged.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 
-public class PlayWindow {
+public class PlayWindow implements ActionListener {
     JFrame frame;
     JPanel topPanel;
     JPanel centerPanel;
@@ -30,8 +32,7 @@ public class PlayWindow {
     JToggleButton volume;
 
 
-
-    public void execute(){
+    public void execute() {
         mainLabel();
         createLabels();
         createTextFields();
@@ -46,7 +47,7 @@ public class PlayWindow {
 
     }
 
-    public void createFrame(){
+    public void createFrame() {
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("The Caged");
@@ -59,14 +60,16 @@ public class PlayWindow {
         frame.setVisible(true);
 
     }
-    public void mainLabel(){
+
+    public void mainLabel() {
         displayImage = new ImageIcon("resources/MainGameDisplay.jpg");
         label = new JLabel(displayImage);
-        label.setBounds(0,0, 1200, 900);
+        label.setBounds(0, 0, 1200, 900);
 
 
     }
-    public void createTopPanel(){
+
+    public void createTopPanel() {
         topPanel = new JPanel();
         topPanel.setBounds(0, 20, 1200, 50);
         topPanel.setOpaque(false);
@@ -83,7 +86,7 @@ public class PlayWindow {
 
     }
 
-    public void createCenterPanel(){
+    public void createCenterPanel() {
         centerPanel = new JPanel();
         centerPanel.setBounds(0, 70, 1200, 600);
         centerPanel.setOpaque(false);
@@ -93,13 +96,14 @@ public class PlayWindow {
 
     }
 
-    public void createBottomPanel(){
+    public void createBottomPanel() {
         bottomPanel = new JPanel();
         bottomPanel.setBounds(0, 700, 1200, 90);
         bottomPanel.setOpaque(false);
         bottomPanel.add(quitBtn);
     }
-    public void createLabels(){
+
+    public void createLabels() {
         location = new JLabel("Location");
         location.setForeground(Color.ORANGE);
         weapon = new JLabel("Weapon");
@@ -110,26 +114,30 @@ public class PlayWindow {
         disguised.setForeground(Color.ORANGE);
 
     }
-    public void createHelpBtn(){
+
+    public void createHelpBtn() {
         help = new JButton("Help");
     }
-    public void createQuitBtn(){
+
+    public void createQuitBtn() {
         quitBtn = new JButton("Quit Game");
+        quitBtn.addActionListener(this);
     }
 
-    public void createMusicToggleBtn(){
+    public void createMusicToggleBtn() {
         volume = new JToggleButton("Music ON");
 
     }
 
-    public void createTextFields(){
+    public void createTextFields() {
         locationField = new JTextField(5);
         weaponField = new JTextField(5);
         HPField = new JTextField(5);
         disguisedField = new JTextField(5);
 
     }
-    public void createCompass(){
+
+    public void createCompass() {
         compassImage = new ImageIcon("resources/compass.jpeg");
         compassLabel = new JLabel(compassImage);
         compassLabel.setBounds(970, 200, 200, 200);
@@ -138,4 +146,13 @@ public class PlayWindow {
     }
 
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == quitBtn) {
+            int userInput = JOptionPane.showConfirmDialog(frame, "Are you your you want to quit?", "Caged", JOptionPane.YES_NO_OPTION);
+            if (userInput == 0) {
+                frame.dispose();
+            }
+        }
+    }
 }
