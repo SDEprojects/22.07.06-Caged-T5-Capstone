@@ -1,0 +1,64 @@
+---
+doors:
+  cage 1 door:
+    name: "cage 1 door"
+    description: "A pretty basic door, could probably be opened with an improvised lock pick..."
+    locked: true
+    keys:
+      boss key: "boss key"
+      spring: "spring"
+      orange key: "orange key"
+  cage wall:
+    name: "cage wall"
+    description: "This is a wall.... or is it..."
+    locked: true
+    keys:
+      spring: "brick"
+  npc cage 1 door:
+    name: "npc cage 1 door"
+    description: "A pretty basic door, could probably be opened with an improvised lock pick..."
+    locked: true
+    keys:
+      boss key: "boss key"
+      spring: "spring"
+      orange key: "orange key"
+  south hall door:
+    name: "south hall door"
+    description: "A pretty basic door, could probably be opened with an improvised lock pick..."
+    locked: true
+    keys:
+      boss key: "boss key"
+      spring: "spring"
+      orange key: "orange key"
+  npc cage 2 door:
+    name: "npc cage 2 door"
+    description: "This door seems to require a purple key..."
+    locked: true
+    keys:
+      boss key: "boss key"
+      orange key: "purple key"
+  wing 1 door:
+    name: "wing 1 door"
+    description: "To get to the 2nd wing you will need an orange key!"
+    locked: true
+    keys:
+      boss key: "boss key"
+      orange key: "orange key"
+  storage Room 2 door:
+    name: "storage Room 2 door"
+    description: "Looks like you need the boss key to get through here..."
+    locked: true
+    keys:
+      boss key: "boss key"
+  vent door:
+    name: "vent door"
+    description: "The vent is pretty high, but could be opened if you could reach it!"
+    locked: true
+    keys:
+      name: "ladder"
+  wing 2 door:
+    name: "wing 2 door"
+    description: "To get out of the building you need to find the green key!"
+    locked: true
+    keys:
+      orange key: "green key"

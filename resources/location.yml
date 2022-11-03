@@ -42,6 +42,15 @@ room:
             description: "an old worn brick, durable and could be used for violence."
             strength: 10
             opens: "box"
+      trash:
+        description: "a small trash bin...maybe you can 'use' the 'trash bin' to find something useful..."
+        bin: "you rummage through the rubbish..."
+        items: #example
+          bin:
+            name: "chocolate"
+            description: "a stale chocolate bar"
+            strength: 5
+            opens: null
 
   South Hall:
     Phase: 1
@@ -260,9 +269,9 @@ room:
         hidden: false
         door: "vent door"
       south:
-          location: "South West Hall - 2F"
-          hidden: false
-          door: "vent door"
+        location: "South West Hall - 2F"
+        hidden: false
+        door: "vent door"
     NPCs: null
     Inventory: null
 

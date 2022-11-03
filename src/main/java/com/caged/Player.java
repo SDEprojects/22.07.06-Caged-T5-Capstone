@@ -19,7 +19,7 @@ class Player {
     private final Scanner scanner = new Scanner(System.in);
     private List<String> lastAction = new ArrayList<>();
 
-    public Player(String name, String currentLocation, int HitPoints, String equipment,String weapon, List<String> lastAction) {
+    public Player(String name, String currentLocation, int HitPoints, String equipment, String weapon, List<String> lastAction) {
         setHitPoints(HitPoints);
         setCurrentLocation(currentLocation);
         setName(name);
@@ -33,7 +33,8 @@ class Player {
     }
 
     //functions
-    public void playerActions(String verb, String noun, String nounPrefix, LocationGetter location, List<Doors> doors, GameMap playerMap1,GameMap playerMap2, MusicPlayer music) {
+    public void playerActions(String verb, String noun, String nounPrefix, LocationGetter location,
+                              List<Doors> doors, GameMap playerMap1, GameMap playerMap2, MusicPlayer music) {
         switch (verb) {
             case "move":
                 move(noun, location, doors);
@@ -83,7 +84,25 @@ class Player {
             case "log":
                 log();
                 break;
+            // TODO: added heal for testing - JS
+            case "heal":
+                heal(noun);
+                break;
             default:
+        }
+    }
+
+    // TODO: added heal for testing - JS
+    private void heal(String noun) {
+        for (Item i : Inventory) {
+            if (i.getName().contains("chocolate")) {
+                Inventory.remove(i);
+                setHitPoints(getHitPoints() + i.getStrength());
+                lastAction.add("Used a chocolate to heal!!!");
+                break;
+            }else {
+                System.out.println("That is not in your inventory!!!");
+            }
         }
     }
 
@@ -246,8 +265,8 @@ class Player {
             lastAction.add("Direction not available...");
             HitEnter.enter();
         }
-        if (getCurrentLocation().equals("Exit")){
-            playGame=false;
+        if (getCurrentLocation().equals("Exit")) {
+            playGame = false;
             HitEnter.enter();
         }
     }
@@ -284,8 +303,8 @@ class Player {
                 }
             }
             if (door.isLocked()) {
-                System.out.println("Unable to unlock... "+ doorDescription);
-                lastAction.add("Unable to unlock... "+ doorDescription);
+                System.out.println("Unable to unlock... " + doorDescription);
+                lastAction.add("Unable to unlock... " + doorDescription);
             }
         } catch (IllegalArgumentException e) {
             System.out.println("Couldn't unlock door, maybe wrong command!");
@@ -343,7 +362,6 @@ class Player {
         }
     }
 
-
     private void use(String subThing, String parentThing, LocationGetter location) {
         String playerLocation = getCurrentLocation();
         JsonNode node = mapper.valueToTree(location);
@@ -353,8 +371,7 @@ class Player {
             int itemFound = 0;
             if (node.get("room").get(playerLocation).get("Inventory").get(parentThing).has("items")) {
                 JsonNode nodeItem = node.get("room").get(playerLocation).get("Inventory").get(parentThing).get("items").get(subThing);
-                for (Item i :
-                        foundItems) {
+                for (Item i : foundItems) {
                     if (i.name.equals(nodeItem.get("name").textValue())) {
                         itemFound = 1;
                     }
@@ -363,7 +380,7 @@ class Player {
                     Item foundItem = new Item(nodeItem.get("name").textValue(), nodeItem.get("description").textValue(), nodeItem.get("strength").intValue(), nodeItem.get("opens").textValue(), playerLocation, false, playerLocation);
                     foundItems.add(foundItem);
                     System.out.println("You found " + foundItem.name + "!");
-                    lastAction.add(node.get("room").get(playerLocation).get("Inventory").get(parentThing).get(subThing).textValue()+ "...You found " + foundItem.name + "!");
+                    lastAction.add(node.get("room").get(playerLocation).get("Inventory").get(parentThing).get(subThing).textValue() + "...You found " + foundItem.name + "!");
                 }
             }
         } catch (Exception e) {
@@ -400,8 +417,8 @@ class Player {
     }
 
     private void log() {
-        for (String log:getLastAction()
-             ) {
+        for (String log : getLastAction()
+        ) {
             System.out.println(log);
         }
         HitEnter.enter();
@@ -411,13 +428,12 @@ class Player {
         JsonNode node = mapper.valueToTree(location);
         String playerLocation = getCurrentLocation();
         System.out.println("\n\u001b[47m\u001b[30m- - - - - - - - - - - Current Position(MAP) - - - - - - - - - - -\u001b[0m\n");
-        System.out.println("Player is currently in " + getCurrentLocation() + ", in wing " + node.get("room").get(playerLocation).get("Phase").intValue()+"!");
+        System.out.println("Player is currently in " + getCurrentLocation() + ", in wing " + node.get("room").get(playerLocation).get("Phase").intValue() + "!");
         System.out.println();
         System.out.println("  ^ north ^");
-        if (node.get("room").get(playerLocation).get("Phase").intValue()==1){
+        if (node.get("room").get(playerLocation).get("Phase").intValue() == 1) {
             playerMap1.show();
-        }
-        else {
+        } else {
             playerMap2.show();
         }
         System.out.println("\nMap Key:");
@@ -425,7 +441,6 @@ class Player {
         System.out.println("\n\u001b[47m\u001b[30m- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\u001b[0m");
         HitEnter.enter();
     }
-
 
     private void quitConfirm() { //private
         System.out.println("\u001b[30m\u001b[41mDo you really want to quit?\u001b[0m");

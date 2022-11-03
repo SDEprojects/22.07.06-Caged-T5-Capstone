@@ -9,8 +9,8 @@ public class CharacterPlayer implements Character{
     }
 
     @Override
-    public int attack(int attk) {
-        return (int)(Math.random() * 4) + attk;
+    public int attack(int attack) {
+        return (int)(Math.random() * 4) + attack;
     }
 
     public int getHp() {

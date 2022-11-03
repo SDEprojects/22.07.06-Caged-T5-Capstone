@@ -10,20 +10,18 @@ import java.util.Locale;
 
 class TextParser {
 
-
-
-    public String[] textParser(String text){
+    // TODO: this is control function - possibly obsolete if action listener doesn't set verb/noun combo
+    public String[] textParser(String text) {
         try {
-            text = text.replaceAll("(?i)[^a-z]"," ");
+            text = text.replaceAll("(?i)[^a-z]", " ");
             String[] sentence = text.split(" ");
             String verb = sentence[0].toLowerCase();
-            String noun = sentence[sentence.length-1].toLowerCase();
+            String noun = sentence[sentence.length - 1].toLowerCase();
             String nounPrefix;
-            if (sentence.length>1){
-                nounPrefix = sentence[sentence.length-2].toLowerCase();
-            }
-            else {
-                nounPrefix = sentence[sentence.length-1].toLowerCase();
+            if (sentence.length > 1) {
+                nounPrefix = sentence[sentence.length - 2].toLowerCase();
+            } else {
+                nounPrefix = sentence[sentence.length - 1].toLowerCase();
             }
             YAMLReader yamlReader = new YAMLReader();
             List move = yamlReader.dictionaryLoader().getMove();
@@ -43,61 +41,51 @@ class TextParser {
             List equip = yamlReader.dictionaryLoader().getEquip();
             List log = yamlReader.dictionaryLoader().getLog();
 
-            if (move.contains(verb)){
+            List heal = yamlReader.dictionaryLoader().getHeal();
+
+            if (move.contains(verb)) {
                 verb = "move";
-            }
-            else if (take.contains(verb)){
+            } else if (take.contains(verb)) {
                 verb = "take";
-            }
-            else if (look.contains(verb)){
+            } else if (look.contains(verb)) {
                 verb = "look";
-            }
-            else if (use.contains(verb)) { //new
+            } else if (use.contains(verb)) { //new
                 verb = "use";
-            }
-            else if (help.contains(verb)){
+            } else if (help.contains(verb)) {
                 verb = "help";
-            }
-            else if (map.contains(verb)){
+            } else if (map.contains(verb)) {
                 verb = "map";
-            }
-            else if (quit.contains(verb)){
+            } else if (quit.contains(verb)) {
                 verb = "quit";
-            }
-            else if (talk.contains(verb)){
+            } else if (talk.contains(verb)) {
                 verb = "talk";
-            }
-            else if (inventory.contains(verb)){
+            } else if (inventory.contains(verb)) {
                 verb = "inventory";
-            }
-            else if (drop.contains(verb)){
+            } else if (drop.contains(verb)) {
                 verb = "drop";
-            }
-            else if (unlock.contains(verb)){
+            } else if (unlock.contains(verb)) {
                 verb = "unlock";
-            }
-            else if (attack.contains(verb)){
+            } else if (attack.contains(verb)) {
                 verb = "attack";
-            }
-            else if (play.contains(verb)){
+            } else if (play.contains(verb)) {
                 verb = "play";
-            }
-            else if (stop.contains(verb)){
+            } else if (stop.contains(verb)) {
                 verb = "stop";
-            }
-            else if (equip.contains(verb)){
+            } else if (equip.contains(verb)) {
                 verb = "equip";
-            }
-            else if (log.contains(verb)){
+            } else if (log.contains(verb)) {
                 verb = "log";
             }
-            else {
+            // TODO: added heal for testing - JS
+            else if (heal.contains(verb)) {
+                verb = "heal";
+            } else {
                 System.out.println("Unrecognized Command, type help for valid command");
             }
             return new String[]{verb, noun, nounPrefix};
         } catch (Exception e) {
             System.out.println("That doesn't make sense, here is some help...");
-            return new String[] {"help", "me", "please"};
+            return new String[]{"help", "me", "please"};
         }
     }
 
