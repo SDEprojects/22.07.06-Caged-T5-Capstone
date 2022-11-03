@@ -39,7 +39,7 @@ public class MainWindow {
     }
 
     public void createLabel(){
-        displayImage = new ImageIcon("./resources/MainGameDisplay.jpg");
+        displayImage = new ImageIcon("resources/MainGameDisplay.jpg");
         label = new JLabel(displayImage);
         label.setBounds(0,0, 900, 600);
         label.add(newGameBtn);

@@ -60,7 +60,7 @@ public class PlayWindow {
 
     }
     public void mainLabel(){
-        displayImage = new ImageIcon("./resources/MainGameDisplay.jpg");
+        displayImage = new ImageIcon("resources/MainGameDisplay.jpg");
         label = new JLabel(displayImage);
         label.setBounds(0,0, 1200, 900);
 
@@ -130,7 +130,7 @@ public class PlayWindow {
 
     }
     public void createCompass(){
-        compassImage = new ImageIcon("./resources/compass.jpeg");
+        compassImage = new ImageIcon("resources/compass.jpeg");
         compassLabel = new JLabel(compassImage);
         compassLabel.setBounds(970, 200, 200, 200);
 

@@ -33,7 +33,7 @@ public class LoadingScreen {
     }
 
     public void addImage() {
-        image = new JLabel(displayImage = new ImageIcon("./resources/prisonRelease.gif"));
+        image = new JLabel(displayImage = new ImageIcon("resources/prisonRelease.gif"));
         image.setBounds(0, 0, 900, 600);
         image.add(text);
         image.add(progressBar);
