@@ -33,7 +33,7 @@ public class LoadingScreen {
     }
 
     public void addImage() {
-        image = new JLabel(displayImage = new ImageIcon("./resources/prison.jpeg"));
+        image = new JLabel(displayImage = new ImageIcon("./resources/prisonRelease.gif"));
         image.setBounds(0, 0, 900, 600);
         image.add(text);
         image.add(progressBar);
@@ -78,7 +78,6 @@ public class LoadingScreen {
 
         while (i <= 100) {
             try {
-
                 Thread.sleep(50);//Pausing execution for 50 milliseconds
                 progressBar.setValue(i);//Setting value of Progress Bar
                 message.setText("LOADING " + Integer.toString(i) + "%");//Setting text of the message JLabel
