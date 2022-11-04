@@ -3,6 +3,7 @@ package com.caged.gui;
 import com.caged.*;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +16,11 @@ public class PlayWindow implements ActionListener {
     JPanel topPanel;
     JPanel centerPanel;
     JPanel bottomPanel;
+    JPanel centerEastPanel;
+    JPanel centerMidPanel;
+    JPanel centerSouthPanel;
+    JPanel centerWestPanel;
+
     JLabel label;
     JLabel compassLabel;
     ImageIcon displayImage;
@@ -58,9 +64,10 @@ public class PlayWindow implements ActionListener {
         createMusicToggleButton();
         createQuitBtn();
         createTopPanel();
-//        createCompass();
         createDirectionalButtons();
         createActionInfoArea();
+        createMidCenterPanels();
+//        createCompass();
         createCenterPanel();
         createBottomPanel();
         createFrame();
@@ -103,14 +110,18 @@ public class PlayWindow implements ActionListener {
         centerPanel = new JPanel();
         centerPanel.setBounds(0, 70, 1200, 600);
         centerPanel.setOpaque(false);
-        centerPanel.setLayout(null);
+        centerPanel.setLayout(new BorderLayout());
         centerPanel.setBorder(BorderFactory.createLineBorder(Color.RED, 1, true));
        // centerPanel.add(compassLabel);
-        centerPanel.add(north);
-        centerPanel.add(south);
-        centerPanel.add(east);
-        centerPanel.add(west);
-        centerPanel.add(actionField);
+//        centerPanel.add(north);
+//        centerPanel.add(south);
+//        centerPanel.add(east);
+//        centerPanel.add(west);
+//        centerPanel.add(actionField);
+        centerPanel.add(centerMidPanel, BorderLayout.CENTER);
+        centerPanel.add(centerEastPanel, BorderLayout.EAST);
+        centerPanel.add(centerSouthPanel, BorderLayout.SOUTH);
+        centerPanel.add(centerWestPanel, BorderLayout.WEST);
     }
 
     public void createBottomPanel() {
@@ -150,37 +161,53 @@ public class PlayWindow implements ActionListener {
 
     public void createActionInfoArea() {
           String text = "You  awaken and found yourself crying in the cage!";
-          actionField = new JTextArea(5, 40);
-          actionField.setBounds(930,90, 250, 100);
+          actionField = new JTextArea(50, 40);
           actionField.setFont(new Font ("Arial", Font.BOLD, 14));
           actionField.setText(text);
           actionField.setLineWrap(true);
           actionField.setWrapStyleWord(true);
-//          actionField.setOpaque(false);
+          actionField.setOpaque(false);
           actionField.setBorder(BorderFactory.createLineBorder(Color.RED, 1, true));
 
-    }
-
-    public void createCompass() {
-        compassImage = new ImageIcon("resources/compass.jpeg");
-        compassLabel = new JLabel(compassImage);
-        compassLabel.setBounds(970, 200, 200, 200);
     }
     public void createDirectionalButtons(){
         northImg = new ImageIcon("resources/north.png");
         southImg = new ImageIcon("resources/south.png");
         eastImg = new ImageIcon("resources/east.png");
         westImg = new ImageIcon("resources/west.png");
-        north = new JButton("NORTH", northImg);
-        south = new JButton("SOUTH", southImg);
-        east = new JButton("EAST", eastImg);
-        west = new JButton("WEST", westImg);
-        north.setBounds(0, 0, 100, 100);
-        south.setBounds(100, 0, 100, 100);
-        east.setBounds(200, 0, 100, 100);
-        west.setBounds(300, 0, 100, 100);
+        north = new JButton(northImg);
+        north.setOpaque(false);
+        south = new JButton(southImg);
+        south.setOpaque(false);
+        east = new JButton(eastImg);
+        east.setOpaque(false);
+        west = new JButton(westImg);
+        west.setOpaque(false);
 
-
+    }
+    public void createMidCenterPanels(){
+        centerEastPanel = new JPanel();
+        centerEastPanel.setOpaque(false);
+        centerEastPanel.setPreferredSize(new Dimension(300,480));
+        centerEastPanel.setLayout(new BorderLayout());
+        centerEastPanel.add(east, BorderLayout.EAST );
+        centerEastPanel.add(west, BorderLayout.WEST);
+        centerEastPanel.add(north, BorderLayout.NORTH);
+        centerEastPanel.add(south, BorderLayout.SOUTH);
+        centerEastPanel.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 1, true));
+        centerMidPanel = new JPanel();
+        centerMidPanel.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 1, true));
+        centerMidPanel.setOpaque(false);
+        centerWestPanel = new JPanel();
+        centerWestPanel.setOpaque(false);
+        centerWestPanel.setPreferredSize(new Dimension(300,480));
+        centerWestPanel.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 1, true));
+        centerSouthPanel = new JPanel();
+        centerSouthPanel.setOpaque(false);
+        centerSouthPanel.setPreferredSize(new Dimension(1200,120));
+        centerSouthPanel.setLayout(new BorderLayout());
+        centerSouthPanel.add(actionField, BorderLayout.CENTER);
+        centerSouthPanel.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 1, true));
     }
 
 
@@ -189,9 +216,8 @@ public class PlayWindow implements ActionListener {
         if (e.getSource() == quitBtn) {
             int userInput = JOptionPane.showConfirmDialog(frame, "Are you your you want to quit?", "Caged", JOptionPane.YES_NO_OPTION );
             if (userInput == 0) {
-                System.out.println(volume.isSelected());
                 gameMusic.turnOff();
-                frame.dispose();
+                System.exit(1);
             }
         }
         if(volume.isSelected()){
