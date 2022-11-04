@@ -1,10 +1,9 @@
 package com.caged;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.net.URL;
 
-class FileGetter {
+public class FileGetter {
 
     public InputStream fileGetter(String fileName) {
 
@@ -29,6 +28,19 @@ class FileGetter {
             throw new IllegalArgumentException("file not found! " + fileName);
         } else {
             return input;
+        }
+    }
+
+    public URL imageGetter(String fileName) {
+
+        ClassLoader classLoader = getClass().getClassLoader();
+        URL image = classLoader.getResource(fileName);
+
+        // the stream holding the file content
+        if (image == null) {
+            throw new IllegalArgumentException("file not found! " + fileName);
+        } else {
+            return image;
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.caged.gui;
 
+import com.caged.FileGetter;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,6 +15,7 @@ public class MainWindow implements ActionListener {
     ImageIcon displayImage;
     JLabel label;
     JLabel confirmLabel;
+    FileGetter url = new FileGetter();
 
     public void execute (){
         createBtns();
@@ -44,7 +47,7 @@ public class MainWindow implements ActionListener {
     }
 
     public void createLabel(){
-        displayImage = new ImageIcon("resources/MainGameDisplay.jpg");
+        displayImage = new ImageIcon(url.imageGetter("MainGameDIsplay.jpg"));
         label = new JLabel(displayImage);
         label.setBounds(0,0, 900, 600);
         label.add(newGameBtn);

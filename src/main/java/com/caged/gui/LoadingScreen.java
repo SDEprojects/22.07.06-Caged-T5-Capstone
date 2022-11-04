@@ -1,5 +1,7 @@
 package com.caged.gui;
 
+import com.caged.FileGetter;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,6 +11,7 @@ public class LoadingScreen {
     JLabel image, message, text;
     JProgressBar progressBar;
     ImageIcon displayImage;
+    FileGetter url = new FileGetter();
 
 
     public void mainFrame() {
@@ -33,7 +36,7 @@ public class LoadingScreen {
     }
 
     public void addImage() {
-        image = new JLabel(displayImage = new ImageIcon("resources/prisonRelease.gif"));
+        image = new JLabel(displayImage = new ImageIcon(url.imageGetter("prisonRelease.gif")));
         image.setBounds(0, 0, 900, 600);
         image.add(text);
         image.add(progressBar);

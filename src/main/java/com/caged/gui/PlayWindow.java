@@ -41,6 +41,9 @@ public class PlayWindow implements ActionListener {
 
     JToggleButton volume;
 
+    // Class loader for image calling
+    FileGetter url = new FileGetter();
+
     // GAME VARIABLES
     YAMLReader yamlReader = new YAMLReader(); //initiates the yaml loader
     Player player = yamlReader.playerLoader(); //sets default player stats
@@ -79,7 +82,7 @@ public class PlayWindow implements ActionListener {
     }
 
     public void mainLabel() {
-        displayImage = new ImageIcon("resources/MainGameDisplay.jpg");
+        displayImage = new ImageIcon(url.imageGetter("MainGameDIsplay.jpg"));
         label = new JLabel(displayImage);
         label.setBounds(0, 0, 1200, 900);
     }
