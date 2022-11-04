@@ -17,7 +17,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 
-class MusicPlayer{
+public class MusicPlayer{
     FileGetter fileGetter = new FileGetter();
     Scanner scanner = new Scanner(System.in);
     File file = new File("");
