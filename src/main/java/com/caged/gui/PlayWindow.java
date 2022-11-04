@@ -135,11 +135,11 @@ public class PlayWindow implements ActionListener {
     public void createLabels(Player player) {
         location = new JLabel("Location: " + player.getCurrentLocation());
         location.setForeground(Color.ORANGE);
-        weapon = new JLabel("Weapon: " + player.getWeapon());
+        weapon = new JLabel(" || Weapon: " + player.getWeapon());
         weapon.setForeground(Color.ORANGE);
-        HP = new JLabel("HP: " + player.getHitPoints());
+        HP = new JLabel(" || HP: " + player.getHitPoints());
         HP.setForeground(Color.ORANGE);
-        disguised = new JLabel("Disguised: " + player.getEquipment());
+        disguised = new JLabel(" || Disguised: " + player.getEquipment());
         disguised.setForeground(Color.ORANGE);
     }
 
@@ -171,10 +171,10 @@ public class PlayWindow implements ActionListener {
 
     }
     public void createDirectionalButtons(){
-        northImg = new ImageIcon("resources/north.png");
-        southImg = new ImageIcon("resources/south.png");
-        eastImg = new ImageIcon("resources/east.png");
-        westImg = new ImageIcon("resources/west.png");
+        northImg = new ImageIcon(url.imageGetter("north.png"));
+        southImg = new ImageIcon(url.imageGetter("south.png"));
+        eastImg = new ImageIcon(url.imageGetter("east.png"));
+        westImg = new ImageIcon(url.imageGetter("west.png"));
         north = new JButton(northImg);
         north.setOpaque(false);
         south = new JButton(southImg);
