@@ -1,9 +1,6 @@
 package com.caged.gui;
 
-import com.caged.Doors;
-import com.caged.LocationGetter;
-import com.caged.Player;
-import com.caged.YAMLReader;
+import com.caged.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,19 +19,25 @@ public class PlayWindow implements ActionListener {
     JLabel compassLabel;
     ImageIcon displayImage;
     ImageIcon compassImage;
+    ImageIcon northImg;
+    ImageIcon southImg;
+    ImageIcon eastImg;
+    ImageIcon westImg;
 
     JLabel location;
     JLabel weapon;
     JLabel HP;
     JLabel disguised;
 
-    JTextField locationField;
-    JTextField weaponField;
-    JTextField HPField;
-    JTextField disguisedField;
+    JTextArea actionField;
+
 
     JButton help;
     JButton quitBtn;
+    JButton north;
+    JButton south;
+    JButton east;
+    JButton west;
 
     JToggleButton volume;
 
@@ -43,15 +46,18 @@ public class PlayWindow implements ActionListener {
     Player player = yamlReader.playerLoader(); //sets default player stats
     LocationGetter locationVar = yamlReader.locationLoader(); //TODO: used for map update
     //List<Doors> doors = yamlReader.doorLoader(); // TODO: used for viewable paths
+    MusicPlayer gameMusic = new MusicPlayer();
 
     public void execute() {
         mainLabel();
         createLabels(player);
         createHelpBtn();
-        createMusicToggleBtn();
+        createMusicToggleButton();
         createQuitBtn();
         createTopPanel();
-        createCompass();
+//        createCompass();
+        createDirectionalButtons();
+        createActionInfoArea();
         createCenterPanel();
         createBottomPanel();
         createFrame();
@@ -96,7 +102,12 @@ public class PlayWindow implements ActionListener {
         centerPanel.setOpaque(false);
         centerPanel.setLayout(null);
         centerPanel.setBorder(BorderFactory.createLineBorder(Color.RED, 1, true));
-        centerPanel.add(compassLabel);
+       // centerPanel.add(compassLabel);
+        centerPanel.add(north);
+        centerPanel.add(south);
+        centerPanel.add(east);
+        centerPanel.add(west);
+        centerPanel.add(actionField);
     }
 
     public void createBottomPanel() {
@@ -127,15 +138,23 @@ public class PlayWindow implements ActionListener {
         quitBtn.addActionListener(this);
     }
 
-    public void createMusicToggleBtn() {
+    public void createMusicToggleButton() {
         volume = new JToggleButton("Music ON");
+        volume.setForeground(Color.GREEN);
+        gameMusic.play();
+        volume.addActionListener(this);
     }
 
-    public void createTextFields() {
-        locationField = new JTextField(5);
-        weaponField = new JTextField(5);
-        HPField = new JTextField(5);
-        disguisedField = new JTextField(5);
+    public void createActionInfoArea() {
+          String text = "You  awaken and found yourself crying in the cage!";
+          actionField = new JTextArea(5, 40);
+          actionField.setBounds(930,90, 250, 100);
+          actionField.setFont(new Font ("Arial", Font.BOLD, 14));
+          actionField.setText(text);
+          actionField.setLineWrap(true);
+          actionField.setWrapStyleWord(true);
+//          actionField.setOpaque(false);
+          actionField.setBorder(BorderFactory.createLineBorder(Color.RED, 1, true));
 
     }
 
@@ -144,14 +163,43 @@ public class PlayWindow implements ActionListener {
         compassLabel = new JLabel(compassImage);
         compassLabel.setBounds(970, 200, 200, 200);
     }
+    public void createDirectionalButtons(){
+        northImg = new ImageIcon("resources/north.png");
+        southImg = new ImageIcon("resources/south.png");
+        eastImg = new ImageIcon("resources/east.png");
+        westImg = new ImageIcon("resources/west.png");
+        north = new JButton("NORTH", northImg);
+        south = new JButton("SOUTH", southImg);
+        east = new JButton("EAST", eastImg);
+        west = new JButton("WEST", westImg);
+        north.setBounds(0, 0, 100, 100);
+        south.setBounds(100, 0, 100, 100);
+        east.setBounds(200, 0, 100, 100);
+        west.setBounds(300, 0, 100, 100);
+
+
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == quitBtn) {
-            int userInput = JOptionPane.showConfirmDialog(frame, "Are you your you want to quit?", "Caged", JOptionPane.YES_NO_OPTION);
+            int userInput = JOptionPane.showConfirmDialog(frame, "Are you your you want to quit?", "Caged", JOptionPane.YES_NO_OPTION );
             if (userInput == 0) {
+                System.out.println(volume.isSelected());
+                gameMusic.turnOff();
                 frame.dispose();
             }
+        }
+        if(volume.isSelected()){
+            volume.setText("Music OFF");
+            volume.setForeground(Color.RED);
+            gameMusic.turnOff();
+        }
+        else{
+            volume.setText("Music ON");
+            volume.setForeground(Color.GREEN);
+            gameMusic.play();
         }
     }
 }
