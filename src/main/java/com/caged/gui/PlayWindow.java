@@ -5,11 +5,9 @@ import com.caged.*;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 
-public class PlayWindow implements ActionListener {
+public class PlayWindow implements ActionListener, MouseListener {
 
     // GUI VARIABLES
     JFrame frame;
@@ -20,22 +18,28 @@ public class PlayWindow implements ActionListener {
     JPanel centerMidPanel;
     JPanel centerSouthPanel;
     JPanel centerWestPanel;
+    JPanel inventoryPanel;
 
     JLabel label;
-    JLabel compassLabel;
     ImageIcon displayImage;
-    ImageIcon compassImage;
     ImageIcon northImg;
     ImageIcon southImg;
     ImageIcon eastImg;
     ImageIcon westImg;
+    ImageIcon bedImg;
+    ImageIcon wallImg;
+    ImageIcon windowImg;
+    ImageIcon deskImg;
+    ImageIcon map;
 
     JLabel location;
     JLabel weapon;
     JLabel HP;
     JLabel disguised;
+    JLabel mapLabel;
 
     JTextArea actionField;
+    JTextArea hoverText;
 
 
     JButton help;
@@ -44,6 +48,10 @@ public class PlayWindow implements ActionListener {
     JButton south;
     JButton east;
     JButton west;
+    JButton inv1;
+    JButton inv2;
+    JButton inv3;
+    JButton inv4;
 
     JToggleButton volume;
 
@@ -66,8 +74,10 @@ public class PlayWindow implements ActionListener {
         createTopPanel();
         createDirectionalButtons();
         createActionInfoArea();
+        createInvButtons();
+        createInventoryPanel();
+        createMap();
         createMidCenterPanels();
-//        createCompass();
         createCenterPanel();
         createBottomPanel();
         createFrame();
@@ -112,12 +122,6 @@ public class PlayWindow implements ActionListener {
         centerPanel.setOpaque(false);
         centerPanel.setLayout(new BorderLayout());
         centerPanel.setBorder(BorderFactory.createLineBorder(Color.RED, 1, true));
-       // centerPanel.add(compassLabel);
-//        centerPanel.add(north);
-//        centerPanel.add(south);
-//        centerPanel.add(east);
-//        centerPanel.add(west);
-//        centerPanel.add(actionField);
         centerPanel.add(centerMidPanel, BorderLayout.CENTER);
         centerPanel.add(centerEastPanel, BorderLayout.EAST);
         centerPanel.add(centerSouthPanel, BorderLayout.SOUTH);
@@ -176,13 +180,29 @@ public class PlayWindow implements ActionListener {
         eastImg = new ImageIcon(url.imageGetter("east.png"));
         westImg = new ImageIcon(url.imageGetter("west.png"));
         north = new JButton(northImg);
+        north.setPreferredSize(new Dimension(100,190));
         north.setOpaque(false);
+        north.setBorderPainted(false);
+        north.setBorder(null);
+        north.setFocusPainted(false);
         south = new JButton(southImg);
         south.setOpaque(false);
+        south.setBorderPainted(false);
+        south.setBorder(null);
+        south.setFocusPainted(false);
+        south.setPreferredSize(new Dimension(100,190));
         east = new JButton(eastImg);
+        east.setBorderPainted(false);
         east.setOpaque(false);
+        east.setBorder(null);
+        east.setPreferredSize(new Dimension(130,195));
+        east.setFocusPainted(false);
         west = new JButton(westImg);
         west.setOpaque(false);
+        west.setBorderPainted(false);
+        west.setBorder(null);
+        west.setPreferredSize(new Dimension(130,195));
+        west.setFocusPainted(false);
 
     }
     public void createMidCenterPanels(){
@@ -196,8 +216,11 @@ public class PlayWindow implements ActionListener {
         centerEastPanel.add(south, BorderLayout.SOUTH);
         centerEastPanel.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 1, true));
         centerMidPanel = new JPanel();
+        centerMidPanel.setLayout(new BorderLayout());
         centerMidPanel.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 1, true));
         centerMidPanel.setOpaque(false);
+        centerMidPanel.add(inventoryPanel, BorderLayout.NORTH);
+        centerMidPanel.add(mapLabel, BorderLayout.CENTER);
         centerWestPanel = new JPanel();
         centerWestPanel.setOpaque(false);
         centerWestPanel.setPreferredSize(new Dimension(300,480));
@@ -205,11 +228,60 @@ public class PlayWindow implements ActionListener {
         centerSouthPanel = new JPanel();
         centerSouthPanel.setOpaque(false);
         centerSouthPanel.setPreferredSize(new Dimension(1200,120));
-        centerSouthPanel.setLayout(new BorderLayout());
-        centerSouthPanel.add(actionField, BorderLayout.CENTER);
+        centerSouthPanel.setLayout(new FlowLayout());
+        centerSouthPanel.add(actionField);
         centerSouthPanel.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 1, true));
     }
 
+    public void createInvButtons(){
+        bedImg = new ImageIcon("resources/bed.png");
+        wallImg = new ImageIcon("resources/wall.jpg");
+        windowImg = new ImageIcon("resources/window.jpg");
+        deskImg = new ImageIcon("resources/desk.jpeg");
+        inv1 = new JButton(bedImg);
+        inv1.setOpaque(false);
+        inv1.setBorderPainted(false);
+        inv1.setBorder(null);
+        inv1.setFocusPainted(false);
+        inv1.addMouseListener(this);
+        inv2 = new JButton(wallImg);
+        inv2.setOpaque(false);
+        inv2.setBorderPainted(false);
+        inv2.setBorder(null);
+        inv2.addMouseListener(this);
+        inv3 = new JButton(windowImg);
+        inv3.setOpaque(false);
+        inv3.setBorderPainted(false);
+        inv3.setBorder(null);
+        inv3.addMouseListener(this);
+        inv4 = new JButton(deskImg);
+        inv4.setOpaque(false);
+        inv4.setBorderPainted(false);
+        inv4.setBorder(null);
+        inv4.addMouseListener(this);
+    }
+    public void createInventoryPanel(){
+        inventoryPanel = new JPanel();
+        inventoryPanel.setPreferredSize(new Dimension(600, 200));
+        inventoryPanel.setLayout( new FlowLayout(FlowLayout.CENTER, 15, 40));
+        inventoryPanel.setOpaque(false);
+        inventoryPanel.add(inv1);
+        inventoryPanel.add(inv2);
+        inventoryPanel.add(inv3);
+        inventoryPanel.add(inv4);
+
+    }
+
+    public void createMap(){
+        map = new ImageIcon("resources/map.jpeg");
+        mapLabel = new JLabel(map);
+
+    }
+
+    public void inventoryTaken(){
+
+
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -230,5 +302,45 @@ public class PlayWindow implements ActionListener {
             volume.setForeground(Color.GREEN);
             gameMusic.play();
         }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        
+        String itemInfo = "<html>Heavily reinforced metal, <br> maybe you can wiggle and <br> 'use' the 'window bars</html>";
+        UIManager.put("ToolTip.foreground", Color.PINK);
+        UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 14));
+        if(e.getSource() == inv1){
+            inv1.setToolTipText(itemInfo);
+        }
+        if(e.getSource() == inv2){
+            inv2.setToolTipText(itemInfo);
+        }
+        if(e.getSource() == inv3){
+            inv3.setToolTipText(itemInfo);
+        }
+        if(e.getSource() == inv4){
+            inv4.setToolTipText(itemInfo);
+        }
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 }
