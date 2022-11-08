@@ -1,9 +1,13 @@
 package com.caged.gui;
 
+import com.apple.eawt.Application;
 import com.caged.FileGetter;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class LoadingScreen {
     JFrame frame;
@@ -12,12 +16,13 @@ public class LoadingScreen {
     ImageIcon displayImage;
     FileGetter url = new FileGetter();
 
-
-    public LoadingScreen() {
+    public LoadingScreen() throws IOException {
         createGUI();
     }
 
-    public void createGUI() {
+    public void createGUI() throws IOException {
+
+
         frame = new JFrame("Caged");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1200, 900);
@@ -52,7 +57,7 @@ public class LoadingScreen {
         progressBar.setBackground(Color.WHITE);//setting background color
         progressBar.setForeground(Color.BLACK);//setting foreground color
         progressBar.setValue(0);//setting progress bar current value
-        //progressBar.setVisible(false);
+        //progressBar.setVisible(false)
         image.add(progressBar);
 
         int i = 0;//Creating an integer variable and intializing it to 0
@@ -61,7 +66,7 @@ public class LoadingScreen {
             try {
                 Thread.sleep(50);//Pausing execution for 50 milliseconds
                 progressBar.setValue(i);//Setting value of Progress Bar
-                message.setText("LOADING " + Integer.toString(i) + "%");//Setting text of the message JLabel
+                message.setText("LOADING " + i + "%");//Setting text of the message JLabel
 
                 i++;
                 if(i == 100){
@@ -73,5 +78,8 @@ public class LoadingScreen {
                 e.printStackTrace();
             }
         }
+        File dockImage = new File("resources/CagedLogo.png");
+        Image image = ImageIO.read(dockImage);
+        Application.getApplication().setDockIconImage(image);
     }
 }

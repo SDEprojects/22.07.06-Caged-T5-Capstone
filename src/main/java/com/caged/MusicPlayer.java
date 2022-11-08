@@ -62,7 +62,6 @@ public class MusicPlayer{
     }
     public void volumeDown(){
         currentVolume -=1.0f;
-        System.out.println("current volume:"+ currentVolume);
         if (currentVolume< -80.0f){
             currentVolume = -80f;
         }
@@ -72,7 +71,6 @@ public class MusicPlayer{
         this.minMaxVolume = minMaxVolume;
         if (!mute){
             previousVolume = currentVolume;
-            System.out.println("current volume:"+currentVolume);
             currentVolume = -80f;
             floatControl.setValue(currentVolume);
             mute = true;
@@ -82,7 +80,6 @@ public class MusicPlayer{
         else if (mute){
             currentVolume = previousVolume;
             minMaxVolume.setValue((int) currentVolume);
-            System.out.println("current volume:"+currentVolume);
             floatControl.setValue(currentVolume);
             mute = false;
         }
