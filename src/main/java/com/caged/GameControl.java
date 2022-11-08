@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLParser;
 
+import javax.sound.sampled.LineUnavailableException;
 import java.lang.reflect.Array;
 import java.util.Iterator;
 import java.util.List;
@@ -30,7 +31,7 @@ public class GameControl<K, V> {
     String lastAction = "";
 
     // Primary game run function - fires from Main
-    public void runGame() {
+    public void runGame() throws LineUnavailableException {
         // Title screen
         console.clear();
         splashScreen.splash();
@@ -49,6 +50,7 @@ public class GameControl<K, V> {
         HitEnter.enter();
         playerMap1.build();
         playerMap2.build();
+        music.setFile("bgmusic.wav");
         music.play();
         //**************************/
 
@@ -58,7 +60,7 @@ public class GameControl<K, V> {
     }
 
     // Driving method for 'turns'
-    private void playGame(Player player, LocationGetter location, List<Doors> doors) {
+    private void playGame(Player player, LocationGetter location, List<Doors> doors) throws LineUnavailableException {
         // Game Loop
         while (player.isPlayGame()) {
             console.clear();

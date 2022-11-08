@@ -2,6 +2,7 @@ package com.caged.gui;
 
 import com.caged.FileGetter;
 
+import javax.sound.sampled.LineUnavailableException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

@@ -2,6 +2,7 @@ package com.caged.gui;
 
 import com.caged.*;
 
+import javax.sound.sampled.LineUnavailableException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -50,7 +51,7 @@ public class TestMainWindow implements ActionListener, MouseListener {
     MusicPlayer gameMusic = new MusicPlayer();
     private JLayeredPane layeredPane;
 
-    public void executeMainWindow(){
+    public void executeMainWindow() throws LineUnavailableException {
         createFrame();
         frame.setVisible(true);
 //        mainPanel();
@@ -58,7 +59,7 @@ public class TestMainWindow implements ActionListener, MouseListener {
 //        createLabel();
         //panelHandler();
     }
-    public void createFrame(){
+    public void createFrame() throws LineUnavailableException {
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("The Caged");
@@ -248,7 +249,7 @@ public class TestMainWindow implements ActionListener, MouseListener {
 
         volume = new JToggleButton("Music ON");
         volume.setForeground(Color.GREEN);
-        gameMusic.play();
+        //gameMusic.play("bgmusic.wav");
         volume.addActionListener(this);
         topPanel.add(volume);
 

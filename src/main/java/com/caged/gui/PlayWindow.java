@@ -4,10 +4,12 @@ import com.caged.*;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 
-public class PlayWindow implements ActionListener, MouseListener {
+public class PlayWindow implements ActionListener, MouseListener{
 
     // GUI VARIABLES
     JFrame frame;
@@ -54,6 +56,7 @@ public class PlayWindow implements ActionListener, MouseListener {
     JButton inv4;
 
     JToggleButton volume;
+    JSlider minMaxVolume;
 
     // Class loader for image calling
     FileGetter url = new FileGetter();
@@ -66,10 +69,14 @@ public class PlayWindow implements ActionListener, MouseListener {
     MusicPlayer gameMusic = new MusicPlayer();
 
     public void execute() {
+        gameMusic.setFile("bgmusic.wav");
+        gameMusic.play();
+        gameMusic.loopSound();
         mainLabel();
         createLabels(player);
         createHelpBtn();
         createMusicToggleButton();
+        createMusicSlider();
         createQuitBtn();
         createTopPanel();
         createDirectionalButtons();
@@ -90,6 +97,7 @@ public class PlayWindow implements ActionListener, MouseListener {
         frame.setTitle("The Caged");
         frame.setSize(1200, 900);
         frame.setLayout(null);
+        frame.setLocationRelativeTo(null);
         frame.add(topPanel);
         frame.add(centerPanel);
         frame.add(bottomPanel);
@@ -108,6 +116,7 @@ public class PlayWindow implements ActionListener, MouseListener {
         topPanel = new JPanel();
         topPanel.setBounds(0, 20, 1200, 50);
         topPanel.setOpaque(false);
+        topPanel.add(minMaxVolume);
         topPanel.add(volume);
         topPanel.add(location);
         topPanel.add(weapon);
@@ -126,6 +135,7 @@ public class PlayWindow implements ActionListener, MouseListener {
         centerPanel.add(centerEastPanel, BorderLayout.EAST);
         centerPanel.add(centerSouthPanel, BorderLayout.SOUTH);
         centerPanel.add(centerWestPanel, BorderLayout.WEST);
+
     }
 
     public void createBottomPanel() {
@@ -153,16 +163,40 @@ public class PlayWindow implements ActionListener, MouseListener {
 
     public void createQuitBtn() {
         quitBtn = new JButton("Quit Game");
-        quitBtn.addActionListener(this);
+        quitBtn.addActionListener(e -> {
+            int userInput = JOptionPane.showConfirmDialog(frame,
+                    "Are you your you want to quit?", "Caged", JOptionPane.YES_NO_OPTION );
+            if (userInput == 0) {
+                System.exit(1);
+            }
+        });
     }
 
     public void createMusicToggleButton() {
         volume = new JToggleButton("Music ON");
         volume.setForeground(Color.GREEN);
-        gameMusic.play();
-        volume.addActionListener(this);
+        volume.addActionListener(e -> {
+            gameMusic.mute(minMaxVolume);
+            if(volume.isSelected()){
+                volume.setText("Music OFF");
+                volume.setForeground(Color.RED);
+            }
+            else{
+                volume.setText("Music ON");
+                volume.setForeground(Color.GREEN);
+            }
+        });
     }
+    public void createMusicSlider(){
+        minMaxVolume = new JSlider(-60,6);
+        minMaxVolume.setPreferredSize(new Dimension(100,50));
+        minMaxVolume.setPaintTicks(true);
+        minMaxVolume.addChangeListener(e -> {
+            gameMusic.currentVolume = minMaxVolume.getValue();
+            gameMusic.floatControl.setValue(gameMusic.currentVolume);
+        });
 
+    }
     public void createActionInfoArea() {
           String text = "You  awaken and found yourself crying in the cage!";
           actionField = new JTextArea(50, 40);
@@ -291,16 +325,6 @@ public class PlayWindow implements ActionListener, MouseListener {
                 gameMusic.turnOff();
                 System.exit(1);
             }
-        }
-        if(volume.isSelected()){
-            volume.setText("Music OFF");
-            volume.setForeground(Color.RED);
-            gameMusic.turnOff();
-        }
-        else{
-            volume.setText("Music ON");
-            volume.setForeground(Color.GREEN);
-            gameMusic.play();
         }
     }
 
