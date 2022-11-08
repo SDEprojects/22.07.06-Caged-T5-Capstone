@@ -55,7 +55,6 @@ public class MusicPlayer{
     }
     public void volumeUp(){
         currentVolume += 1.0f;
-        System.out.println("current volume:" + currentVolume);
         if (currentVolume>6.0f){
             currentVolume = 6.0f;
         }
