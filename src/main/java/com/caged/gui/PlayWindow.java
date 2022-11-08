@@ -193,7 +193,9 @@ public class PlayWindow implements MouseListener{
         minMaxVolume.setPaintTicks(true);
         minMaxVolume.addChangeListener(e -> {
             gameMusic.currentVolume = minMaxVolume.getValue();
-            gameMusic.floatControl.setValue(gameMusic.currentVolume);
+            if(volume.getText() == "Music ON"){
+                gameMusic.floatControl.setValue(gameMusic.currentVolume);
+            }
         });
 
     }
