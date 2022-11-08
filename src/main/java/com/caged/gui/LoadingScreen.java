@@ -26,7 +26,7 @@ public class LoadingScreen {
         frame.setVisible(true);
 
 
-        displayImage = new ImageIcon("resources/prisonRelease.gif");
+        displayImage = new ImageIcon(url.imageGetter("prisonRelease.gif"));
         image = new JLabel(displayImage);
         image.setSize(1200, 900);
         frame.add(image);
