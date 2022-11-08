@@ -35,7 +35,7 @@ public class Player {
 
     //functions
     public void playerActions(String verb, String noun, String nounPrefix, LocationGetter location,
-                              List<Doors> doors, GameMap playerMap1, GameMap playerMap2, MusicPlayer music) throws LineUnavailableException {
+                              List<Doors> doors, GameMap playerMap1, GameMap playerMap2, MusicPlayer music) {
         switch (verb) {
             case "move":
                 move(noun, location, doors);
@@ -76,12 +76,6 @@ public class Player {
             case "equip":
                 equip();
                 break;
-            case "play":
-                playMusic(music);
-                break;
-            case "stop":
-                stopMusic(music);
-                break;
             case "log":
                 log();
                 break;
@@ -119,19 +113,6 @@ public class Player {
             }
 
         }
-    }
-
-    private void playMusic(MusicPlayer music) throws LineUnavailableException {
-        music.setFile("gbmusic.wav");
-        music.play();
-        System.out.println("Play music");
-        lastAction.add("Playing music");
-    }
-
-    private void stopMusic(MusicPlayer music) {
-        music.turnOff();
-        System.out.println("quit music");
-        lastAction.add("Turned off music");
     }
 
     private void attack(String firstName, String lastName, LocationGetter location) {
@@ -242,7 +223,7 @@ public class Player {
         }
     }
 
-    private void move(String direction, LocationGetter location, List<Doors> doors) {
+    public void move(String direction, LocationGetter location, List<Doors> doors) {
         String playerLocation = getCurrentLocation();
         JsonNode node = mapper.valueToTree(location);
         try {
@@ -265,12 +246,12 @@ public class Player {
         } catch (Exception e) {
             System.out.println("Direction not available...");
             lastAction.add("Direction not available...");
-            HitEnter.enter();
+            //HitEnter.enter();
         }
-        if (getCurrentLocation().equals("Exit")) {
-            playGame = false;
-            HitEnter.enter();
-        }
+//        if (getCurrentLocation().equals("Exit")) {
+//            playGame = false;
+//            HitEnter.enter();
+//        }
     }
 
     public void unlock(String target, String direction, LocationGetter location, List<Doors> doors) {
