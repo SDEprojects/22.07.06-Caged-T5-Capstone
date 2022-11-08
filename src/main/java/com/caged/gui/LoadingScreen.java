@@ -28,7 +28,7 @@ public class LoadingScreen {
     public void createGUI() {
         frame = new JFrame("Caged");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(900, 600);
+        frame.setSize(1200, 900);
         frame.getContentPane().setLayout(null);
         frame.setLocationRelativeTo(null);
         frame.add(image);
@@ -36,8 +36,9 @@ public class LoadingScreen {
     }
 
     public void addImage() {
-        image = new JLabel(displayImage = new ImageIcon(url.imageGetter("prisonRelease.gif")));
-        image.setBounds(0, 0, 900, 600);
+        displayImage = new ImageIcon("resources/prisonRelease.gif");
+        image = new JLabel(displayImage);
+        image.setSize(1200, 900);
         image.add(text);
         image.add(progressBar);
         image.add(message);
@@ -47,7 +48,7 @@ public class LoadingScreen {
     public void addText() {
         text = new JLabel("WELCOME TO CAGED");
         text.setFont(new Font("arial", Font.BOLD, 45));
-        text.setBounds(160, 440, 600, 40);
+        text.setBounds(200, 440, 600, 40);
         text.setBorder((BorderFactory.createEmptyBorder(4,4,4,4)));
         text.setForeground(Color.red);
 
@@ -56,7 +57,7 @@ public class LoadingScreen {
 
     public void addMessage() {
         message = new JLabel();
-        message.setBounds(380, 540, 200, 40);//Setting the size and location of the label
+        message.setBounds(400, 540, 200, 40);//Setting the size and location of the label
         message.setForeground(Color.red);//Setting foreground Color
         message.setFont(new Font("arial", Font.BOLD, 20));//Setting font properties
         //message.setVisible(false);
@@ -65,7 +66,7 @@ public class LoadingScreen {
 
     public void addProgressBar() {
         progressBar = new JProgressBar();//Creating an object of JProgressBar
-        progressBar.setBounds(250, 520, 400, 30);//Setting Location and size
+        progressBar.setBounds(300, 520, 400, 30);//Setting Location and size
         progressBar.setBorderPainted(true);//Setting border painted property
         progressBar.setStringPainted(true);//Setting String painted property
         progressBar.setBackground(Color.WHITE);//setting background color
