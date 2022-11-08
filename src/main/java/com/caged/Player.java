@@ -3,6 +3,7 @@ package com.caged;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
+import javax.sound.sampled.LineUnavailableException;
 import java.util.*;
 
 public class Player {
@@ -34,7 +35,7 @@ public class Player {
 
     //functions
     public void playerActions(String verb, String noun, String nounPrefix, LocationGetter location,
-                              List<Doors> doors, GameMap playerMap1, GameMap playerMap2, MusicPlayer music) {
+                              List<Doors> doors, GameMap playerMap1, GameMap playerMap2, MusicPlayer music) throws LineUnavailableException {
         switch (verb) {
             case "move":
                 move(noun, location, doors);
@@ -120,7 +121,8 @@ public class Player {
         }
     }
 
-    private void playMusic(MusicPlayer music) {
+    private void playMusic(MusicPlayer music) throws LineUnavailableException {
+        music.setFile("gbmusic.wav");
         music.play();
         System.out.println("Play music");
         lastAction.add("Playing music");
