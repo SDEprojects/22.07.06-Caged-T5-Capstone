@@ -75,7 +75,7 @@ public class PlayWindow implements MouseListener {
     List<Doors> doors = yamlReader.doorLoader(); // TODO: used for viewable paths
     MusicPlayer gameMusic = new MusicPlayer();
 
-    public void execute() {
+    public PlayWindow() {
         gameMusic.setFile("bgmusic.wav");
         gameMusic.play();
         gameMusic.loopSound();

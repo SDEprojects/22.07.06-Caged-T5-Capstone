@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
-public class MainWindow implements ActionListener {
+public class MainWindow{
     JFrame frame;
     JButton newGameBtn;
     JButton quitBtn;
@@ -18,57 +18,45 @@ public class MainWindow implements ActionListener {
     JLabel confirmLabel;
     FileGetter url = new FileGetter();
 
-    public void execute (){
-        createBtns();
-        createLabel();
+    public MainWindow(){
         createFrame();
-
+        frame.setVisible(true);
     }
 
     public void createFrame(){
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("The Caged");
-        frame.setSize(900, 600);
+        frame.setSize(1200, 900);
         frame.setLayout(null);
         frame.setLocationRelativeTo(null);
-        frame.add(label);
-        frame.setVisible(true);
-    }
 
-    public void createBtns (){
 
-        newGameBtn = new JButton("New Game");
-        newGameBtn.addActionListener(this);
-        quitBtn  = new JButton("Quit");
-        quitBtn.addActionListener(this);
-        newGameBtn.setBounds(380, 400, 100, 50);
-        quitBtn.setBounds(500, 400, 100 ,50);
-
-    }
-
-    public void createLabel(){
         displayImage = new ImageIcon(url.imageGetter("MainGameDIsplay.jpg"));
         label = new JLabel(displayImage);
-        label.setBounds(0,0, 900, 600);
-        label.add(newGameBtn);
-        label.add(quitBtn);
+        label.setBounds(0, 0, 1200, 900);
+        frame.add(label);
 
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == newGameBtn){
+        newGameBtn = new JButton("New Game");
+        newGameBtn.setFont(new Font("Arial",Font.BOLD,20));
+        newGameBtn.setBounds(400, 400, 150, 100);
+        newGameBtn.addActionListener(e -> {
             frame.dispose();
-            PlayWindow play = new PlayWindow();
-            play.execute();
-        }
-        if(e.getSource() == quitBtn){
-           int userInput=  JOptionPane.showConfirmDialog(frame, "Are you your you want to quit?", "Caged", JOptionPane.YES_NO_OPTION);
-           if(userInput == 0){
-               frame.dispose();
-           }
-        }
-    }
+            new PlayWindow();
 
+        });
+        label.add(newGameBtn);
+
+        quitBtn  = new JButton("Quit");
+        quitBtn.setFont(new Font("Arial",Font.BOLD,20));
+        quitBtn.setBounds(600, 400, 150 ,100);
+        quitBtn.addActionListener(e -> {
+            int userInput=  JOptionPane.showConfirmDialog(frame, "Are you your you want to quit?",
+                    "Caged", JOptionPane.YES_NO_OPTION);
+            if(userInput == 0){
+                frame.dispose();
+            }
+        });
+        label.add(quitBtn);
+    }
 }
