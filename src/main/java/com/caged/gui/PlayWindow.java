@@ -9,7 +9,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 
-public class PlayWindow implements ActionListener, MouseListener{
+public class PlayWindow implements MouseListener{
 
     // GUI VARIABLES
     JFrame frame;
@@ -315,17 +315,6 @@ public class PlayWindow implements ActionListener, MouseListener{
     public void inventoryTaken(){
 
 
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == quitBtn) {
-            int userInput = JOptionPane.showConfirmDialog(frame, "Are you your you want to quit?", "Caged", JOptionPane.YES_NO_OPTION );
-            if (userInput == 0) {
-                gameMusic.turnOff();
-                System.exit(1);
-            }
-        }
     }
 
     @Override
