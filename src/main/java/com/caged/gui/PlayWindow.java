@@ -1,6 +1,8 @@
 package com.caged.gui;
 
 import com.caged.*;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
 import javax.swing.*;
 import java.awt.*;
@@ -73,6 +75,9 @@ public class PlayWindow implements MouseListener {
     Player player = yamlReader.playerLoader(); //sets default player stats
     LocationGetter locationVar = yamlReader.locationLoader(); //TODO: used for map update
     List<Doors> doors = yamlReader.doorLoader(); // TODO: used for viewable paths
+
+    YAMLMapper mapper = new YAMLMapper();
+    JsonNode node = mapper.valueToTree(locationVar);
     MusicPlayer gameMusic = new MusicPlayer();
 
     public void execute() {
@@ -291,10 +296,10 @@ public class PlayWindow implements MouseListener {
     }
 
     public void createInvButtons() {
-        bedImg = new ImageIcon("resources/bed.png");
-        wallImg = new ImageIcon("resources/wall.jpg");
-        windowImg = new ImageIcon("resources/window.jpg");
-        deskImg = new ImageIcon("resources/desk.jpeg");
+        bedImg = new ImageIcon(url.imageGetter("bed.png"));
+        wallImg = new ImageIcon(url.imageGetter("wall.jpg"));
+        windowImg  = new ImageIcon(url.imageGetter("window.jpg"));
+        deskImg = new ImageIcon(url.imageGetter("desk.jpeg"));
         inv1 = new JButton(bedImg);
         inv1.setOpaque(false);
         inv1.setBorderPainted(false);
@@ -331,7 +336,7 @@ public class PlayWindow implements MouseListener {
     }
 
     public void createMap() {
-        map = new ImageIcon("resources/map.jpeg");
+        map = new ImageIcon(url.imageGetter("map.jpeg"));
         mapLabel = new JLabel(map);
 
     }
