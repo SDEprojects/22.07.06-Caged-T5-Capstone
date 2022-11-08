@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLParser;
 
+import javax.sound.sampled.LineUnavailableException;
 import java.lang.reflect.Array;
 import java.util.Iterator;
 import java.util.List;
@@ -18,8 +19,8 @@ public class GameControl<K, V> {
     private final Scanner scanner = new Scanner(System.in);
     private boolean playGame = true;
     Scanner in = new Scanner(System.in);
-    TextParser textParser = new TextParser();
-    YAMLReader yamlReader = new YAMLReader();
+    TextParser textParser = new TextParser(); // unnecessary?
+    YAMLReader yamlReader = new YAMLReader(); //migrated
     SplashScreen splashScreen = new SplashScreen();
     MainMenu mainMenu = new MainMenu();
     Console console = new Console();
@@ -30,7 +31,7 @@ public class GameControl<K, V> {
     String lastAction = "";
 
     // Primary game run function - fires from Main
-    public void runGame() {
+    public void runGame() throws LineUnavailableException {
         // Title screen
         console.clear();
         splashScreen.splash();
@@ -49,6 +50,7 @@ public class GameControl<K, V> {
         HitEnter.enter();
         playerMap1.build();
         playerMap2.build();
+        music.setFile("bgmusic.wav");
         music.play();
         //**************************/
 
@@ -58,7 +60,7 @@ public class GameControl<K, V> {
     }
 
     // Driving method for 'turns'
-    private void playGame(Player player, LocationGetter location, List<Doors> doors) {
+    private void playGame(Player player, LocationGetter location, List<Doors> doors) throws LineUnavailableException {
         // Game Loop
         while (player.isPlayGame()) {
             console.clear();
@@ -83,6 +85,7 @@ public class GameControl<K, V> {
             System.out.println("\nPeople seen in room: ");
             KeyValueParser.key(node.get("room").get(playerLocation).get("NPCs"));
             System.out.println("\nDirections you can move: ");
+            // TODO: provides movable directions to screen:
             KeyValueParser.locationKeyValue(node.get("room").get(playerLocation).get("Moves"), player, doors);
             System.out.println("\nLast action taken: "+player.getLastAction().get(player.getLastAction().size()-1));
             System.out.print(">>>>");

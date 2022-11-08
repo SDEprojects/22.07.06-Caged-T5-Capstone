@@ -1,12 +1,13 @@
 package com.caged.client;
 
-import com.caged.GameControl;
+
+import com.caged.gui.LoadingScreen;
 
 class Main {
 
     public static void main(String[] args) {
-        GameControl newGame = new GameControl();
-        newGame.runGame();
+        LoadingScreen main = new LoadingScreen();
+
     }
 
 }

@@ -15,54 +15,76 @@ import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.*;
 
 
-class MusicPlayer{
+public class MusicPlayer{
     FileGetter fileGetter = new FileGetter();
-    Scanner scanner = new Scanner(System.in);
-    File file = new File("");
-    boolean playCompleted;
+    public float previousVolume = 0;
+    public float currentVolume = -17;
+    public FloatControl floatControl;
+    boolean mute = false;
+    Clip audioClip;
+    private JSlider minMaxVolume;
 
 
-    public void play() {
+    public void setFile(String path) {
 
         try {
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(new BufferedInputStream(fileGetter.fileGetter("bgmusic.wav")));
-            //AudioFormat format = audioStream.getFormat();
-            //DataLine.Info info = new DataLine.Info(Clip.class, format);
-            Clip audioClip = AudioSystem.getClip();
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(new BufferedInputStream(fileGetter.fileGetter(path)));
+            audioClip = AudioSystem.getClip();
             audioClip.open(audioStream);
-            audioClip.loop(Clip.LOOP_CONTINUOUSLY);
-            playCompleted = false;
-            Thread thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    while (!playCompleted) {
-                        try {
-                            Thread.sleep(1000);
-
-                        } catch (InterruptedException ex) {
-                            ex.printStackTrace();
-                        }
-                    }
-                    audioClip.close();
-                }
-            });
-            thread.start();
+            floatControl = (FloatControl)audioClip.getControl(FloatControl.Type.MASTER_GAIN);
 
         } catch (UnsupportedAudioFileException | LineUnavailableException | IOException ex) {
             ex.printStackTrace();
         }
 
     }
-
-    public void update(LineEvent event) {
-        LineEvent.Type type = event.getType();
-
+    public  void play(){
+        floatControl.setValue(currentVolume);
+        audioClip.setFramePosition(0);
+        audioClip.start();
     }
 
     public void turnOff() {
-        playCompleted = true;
+        audioClip.close();
     }
+    public void loopSound(){
+        audioClip.loop(audioClip.LOOP_CONTINUOUSLY);
+    }
+    public void volumeUp(){
+        currentVolume += 1.0f;
+        if (currentVolume>6.0f){
+            currentVolume = 6.0f;
+        }
+        floatControl.setValue(currentVolume);
+    }
+    public void volumeDown(){
+        currentVolume -=1.0f;
+        System.out.println("current volume:"+ currentVolume);
+        if (currentVolume< -80.0f){
+            currentVolume = -80f;
+        }
+        floatControl.setValue(currentVolume);
+    }
+    public void mute(JSlider minMaxVolume){
+        this.minMaxVolume = minMaxVolume;
+        if (!mute){
+            previousVolume = currentVolume;
+            System.out.println("current volume:"+currentVolume);
+            currentVolume = -80f;
+            floatControl.setValue(currentVolume);
+            mute = true;
 
+            minMaxVolume.setValue(minMaxVolume.getMinimum());
+        }
+        else if (mute){
+            currentVolume = previousVolume;
+            minMaxVolume.setValue((int) currentVolume);
+            System.out.println("current volume:"+currentVolume);
+            floatControl.setValue(currentVolume);
+            mute = false;
+        }
+    }
 }

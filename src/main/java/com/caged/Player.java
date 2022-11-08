@@ -3,9 +3,10 @@ package com.caged;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
+import javax.sound.sampled.LineUnavailableException;
 import java.util.*;
 
-class Player {
+public class Player {
 
     private String name;
     private String currentLocation;
@@ -75,12 +76,6 @@ class Player {
             case "equip":
                 equip();
                 break;
-            case "play":
-                playMusic(music);
-                break;
-            case "stop":
-                stopMusic(music);
-                break;
             case "log":
                 log();
                 break;
@@ -118,18 +113,6 @@ class Player {
             }
 
         }
-    }
-
-    private void playMusic(MusicPlayer music) {
-        music.play();
-        System.out.println("Play music");
-        lastAction.add("Playing music");
-    }
-
-    private void stopMusic(MusicPlayer music) {
-        music.turnOff();
-        System.out.println("quit music");
-        lastAction.add("Turned off music");
     }
 
     private void attack(String firstName, String lastName, LocationGetter location) {
@@ -240,7 +223,7 @@ class Player {
         }
     }
 
-    private void move(String direction, LocationGetter location, List<Doors> doors) {
+    public void move(String direction, LocationGetter location, List<Doors> doors) {
         String playerLocation = getCurrentLocation();
         JsonNode node = mapper.valueToTree(location);
         try {
@@ -263,12 +246,12 @@ class Player {
         } catch (Exception e) {
             System.out.println("Direction not available...");
             lastAction.add("Direction not available...");
-            HitEnter.enter();
+            //HitEnter.enter();
         }
-        if (getCurrentLocation().equals("Exit")) {
-            playGame = false;
-            HitEnter.enter();
-        }
+//        if (getCurrentLocation().equals("Exit")) {
+//            playGame = false;
+//            HitEnter.enter();
+//        }
     }
 
     public void unlock(String target, String direction, LocationGetter location, List<Doors> doors) {
