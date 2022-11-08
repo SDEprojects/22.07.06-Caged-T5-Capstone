@@ -19,6 +19,7 @@ public class PlayWindow implements MouseListener {
     JPanel centerSouthPanel;
     JPanel centerWestPanel;
     JPanel inventoryPanel;
+    JPanel playerActionPanel;
 
     JLabel label;
     ImageIcon displayImage;
@@ -52,6 +53,14 @@ public class PlayWindow implements MouseListener {
     JButton inv2;
     JButton inv3;
     JButton inv4;
+    JButton take;
+    JButton look;
+    JButton talk;
+    JButton attack;
+    JButton use;
+    JButton unlock;
+    JButton equip;
+    JButton heal;
 
     JToggleButton volume;
     JSlider minMaxVolume;
@@ -79,6 +88,8 @@ public class PlayWindow implements MouseListener {
         createTopPanel();
         createDirectionalButtons();
         createActionInfoArea();
+        createButtonActionPallet();
+        createPlayerActionPanel();
         createInvButtons();
         createInventoryPanel();
         createMap();
@@ -200,7 +211,7 @@ public class PlayWindow implements MouseListener {
 
     public void createActionInfoArea() {
         String text = "You  awaken and found yourself crying in the cage!";
-        actionField = new JTextArea(50, 40);
+        actionField = new JTextArea(5, 30);
         actionField.setFont(new Font("Arial", Font.BOLD, 14));
         actionField.setText(text);
         actionField.setLineWrap(true);
@@ -275,6 +286,7 @@ public class PlayWindow implements MouseListener {
         centerSouthPanel.setPreferredSize(new Dimension(1200, 120));
         centerSouthPanel.setLayout(new FlowLayout());
         centerSouthPanel.add(actionField);
+        centerSouthPanel.add(playerActionPanel);
         centerSouthPanel.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 1, true));
     }
 
@@ -324,10 +336,32 @@ public class PlayWindow implements MouseListener {
 
     }
 
-    public void inventoryTaken() {
-
+    public void createButtonActionPallet(){
+        take = new JButton("Take");
+        look = new JButton("Look");
+        attack = new JButton("Attack");
+        use =  new JButton("Use");
+        unlock = new JButton("Equip");
+        heal = new JButton("Heal");
+        talk = new JButton("Talk");
+        equip = new JButton("Equip");
+    }
+    public void createPlayerActionPanel(){
+        playerActionPanel = new JPanel();
+        playerActionPanel.setSize(600, 120);
+        playerActionPanel.setOpaque(false);
+        playerActionPanel.add(take);
+        playerActionPanel.add(look);
+        playerActionPanel.add(attack);
+        playerActionPanel.add(use);
+        playerActionPanel.add(unlock);
+        playerActionPanel.add(heal);
+        playerActionPanel.add(talk);
+        playerActionPanel.add(equip);
 
     }
+
+
 
     public void movePerformed(ActionEvent e) {
         if (e.getSource() == north) {
