@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-class KeyValueParser {
+public class KeyValueParser {
 
     public static void keyValue(JsonNode node) {
         Iterator<Map.Entry<String, JsonNode>> nodes = node.fields();
@@ -23,6 +23,8 @@ class KeyValueParser {
         while (nodes.hasNext()) {
             Map.Entry<String, JsonNode> entry = (Map.Entry<String, JsonNode>) nodes.next();
             System.out.println("\u001b[35m" + entry.getKey()+ "\u001b[0m");
+            //Store in global arraylist
+            InventoryGlobal.roomInvList.add(entry.getKey());
         }
     }
 

@@ -67,6 +67,9 @@ public class PlayWindow implements MouseListener {
     JToggleButton volume;
     JSlider minMaxVolume;
 
+    JList <String> roomInvList;
+    JList <String> npcInvList;
+
     // Class loader for image calling
     FileGetter url = new FileGetter();
 
@@ -98,6 +101,8 @@ public class PlayWindow implements MouseListener {
         createInvButtons();
         createInventoryPanel();
         createMap();
+        createRoomInventoryList();
+        createNPCList();
         createMidCenterPanels();
         createCenterPanel();
         createBottomPanel();
@@ -238,6 +243,7 @@ public class PlayWindow implements MouseListener {
         north.setBorderPainted(false);
         north.setBorder(null);
         north.setFocusPainted(false);
+//        north.setEnabled(false);
         north.addActionListener(this::movePerformed);
 
         south = new JButton(southImg);
@@ -286,6 +292,9 @@ public class PlayWindow implements MouseListener {
         centerWestPanel.setOpaque(false);
         centerWestPanel.setPreferredSize(new Dimension(300, 480));
         centerWestPanel.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 1, true));
+        centerWestPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        centerWestPanel.add(roomInvList);
+        centerWestPanel.add(npcInvList);
         centerSouthPanel = new JPanel();
         centerSouthPanel.setOpaque(false);
         centerSouthPanel.setPreferredSize(new Dimension(1200, 120));
@@ -364,6 +373,30 @@ public class PlayWindow implements MouseListener {
         playerActionPanel.add(talk);
         playerActionPanel.add(equip);
 
+    }
+
+    public void createRoomInventoryList(){
+
+        DefaultListModel<String> inv = new DefaultListModel<>();
+        String playerLocation = player.getCurrentLocation();
+        KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory"));
+        for (String item: InventoryGlobal.roomInvList){
+            inv.addElement(item);
+        }
+        roomInvList = new JList<>(inv);
+        roomInvList.setBounds(100, 100, 75, 75);
+    }
+
+    public void createNPCList(){
+        DefaultListModel<String> inv = new DefaultListModel<>();
+        String playerLocation = player.getCurrentLocation();
+        KeyValueParser.key(node.get("room").get(playerLocation).get("NPCs"));
+
+        for (String item: InventoryGlobal.npcList){
+            inv.addElement(item);
+        }
+        npcInvList = new JList<>(inv);
+        npcInvList.setBounds(100, 100, 75, 75);
     }
 
 
