@@ -1,12 +1,9 @@
 package com.caged.gui;
 
-import com.apple.eawt.Application;
-import com.caged.FileGetter;
 
-import javax.imageio.ImageIO;
+import com.caged.FileGetter;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 
 public class LoadingScreen {
@@ -16,7 +13,9 @@ public class LoadingScreen {
     ImageIcon displayImage;
     FileGetter url = new FileGetter();
 
+
     public LoadingScreen() throws IOException {
+
         createGUI();
     }
 
@@ -31,7 +30,7 @@ public class LoadingScreen {
         frame.setVisible(true);
 
 
-        displayImage = new ImageIcon("resources/prisonRelease.gif");
+        displayImage = new ImageIcon(url.imageGetter("prisonRelease.gif"));
         image = new JLabel(displayImage);
         image.setSize(1200, 900);
         frame.add(image);
@@ -39,7 +38,7 @@ public class LoadingScreen {
         text = new JLabel("WELCOME TO CAGED");
         text.setFont(new Font("arial", Font.BOLD, 45));
         text.setBounds(350, 440, 600, 40);
-        text.setBorder((BorderFactory.createEmptyBorder(4,4,4,4)));
+        text.setBorder((BorderFactory.createEmptyBorder(4, 4, 4, 4)));
         text.setForeground(Color.red);
         image.add(text);
 
@@ -60,16 +59,16 @@ public class LoadingScreen {
         //progressBar.setVisible(false)
         image.add(progressBar);
 
-        int i = 0;//Creating an integer variable and intializing it to 0
+        int progress = 0;//Creating an integer variable and initializing it to 0
 
-        while (i <= 100) {
+        while (progress <= 100) {
             try {
                 Thread.sleep(50);//Pausing execution for 50 milliseconds
-                progressBar.setValue(i);//Setting value of Progress Bar
-                message.setText("LOADING " + i + "%");//Setting text of the message JLabel
+                progressBar.setValue(progress);//Setting value of Progress Bar
+                message.setText("LOADING " + progress + "%");//Setting text of the message JLabel
 
-                i++;
-                if(i == 100){
+                progress++;
+                if (progress == 100) {
                     frame.dispose();
                     new MainWindow();
                 }
@@ -78,8 +77,5 @@ public class LoadingScreen {
                 e.printStackTrace();
             }
         }
-        File dockImage = new File("resources/CagedLogo.png");
-        Image image = ImageIO.read(dockImage);
-        Application.getApplication().setDockIconImage(image);
     }
 }

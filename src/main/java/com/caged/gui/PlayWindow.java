@@ -116,7 +116,7 @@ public class PlayWindow implements MouseListener {
     }
 
     public void mainLabel() {
-        displayImage = new ImageIcon(url.imageGetter("MainGameDIsplay.jpg"));
+        displayImage = new ImageIcon(url.imageGetter("MainGameDisplay.jpeg"));
         label = new JLabel(displayImage);
         label.setBounds(0, 0, 1200, 900);
     }

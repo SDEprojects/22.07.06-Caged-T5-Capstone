@@ -1,12 +1,8 @@
 package com.caged.gui;
 
 import com.caged.FileGetter;
-
-import javax.sound.sampled.LineUnavailableException;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 public class MainWindow{
@@ -15,7 +11,6 @@ public class MainWindow{
     JButton quitBtn;
     ImageIcon displayImage;
     JLabel label;
-    JLabel confirmLabel;
     FileGetter url = new FileGetter();
 
     public MainWindow(){
@@ -32,7 +27,7 @@ public class MainWindow{
         frame.setLocationRelativeTo(null);
 
 
-        displayImage = new ImageIcon(url.imageGetter("MainGameDIsplay.jpg"));
+        displayImage = new ImageIcon(url.imageGetter("MainGameDisplay.jpeg"));
         label = new JLabel(displayImage);
         label.setBounds(0, 0, 1200, 900);
         frame.add(label);

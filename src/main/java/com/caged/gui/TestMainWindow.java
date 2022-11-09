@@ -72,7 +72,7 @@ public class TestMainWindow implements ActionListener, MouseListener {
         panel.setLayout(null);
         frame.getContentPane().add(panel);
 
-        displayImage = new ImageIcon(url.imageGetter("MainGameDIsplay.jpg"));
+        displayImage = new ImageIcon(url.imageGetter("MainGameDisplay.jpeg"));
         label = new JLabel(displayImage);
         label.setBounds(0, 0, 1200, 900);
         panel.add(label);
@@ -96,7 +96,7 @@ public class TestMainWindow implements ActionListener, MouseListener {
 
 
 
-        displayImage2 = new ImageIcon(url2.imageGetter("MainGameDIsplay.jpg"));
+        displayImage2 = new ImageIcon(url2.imageGetter("MainGameDisplay.jpeg"));
         label2 = new JLabel(displayImage2);
         label2.setBounds(0, 0, 1200, 900);
         playPanel.add(label2);
