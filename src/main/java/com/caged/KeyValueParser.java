@@ -42,23 +42,22 @@ public class KeyValueParser {
         while (nodes.hasNext()) {
             Map.Entry<String, JsonNode> entry = (Map.Entry<String, JsonNode>) nodes.next();
             String location = node.get(entry.getKey()).get("location").textValue();
-//            String loc = node.get(entry.getKey()).get("Moves").textValue();
-            String loc1 = node.get(entry.getKey()).textValue();
 
             Doors door = doors.stream().filter(doorSeek -> doorSeek.getDoorName().equals(node.get(entry.getKey()).get("door").textValue())).findFirst().orElse(null);
             if (!node.get(entry.getKey()).get("hidden").booleanValue()) {
 
                 if (node.get(entry.getKey()).get("door").isNull()){
                     System.out.println("\u001b[35m" + entry.getKey() + "\u001b[0m" + "  ---->  " + location);
+                    InventoryGlobal.locationList.add(entry.getKey());
+                    System.out.println(location);
 
                 }
                 else {
                     //Doors door = doors.stream().filter(doorSeek -> doorSeek.getDoorName().equals(node.get(entry.getKey()).get("door").textValue())).findFirst().orElse(null);
                     if (door.isLocked()){
                         System.out.println("\u001b[35m" + entry.getKey() + "\u001b[0m" + "  ---->  " + location + "  ---->  ***DOOR LOCKED***");
-//                        InventoryGlobal.locationList.add(location);
                         InventoryGlobal.locationList.add(entry.getKey());
-
+                        System.out.println(location);
                     }
                     else {
                         System.out.println("\u001b[35m" + entry.getKey() + "\u001b[0m" + "  ---->  " + location + "  ---->  DOOR UNLOCKED!");;

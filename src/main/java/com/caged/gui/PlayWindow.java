@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
 
-public class PlayWindow implements MouseListener {
+public class PlayWindow implements MouseListener, ActionListener {
 
     // GUI VARIABLES
     JFrame frame;
@@ -67,8 +67,11 @@ public class PlayWindow implements MouseListener {
     JToggleButton volume;
     JSlider minMaxVolume;
 
+    DefaultListModel<String> inv = new DefaultListModel<>();
     JList <String> roomInvList;
     JList <String> npcInvList;
+    JList<String> itemList;
+    String text;
 
     // Class loader for image calling
     FileGetter url = new FileGetter();
@@ -220,13 +223,14 @@ public class PlayWindow implements MouseListener {
     }
 
     public void createActionInfoArea() {
-        String text = String.join(" ", player.getLastAction());
+        text = String.join(" ", player.getLastAction());
         actionField = new JTextArea(5, 30);
         actionField.setFont(new Font("Arial", Font.BOLD, 14));
         actionField.setText(text);
         actionField.setLineWrap(true);
         actionField.setWrapStyleWord(true);
         actionField.setOpaque(false);
+        actionField.setEditable(true);
         actionField.setBorder(BorderFactory.createLineBorder(Color.RED, 1, true));
 
     }
@@ -243,7 +247,7 @@ public class PlayWindow implements MouseListener {
         north.setBorderPainted(false);
         north.setBorder(null);
         north.setFocusPainted(false);
-        north.addActionListener(this::movePerformed);
+        north.addActionListener(this);
         north.setActionCommand("north");
 //        north.setEnabled(false);
 
@@ -253,8 +257,9 @@ public class PlayWindow implements MouseListener {
         south.setBorder(null);
         south.setFocusPainted(false);
         south.setPreferredSize(new Dimension(100, 190));
-        south.addActionListener(this::movePerformed);
+        south.addActionListener(this);
         south.setActionCommand("south");
+
 
         east = new JButton(eastImg);
         east.setBorderPainted(false);
@@ -262,7 +267,7 @@ public class PlayWindow implements MouseListener {
         east.setBorder(null);
         east.setPreferredSize(new Dimension(130, 195));
         east.setFocusPainted(false);
-        east.addActionListener(this::movePerformed);
+        east.addActionListener(this);
         east.setActionCommand("east");
 
         west = new JButton(westImg);
@@ -271,10 +276,8 @@ public class PlayWindow implements MouseListener {
         west.setBorder(null);
         west.setPreferredSize(new Dimension(130, 195));
         west.setFocusPainted(false);
-        west.addActionListener(this::movePerformed);
+        west.addActionListener(this);
         west.setActionCommand("west");
-
-
 
 
         String playerLocation = player.getCurrentLocation();
@@ -289,28 +292,24 @@ public class PlayWindow implements MouseListener {
                 north.setEnabled(false);
             }
 
-
             if (south.getActionCommand().equals(item)) {
 
                 south.setEnabled(true);
             } else {
                 south.setEnabled(false);
             }
-
             if (west.getActionCommand().equals(item)) {
 
                 west.setEnabled(true);
             } else {
                 west.setEnabled(false);
             }
-
             if (east.getActionCommand().equals(item)) {
 
                 east.setEnabled(true);
             } else {
                 east.setEnabled(false);
             }
-
         }
     }
 
@@ -394,14 +393,25 @@ public class PlayWindow implements MouseListener {
 
     public void createButtonActionPallet(){
         take = new JButton("Take");
+        take.addActionListener(this);
         look = new JButton("Look");
+        look.addActionListener(this);
         attack = new JButton("Attack");
+        attack.addActionListener(this);
         use =  new JButton("Use");
+        use.addActionListener(this);
         unlock = new JButton("Equip");
+        unlock.addActionListener(this);
         heal = new JButton("Heal");
+        heal.addActionListener(this);
         talk = new JButton("Talk");
+        talk.addActionListener(this);
         equip = new JButton("Equip");
+        equip.addActionListener(this);
     }
+
+
+
     public void createPlayerActionPanel(){
         playerActionPanel = new JPanel();
         playerActionPanel.setSize(600, 120);
@@ -418,8 +428,6 @@ public class PlayWindow implements MouseListener {
     }
 
     public void createRoomInventoryList(){
-
-        DefaultListModel<String> inv = new DefaultListModel<>();
         String playerLocation = player.getCurrentLocation();
         KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory"));
         for (String item: InventoryGlobal.roomInvList){
@@ -440,18 +448,45 @@ public class PlayWindow implements MouseListener {
         npcInvList = new JList<>(inv);
         npcInvList.setBounds(100, 100, 75, 75);
     }
+    public void createItemList(){
+        String playerLocation = player.getCurrentLocation();
+        KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory"));
+        for (String item: InventoryGlobal.roomInvList){
+            inv.addElement(item);
+        }
+        roomInvList = new JList<>(inv);
+        roomInvList.setBounds(100, 100, 75, 75);
+    }
 
 
+    public void actionPerformed(ActionEvent e){
 
-    public void movePerformed(ActionEvent e) {
         if (e.getSource() == north) {
             player.move("north", locationVar, doors);
+            text = "gaurav";
+            text = player.getLastAction().get(player.getLastAction().size()-1);
+//            text= String.join(" ", player.getLastAction());
+            actionField.setText(text);
         } else if (e.getSource() == south) {
             player.move("south", locationVar, doors);
+            text = player.getLastAction().get(player.getLastAction().size()-1);
+            actionField.setText(text);
+
         } else if (e.getSource() == east) {
             player.move("east", locationVar, doors);
+            text = player.getLastAction().get(player.getLastAction().size()-1);
+            actionField.setText(text);
         } else if (e.getSource() == west) {
             player.move("west", locationVar, doors);
+            text = player.getLastAction().get(player.getLastAction().size()-1);
+            actionField.setText(text);
+        }
+
+        String val = roomInvList.getSelectedValue();
+        if (e.getSource() == look){
+            player.look(val, locationVar);
+           text=  node.get("room").get(player.getCurrentLocation()).get("Inventory").get(val).get("description").textValue();
+           actionField.setText(text);
         }
     }
 
