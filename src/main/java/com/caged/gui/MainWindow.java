@@ -1,48 +1,45 @@
 package com.caged.gui;
 
 import com.caged.FileGetter;
+import com.caged.gui.PlayWindow;
+import com.caged.test.PlayWindowTest;
+import com.caged.test.TestMainWindow;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JOptionPane;
 
-public class MainWindow{
-    JFrame frame;
+public class MainWindow extends JPanel{
+    JPanel panel;
     JButton newGameBtn;
     JButton quitBtn;
     ImageIcon displayImage;
     JLabel label;
-    JLabel confirmLabel;
+
     FileGetter url = new FileGetter();
 
-    public MainWindow(){
-        createFrame();
+    public MainWindow(JFrame frame){
+        initialize(frame);
         frame.setVisible(true);
     }
 
-    public void createFrame(){
-        frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("The Caged");
-        frame.setSize(1200, 900);
-        frame.setLayout(null);
-        frame.setLocationRelativeTo(null);
+    public void initialize(JFrame frame){
+        panel = new JPanel();
+        panel.setLayout(null);
 
 
-        displayImage = new ImageIcon(url.imageGetter("MainGameDIsplay.jpg"));
+        displayImage = new ImageIcon(url.imageGetter("prison.jpeg"));
         label = new JLabel(displayImage);
         label.setBounds(0, 0, 1200, 900);
-        frame.add(label);
 
         newGameBtn = new JButton("New Game");
         newGameBtn.setFont(new Font("Arial",Font.BOLD,20));
         newGameBtn.setBounds(400, 400, 150, 100);
         newGameBtn.addActionListener(e -> {
-            frame.dispose();
-            new PlayWindow();
+            panel.setVisible(false);
+            new PlayWindowTest(frame);
+//            panel.revalidate();
+//            panel.repaint();
 
         });
         label.add(newGameBtn);
@@ -57,6 +54,10 @@ public class MainWindow{
                 frame.dispose();
             }
         });
-        label.add(quitBtn);
+        panel.add(newGameBtn);
+        panel.add(quitBtn);
+        panel.add(label);
+
+        frame.add(panel);
     }
 }

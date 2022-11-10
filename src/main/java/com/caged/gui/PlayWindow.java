@@ -9,10 +9,10 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
 
-public class PlayWindow implements MouseListener {
+public class PlayWindow extends JPanel implements MouseListener {
 
     // GUI VARIABLES
-    JFrame frame;
+    JPanel mainPanel;
     JPanel topPanel;
     JPanel centerPanel;
     JPanel bottomPanel;
@@ -80,7 +80,7 @@ public class PlayWindow implements MouseListener {
     JsonNode node = mapper.valueToTree(locationVar);
     MusicPlayer gameMusic = new MusicPlayer();
 
-    public PlayWindow() {
+    public PlayWindow(JFrame frame) {
         gameMusic.setFile("bgmusic.wav");
         gameMusic.play();
         gameMusic.loopSound();
@@ -101,22 +101,22 @@ public class PlayWindow implements MouseListener {
         createMidCenterPanels();
         createCenterPanel();
         createBottomPanel();
-        createFrame();
-
+        initialize();
+        frame.setVisible(true);
     }
 
-    public void createFrame() {
-        frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("The Caged");
-        frame.setSize(1200, 900);
-        frame.setLayout(null);
-        frame.setLocationRelativeTo(null);
-        frame.add(topPanel);
-        frame.add(centerPanel);
-        frame.add(bottomPanel);
-        frame.add(label);
-        frame.setVisible(true);
+    public void initialize() {
+        mainPanel = new JPanel();
+        //mainPanel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //mainPanel.setTitle("The Caged");
+        mainPanel.setSize(1200, 900);
+        mainPanel.setLayout(null);
+        //mainPanel.setLocationRelativeTo(null);
+        mainPanel.add(topPanel);
+        mainPanel.add(centerPanel);
+        mainPanel.add(bottomPanel);
+        mainPanel.add(label);
+
 
     }
 
@@ -178,7 +178,7 @@ public class PlayWindow implements MouseListener {
     public void createQuitBtn() {
         quitBtn = new JButton("Quit Game");
         quitBtn.addActionListener(e -> {
-            int userInput = JOptionPane.showConfirmDialog(frame,
+            int userInput = JOptionPane.showConfirmDialog(mainPanel,
                     "Are you your you want to quit?", "Caged", JOptionPane.YES_NO_OPTION);
             if (userInput == 0) {
                 System.exit(1);
@@ -336,8 +336,8 @@ public class PlayWindow implements MouseListener {
     }
 
     public void createMap() {
-        map = new ImageIcon(url.imageGetter("map.jpeg"));
-        mapLabel = new JLabel(map);
+            map = new ImageIcon(url.imageGetter("map.jpeg"));
+            mapLabel = new JLabel(map);
 
     }
 
