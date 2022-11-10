@@ -7,6 +7,7 @@ public class InventoryGlobal {
 
    public static List<String> roomInvList = new ArrayList<>();
    public static List<String> npcList = new ArrayList<>();
+   public static List<String> locationList = new ArrayList<>();
 
 
 }
