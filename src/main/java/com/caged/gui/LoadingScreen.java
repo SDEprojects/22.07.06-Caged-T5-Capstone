@@ -1,5 +1,6 @@
 package com.caged.gui;
 
+
 import com.caged.FileGetter;
 
 import javax.swing.*;
@@ -7,70 +8,83 @@ import java.awt.*;
 
 public class LoadingScreen {
     JFrame frame;
-    JLabel image, message, text;
+    JPanel panel;
+    JPanel panel1;
+    JLabel image, message, title;
     JProgressBar progressBar;
     ImageIcon displayImage;
     FileGetter url = new FileGetter();
-
 
     public LoadingScreen() {
         createGUI();
     }
 
     public void createGUI() {
+
         frame = new JFrame("Caged");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1200, 900);
-        frame.getContentPane().setLayout(null);
+        //frame.getContentPane().setLayout(null);
         frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
 
 
+        panel = new JPanel();
+        panel.setLayout(null);
+
+        panel1 = new JPanel();
+        panel1.setLayout(null);
+
+//
         displayImage = new ImageIcon(url.imageGetter("prisonRelease.gif"));
         image = new JLabel(displayImage);
         image.setSize(1200, 900);
-        frame.add(image);
 
-        text = new JLabel("WELCOME TO CAGED");
-        text.setFont(new Font("arial", Font.BOLD, 45));
-        text.setBounds(350, 440, 600, 40);
-        text.setBorder((BorderFactory.createEmptyBorder(4,4,4,4)));
-        text.setForeground(Color.red);
-        image.add(text);
+//
+        title = new JLabel("WELCOME TO CAGED");
+        title.setFont(new Font("arial", Font.BOLD, 45));
+        title.setBounds(350, 440, 600, 40);
+        title.setBorder((BorderFactory.createEmptyBorder(4, 4, 4, 4)));
+        title.setForeground(Color.red);
 
+//
         message = new JLabel();
         message.setBounds(525, 540, 200, 40);//Setting the size and location of the label
         message.setForeground(Color.red);//Setting foreground Color
         message.setFont(new Font("arial", Font.BOLD, 20));//Setting font properties
-        //message.setVisible(false);
-        image.add(message);
+
 
         progressBar = new JProgressBar();//Creating an object of JProgressBar
         progressBar.setBounds(400, 520, 400, 30);//Setting Location and size
-        progressBar.setBorderPainted(true);//Setting border painted property
         progressBar.setStringPainted(true);//Setting String painted property
-        progressBar.setBackground(Color.WHITE);//setting background color
-        progressBar.setForeground(Color.BLACK);//setting foreground color
         progressBar.setValue(0);//setting progress bar current value
-        //progressBar.setVisible(false);
-        image.add(progressBar);
 
-        int i = 0;//Creating an integer variable and intializing it to 0
 
-        while (i <= 100) {
+        panel.add(progressBar);
+        panel.add(title);
+        panel.add(message);
+        panel.add(image);
+        frame.add(panel);
+
+        frame.setVisible(true);
+
+        int progress = 0;//Creating an integer variable and initializing it to 0
+
+        while (progress <= 100) {
+
+            progressBar.setValue(progress);
             try {
-                Thread.sleep(50);//Pausing execution for 50 milliseconds
-                progressBar.setValue(i);//Setting value of Progress Bar
-                message.setText("LOADING " + Integer.toString(i) + "%");//Setting text of the message JLabel
-
-                i++;
-                if(i == 100){
-                    frame.dispose();
-                    new MainWindow();
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
+                Thread.sleep(50);
+            } catch (Exception ev) {
+                ev.printStackTrace();
+            }
+            progress++;
+            if (progress == 100) {
+                panel.setVisible(false);
+                new MainWindow(frame);
+//                panel.removeAll();
+//                new MainWindow(frame);
+//                panel.revalidate();
+//                panel.repaint();
             }
         }
     }
