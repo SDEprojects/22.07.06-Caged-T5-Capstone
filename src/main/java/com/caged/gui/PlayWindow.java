@@ -220,7 +220,7 @@ public class PlayWindow implements MouseListener {
     }
 
     public void createActionInfoArea() {
-        String text = "You  awaken and found yourself crying in the cage!";
+        String text = String.join(" ", player.getLastAction());
         actionField = new JTextArea(5, 30);
         actionField.setFont(new Font("Arial", Font.BOLD, 14));
         actionField.setText(text);
@@ -243,8 +243,9 @@ public class PlayWindow implements MouseListener {
         north.setBorderPainted(false);
         north.setBorder(null);
         north.setFocusPainted(false);
-//        north.setEnabled(false);
         north.addActionListener(this::movePerformed);
+        north.setActionCommand("north");
+//        north.setEnabled(false);
 
         south = new JButton(southImg);
         south.setOpaque(false);
@@ -253,6 +254,7 @@ public class PlayWindow implements MouseListener {
         south.setFocusPainted(false);
         south.setPreferredSize(new Dimension(100, 190));
         south.addActionListener(this::movePerformed);
+        south.setActionCommand("south");
 
         east = new JButton(eastImg);
         east.setBorderPainted(false);
@@ -261,6 +263,7 @@ public class PlayWindow implements MouseListener {
         east.setPreferredSize(new Dimension(130, 195));
         east.setFocusPainted(false);
         east.addActionListener(this::movePerformed);
+        east.setActionCommand("east");
 
         west = new JButton(westImg);
         west.setOpaque(false);
@@ -269,7 +272,46 @@ public class PlayWindow implements MouseListener {
         west.setPreferredSize(new Dimension(130, 195));
         west.setFocusPainted(false);
         west.addActionListener(this::movePerformed);
+        west.setActionCommand("west");
 
+
+
+
+        String playerLocation = player.getCurrentLocation();
+        KeyValueParser.locationKeyValue(node.get("room").get(playerLocation).get("Moves"), player, doors);
+
+        for (String item : InventoryGlobal.locationList) {
+
+            if (north.getActionCommand().equals(item)) {
+
+                north.setEnabled(true);
+            } else {
+                north.setEnabled(false);
+            }
+
+
+            if (south.getActionCommand().equals(item)) {
+
+                south.setEnabled(true);
+            } else {
+                south.setEnabled(false);
+            }
+
+            if (west.getActionCommand().equals(item)) {
+
+                west.setEnabled(true);
+            } else {
+                west.setEnabled(false);
+            }
+
+            if (east.getActionCommand().equals(item)) {
+
+                east.setEnabled(true);
+            } else {
+                east.setEnabled(false);
+            }
+
+        }
     }
 
     public void createMidCenterPanels() {
