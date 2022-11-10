@@ -372,7 +372,7 @@ public class Player {
         }
     }
 
-    private void look(String thing, LocationGetter location) { //private
+    public void look(String thing, LocationGetter location) { //private
         String playerLocation = getCurrentLocation();
         JsonNode node = mapper.valueToTree(location);
         if (node.get("room").get(playerLocation).get("Inventory").has(thing)) {
