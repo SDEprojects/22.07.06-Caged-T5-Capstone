@@ -47,7 +47,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     DefaultListModel<String> itemsInv = new DefaultListModel<>();
     JList <String> roomInvList;
     JList <String> npcInvList;
-    JList<String> itemList;
+    JList<String> itemList = new JList<>(itemsInv);
 
     String text;
 
@@ -180,6 +180,8 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         createNPCList();
 //        createItemList();
         centerWestPanel.add(roomInvList);
+        centerWestPanel.add(itemList);
+        itemList.setSize(100,100);
         centerWestPanel.add(npcInvList);
     }
     public void createRoomInventoryList(){
@@ -190,7 +192,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
             inv.addElement(item);
         }
         roomInvList = new JList<>(inv);
-        roomInvList.setBounds(100, 100, 75, 75);
+        roomInvList.setSize(100,100);
     }
     public void createNPCList(){
         DefaultListModel<String> inv = new DefaultListModel<>();
@@ -477,13 +479,10 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
             try {
                 KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory").get(val).get("items"), InventoryGlobal.itemsList);
                 for (String item: InventoryGlobal.itemsList){
-                    itemsInv.addElement(item);
+                    if(!itemsInv.contains(item)){
+                        itemsInv.addElement(item);
+                    }
                 }
-                itemList = new JList<>(itemsInv);
-                itemList.setSize(75, 75);
-                itemList.setVisible(true);
-                centerWestPanel.add(itemList);
-
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
