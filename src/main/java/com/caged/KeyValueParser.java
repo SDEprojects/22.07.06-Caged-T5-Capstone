@@ -18,13 +18,14 @@ public class KeyValueParser {
         }
     }
 
-    public static void key(JsonNode node) {
+    public static void key(JsonNode node, List<String> items) {
         Iterator<Map.Entry<String, JsonNode>> nodes = node.fields();
         while (nodes.hasNext()) {
             Map.Entry<String, JsonNode> entry = (Map.Entry<String, JsonNode>) nodes.next();
             System.out.println("\u001b[35m" + entry.getKey()+ "\u001b[0m");
             //Store in global arraylist
-            InventoryGlobal.roomInvList.add(entry.getKey());
+//            InventoryGlobal.roomInvList.add(entry.getKey());
+            items.add(entry.getKey());
         }
     }
 
