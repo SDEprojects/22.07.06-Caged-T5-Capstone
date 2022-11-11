@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-public class GameMap {
+class GameMap {
 
     List<String> a = new ArrayList<>();
     List<String> b = new ArrayList<>();
