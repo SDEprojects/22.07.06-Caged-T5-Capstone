@@ -34,19 +34,19 @@ public class LoadingScreen {
         panel1 = new JPanel();
         panel1.setLayout(null);
 
-//
+
         displayImage = new ImageIcon(url.imageGetter("prisonRelease.gif"));
         image = new JLabel(displayImage);
         image.setSize(1200, 900);
 
-//
+
         title = new JLabel("WELCOME TO CAGED");
         title.setFont(new Font("arial", Font.BOLD, 45));
         title.setBounds(350, 440, 600, 40);
         title.setBorder((BorderFactory.createEmptyBorder(4, 4, 4, 4)));
         title.setForeground(Color.red);
 
-//
+
         message = new JLabel();
         message.setBounds(525, 540, 200, 40);//Setting the size and location of the label
         message.setForeground(Color.red);//Setting foreground Color
@@ -81,10 +81,6 @@ public class LoadingScreen {
             if (progress == 100) {
                 panel.setVisible(false);
                 new MainWindow(frame);
-//                panel.removeAll();
-//                new MainWindow(frame);
-//                panel.revalidate();
-//                panel.repaint();
             }
         }
     }
