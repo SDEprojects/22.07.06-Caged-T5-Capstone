@@ -31,12 +31,12 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     JPanel panel, bottomPanel, topPanel, centerPanel;
     JPanel[] gameWindow = new JPanel[15];
     JLabel[] gameLabel = new JLabel[15];
-    JLabel backgroundPic;
+    JLabel backgroundPic, textBGPic;
     //TOP PANEL///
     JLabel location, weapon, HP, disguised, help;
     JToggleButton volume;
     JSlider minMaxVolume;
-    ImageIcon displayImage;
+    ImageIcon displayImage,textBackground;
     //BOTTOM///
     JButton quitBtn;
     //CENTER PANEL///
@@ -61,7 +61,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     JsonNode node = mapper.valueToTree(locationVar);
 
     public PlayWindow(JFrame frame) {
-        gameMusic.setFile("bgmusic.wav");
+        gameMusic.setFile("gamePlaySong.wav");
         gameMusic.play();
         gameMusic.loopSound();
         createTopPanel(frame);
@@ -76,7 +76,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         panel = new JPanel();
         panel.setLayout(null);
 
-        displayImage = new ImageIcon(url.imageGetter("MainGameDIsplay.jpg"));
+        displayImage = new ImageIcon(url.imageGetter("gamePlayBG.jpeg"));
         backgroundPic = new JLabel(displayImage);
         backgroundPic.setBounds(0, 0, 1200, 900);
         panel.add(topPanel);
@@ -136,12 +136,12 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
 
     public void createBottomPanel(JFrame frame) {
         bottomPanel = new JPanel();
-        bottomPanel.setBounds(0, 700, 1200, 90);
+        bottomPanel.setBounds(0, 700, 1200, 70);
         bottomPanel.setOpaque(false);
 
         quitBtn = new JButton("Quit");
         quitBtn.setFont(new Font("Arial", Font.BOLD, 20));
-        quitBtn.setBounds(600, 400, 150, 100);
+        quitBtn.setBounds(600, 350, 150, 100);
         quitBtn.addActionListener(e -> {
             int userInput = JOptionPane.showConfirmDialog(frame, "Are you your you want to quit?",
                     "Caged", JOptionPane.YES_NO_OPTION);
@@ -157,7 +157,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         centerPanel.setBounds(0, 70, 1200, 600);
         centerPanel.setOpaque(false);
         centerPanel.setLayout(new BorderLayout());
-        centerPanel.setBorder(BorderFactory.createLineBorder(Color.RED, 2, true));
+        //centerPanel.setBorder(BorderFactory.createLineBorder(Color.RED, 2, true));
         createCenterMidPanel();
         createCenterEastPanels();
         createCenterSouthPanel();
@@ -171,7 +171,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         centerWestPanel = new JPanel();
         centerWestPanel.setOpaque(false);
         centerWestPanel.setPreferredSize(new Dimension(300, 480));
-        centerWestPanel.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 1, true));
+        //centerWestPanel.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 1, true));
         createRoomInventoryList();
         createNPCList();
         createItemList();
@@ -212,30 +212,41 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         centerSouthPanel = new JPanel();
         centerSouthPanel.setOpaque(false);
         centerSouthPanel.setPreferredSize(new Dimension(1200, 120));
-        centerSouthPanel.setLayout(new FlowLayout());
-        centerSouthPanel.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 1, true));
+        //centerSouthPanel.setLayout(new FlowLayout());
+        //centerSouthPanel.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 1, true));
+        textBackground = new ImageIcon(url.imageGetter("textBGImage.png"));
+        textBGPic = new JLabel(textBackground);
+        textBGPic.setSize(1200, 120);
+        textBGPic.setLayout(new GridLayout(1,2));
+
         createActionInfoArea();
         createPlayerActionPanel();
-        centerSouthPanel.add(actionField);
-        centerSouthPanel.add(playerActionPanel);
 
-
+        textBGPic.add(actionField);
+        textBGPic.add(playerActionPanel);
+        centerSouthPanel.add(textBGPic);
     }
     public void createActionInfoArea() {
         text = String.join(" ", player.getLastAction());
         actionField = new JTextArea(5, 30);
-        actionField.setFont(new Font("Arial", Font.BOLD, 14));
+        actionField.setFont(new Font("SansSerif Bold", Font.BOLD, 18));
+        actionField.setAlignmentX(Component.LEFT_ALIGNMENT);
+        actionField.setBackground(Color.white);
+        actionField.setForeground(Color.red);
         actionField.setText(text);
         actionField.setLineWrap(true);
         actionField.setWrapStyleWord(true);
         actionField.setOpaque(false);
         actionField.setEditable(true);
-        actionField.setBorder(BorderFactory.createLineBorder(Color.RED, 1, true));
+
+
+
     }
     public void createPlayerActionPanel(){
         playerActionPanel = new JPanel();
         playerActionPanel.setSize(600, 120);
         playerActionPanel.setOpaque(false);
+        playerActionPanel.setLayout(new FlowLayout());
         createButtonActionPallet();
         playerActionPanel.add(take);
         playerActionPanel.add(look);
@@ -249,26 +260,42 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     }
     public void createButtonActionPallet(){
         take = new JButton("Take");
+        take.setFont(new Font("Arial",Font.BOLD,15));
+        take.setSize(50,50);
         take.addActionListener(this);
         look = new JButton("Look");
+        look.setFont(new Font("Arial",Font.BOLD,15));
+        look.setSize(50,50);
         look.addActionListener(this);
         attack = new JButton("Attack");
+        attack.setFont(new Font("Arial",Font.BOLD,15));
+        attack.setSize(50,50);
         attack.addActionListener(this);
         use =  new JButton("Use");
+        use.setFont(new Font("Arial",Font.BOLD,15));
+        use.setSize(50,50);
         use.addActionListener(this);
         unlock = new JButton("Equip");
+        unlock.setFont(new Font("Arial",Font.BOLD,15));
+        unlock.setSize(50,50);
         unlock.addActionListener(this);
         heal = new JButton("Heal");
+        heal.setFont(new Font("Arial",Font.BOLD,15));
+        heal.setSize(50,50);
         heal.addActionListener(this);
         talk = new JButton("Talk");
+        talk.setFont(new Font("Arial",Font.BOLD,15));
+        talk.setSize(50,50);
         talk.addActionListener(this);
         equip = new JButton("Equip");
+        equip.setFont(new Font("Arial",Font.BOLD,15));
+        equip.setSize(50,50);
         equip.addActionListener(this);
     }
     public void createCenterMidPanel(){
         centerMidPanel = new JPanel();
         centerMidPanel.setLayout(new BorderLayout());
-        centerMidPanel.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 1, true));
+        //centerMidPanel.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 1, true));
         centerMidPanel.setOpaque(false);
         createInventoryPanel();
         createMap();

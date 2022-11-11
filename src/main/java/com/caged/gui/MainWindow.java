@@ -1,6 +1,7 @@
 package com.caged.gui;
 
 import com.caged.FileGetter;
+import com.caged.MusicPlayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,8 +14,10 @@ public class MainWindow extends JPanel{
     JLabel label;
 
     FileGetter url = new FileGetter();
+    MusicPlayer gameMusic = new MusicPlayer();
 
     public MainWindow(JFrame frame){
+        gameMusic.setFile("MainPageSong.wav");
         initialize(frame);
         frame.setVisible(true);
     }
@@ -34,8 +37,7 @@ public class MainWindow extends JPanel{
         newGameBtn.addActionListener(e -> {
             panel.setVisible(false);
             new PlayWindow(frame);
-//            panel.revalidate();
-//            panel.repaint();
+
 
         });
         label.add(newGameBtn);
