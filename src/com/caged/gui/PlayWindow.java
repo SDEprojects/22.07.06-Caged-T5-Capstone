@@ -88,6 +88,9 @@ public class PlayWindow implements MouseListener, ActionListener {
     JsonNode node = mapper.valueToTree(locationVar);
     MusicPlayer gameMusic = new MusicPlayer();
 
+    GameMap playerMap1 = new GameMap();
+    GameMap playerMap2 = new GameMap();
+
     public PlayWindow() {
         gameMusic.setFile("bgmusic.wav");
         gameMusic.play();
@@ -112,6 +115,7 @@ public class PlayWindow implements MouseListener, ActionListener {
         createCenterPanel();
         createBottomPanel();
         createFrame();
+        drawMap();
 
     }
 
@@ -431,19 +435,18 @@ public class PlayWindow implements MouseListener, ActionListener {
 
     public void createRoomInventoryList(){
         String playerLocation = player.getCurrentLocation();
-        KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory"));
+        KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory"), InventoryGlobal.roomInvList);
         for (String item: InventoryGlobal.roomInvList){
             inv.addElement(item);
         }
         roomInvList = new JList<>(inv);
-//        roomInvList.setBounds(100, 100, 75, 75);
         roomInvList.setSize(75,75);
     }
 
     public void createNPCList(){
         DefaultListModel<String> inv = new DefaultListModel<>();
         String playerLocation = player.getCurrentLocation();
-        KeyValueParser.key(node.get("room").get(playerLocation).get("NPCs"));
+        KeyValueParser.key(node.get("room").get(playerLocation).get("NPCs"), InventoryGlobal.npcList);
 
         for (String item: InventoryGlobal.npcList){
             inv.addElement(item);
@@ -454,7 +457,7 @@ public class PlayWindow implements MouseListener, ActionListener {
     }
     public void createItemList(){
         String playerLocation = player.getCurrentLocation();
-        KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory").get("items"));
+        KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory").get("items"), InventoryGlobal.itemsList);
         for (String item: InventoryGlobal.itemsList){
             itemsInv.addElement(item);
         }
@@ -464,7 +467,6 @@ public class PlayWindow implements MouseListener, ActionListener {
 
 
     public void actionPerformed(ActionEvent e){
-
         if (e.getSource() == north) {
             player.move("north", locationVar, doors);
             text = "gaurav";
@@ -495,12 +497,10 @@ public class PlayWindow implements MouseListener, ActionListener {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-
             //populate Jlist for the items seen in the rooms
-
             String playerLocation = player.getCurrentLocation();
             try {
-                KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory").get(val).get("items"));
+                KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory").get(val).get("items"), InventoryGlobal.itemsList);
                 for (String item: InventoryGlobal.itemsList){
                     itemsInv.addElement(item);
                 }
@@ -513,6 +513,22 @@ public class PlayWindow implements MouseListener, ActionListener {
                 ex.printStackTrace();
             }
         }
+    }
+
+    public void drawMap(){
+        playerMap1.build();
+        playerMap2.build();
+        String playerLocation = player.getCurrentLocation();
+
+        if (node.get("room").get(playerLocation).get("Phase").intValue()==1){
+            playerMap1.positionUpdate(player, locationVar);
+            playerMap1.show();
+        }
+        else {
+            playerMap2.positionUpdate(player, locationVar);
+            playerMap2.show();
+        }
+
     }
 
     @Override
