@@ -91,7 +91,7 @@ public class PlayWindow implements MouseListener, ActionListener {
     GameMap playerMap1 = new GameMap();
     GameMap playerMap2 = new GameMap();
 
-    public PlayWindow() {
+    public PlayWindow(JFrame frame) {
         gameMusic.setFile("bgmusic.wav");
         gameMusic.play();
         gameMusic.loopSound();
