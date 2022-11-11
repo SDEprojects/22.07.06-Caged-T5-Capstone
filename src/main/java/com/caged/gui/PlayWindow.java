@@ -44,8 +44,10 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     JLabel mapLabel;
 
     DefaultListModel<String> inv = new DefaultListModel<>();
+    DefaultListModel<String> itemsInv = new DefaultListModel<>();
     JList <String> roomInvList;
     JList <String> npcInvList;
+    JList<String> itemList;
 
     String text;
 
@@ -59,6 +61,8 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
 
     YAMLMapper mapper = new YAMLMapper();
     JsonNode node = mapper.valueToTree(locationVar);
+    GameMap playerMap1 = new GameMap();
+    GameMap playerMap2 = new GameMap();
 
     public PlayWindow(JFrame frame) {
         gameMusic.setFile("gamePlaySong.wav");
@@ -68,8 +72,8 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         createBottomPanel(frame);
         createCenterPanel(frame);
         playWindow(frame);
-
         frame.setVisible(true);
+        drawMap();
     }
 
     public void playWindow(JFrame frame) {
@@ -174,14 +178,14 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         //centerWestPanel.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 1, true));
         createRoomInventoryList();
         createNPCList();
-        createItemList();
+//        createItemList();
         centerWestPanel.add(roomInvList);
         centerWestPanel.add(npcInvList);
     }
     public void createRoomInventoryList(){
 
         String playerLocation = player.getCurrentLocation();
-        KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory"));
+        KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory"), InventoryGlobal.roomInvList);
         for (String item: InventoryGlobal.roomInvList){
             inv.addElement(item);
         }
@@ -191,7 +195,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     public void createNPCList(){
         DefaultListModel<String> inv = new DefaultListModel<>();
         String playerLocation = player.getCurrentLocation();
-        KeyValueParser.key(node.get("room").get(playerLocation).get("NPCs"));
+        KeyValueParser.key(node.get("room").get(playerLocation).get("NPCs"), InventoryGlobal.npcList);
 
         for (String item: InventoryGlobal.npcList){
             inv.addElement(item);
@@ -199,15 +203,15 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         npcInvList = new JList<>(inv);
         npcInvList.setBounds(100, 100, 75, 75);
     }
-    public void createItemList(){
-        String playerLocation = player.getCurrentLocation();
-        KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory"));
-        for (String item: InventoryGlobal.roomInvList){
-            inv.addElement(item);
-        }
-        roomInvList = new JList<>(inv);
-        roomInvList.setBounds(100, 100, 75, 75);
-    }
+//    public void createItemList(){
+//        String playerLocation = player.getCurrentLocation();
+//        KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory"));
+//        for (String item: InventoryGlobal.roomInvList){
+//            inv.addElement(item);
+//        }
+//        roomInvList = new JList<>(inv);
+//        roomInvList.setBounds(100, 100, 75, 75);
+//    }
     public void createCenterSouthPanel(){
         centerSouthPanel = new JPanel();
         centerSouthPanel.setOpaque(false);
@@ -437,7 +441,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     }
 
 
-    public void movePerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e) {
         if (e.getSource() == north) {
             player.move("north", locationVar, doors);
             text = "gaurav";
@@ -461,12 +465,45 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
 
         String val = roomInvList.getSelectedValue();
         if (e.getSource() == look){
-            player.look(val, locationVar);
-            text=  node.get("room").get(player.getCurrentLocation()).get("Inventory").get(val).get("description").textValue();
-            actionField.setText(text);
+            try {
+                player.look(val, locationVar);
+                text=  node.get("room").get(player.getCurrentLocation()).get("Inventory").get(val).get("description").textValue();
+                actionField.setText(text);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            //populate Jlist for the items seen in the rooms
+            String playerLocation = player.getCurrentLocation();
+            try {
+                KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory").get(val).get("items"), InventoryGlobal.itemsList);
+                for (String item: InventoryGlobal.itemsList){
+                    itemsInv.addElement(item);
+                }
+                itemList = new JList<>(itemsInv);
+                itemList.setSize(75, 75);
+                itemList.setVisible(true);
+                centerWestPanel.add(itemList);
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
+    public void drawMap(){
+        playerMap1.build();
+        playerMap2.build();
+        String playerLocation = player.getCurrentLocation();
 
+        if (node.get("room").get(playerLocation).get("Phase").intValue()==1){
+            playerMap1.positionUpdate(player, locationVar);
+            playerMap1.show();
+        }
+        else {
+            playerMap2.positionUpdate(player, locationVar);
+            playerMap2.show();
+        }
+
+    }
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -484,7 +521,6 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     }
 
     public void mouseEntered(MouseEvent e) {
-
         String itemInfo = "<html>Heavily reinforced metal, <br> maybe you can wiggle and <br> 'use' the 'window bars</html>";
         UIManager.put("ToolTip.foreground", Color.PINK);
         UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 14));
@@ -507,8 +543,4 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
 
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
 }
