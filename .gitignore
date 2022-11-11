@@ -1,12 +1,11 @@
 # Compiled class file
 *.class
-out/
+*.idea
+*.idea/*
 *.iml
 .idea/*
-!.idea/artifacts/
-!.idea/libraries/
 *.MF
-
+src/main/java/META-INF/*
 
 # Log file
 *.log
