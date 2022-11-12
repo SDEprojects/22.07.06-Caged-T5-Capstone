@@ -41,8 +41,8 @@ public class LoadingScreen {
 
 
         title = new JLabel("WELCOME TO CAGED");
-        title.setFont(new Font("arial", Font.BOLD, 45));
-        title.setBounds(350, 440, 600, 40);
+        title.setFont(new Font("arial", Font.BOLD, 65));
+        title.setBounds(250, 440, 800, 60);
         title.setBorder((BorderFactory.createEmptyBorder(4, 4, 4, 4)));
         title.setForeground(Color.red);
 
