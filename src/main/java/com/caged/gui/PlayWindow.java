@@ -38,7 +38,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     JButton help;
     JToggleButton volume;
     JSlider minMaxVolume;
-    ImageIcon displayImage,textBackground;
+    ImageIcon displayImage, textBackground;
     //BOTTOM///
     JButton quitBtn;
     //CENTER PANEL///
@@ -48,11 +48,13 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     DefaultListModel<String> inv = new DefaultListModel<>();
     DefaultListModel<String> reactionInv = new DefaultListModel<>();
     DefaultListModel<String> itemInv = new DefaultListModel<>();
+    DefaultListModel<String> playerInv = new DefaultListModel<>();
 
     JList<String> itemInvList = new JList<>(itemInv);
+    JList<String> reactionList = new JList<>(reactionInv);
+    JList <String> playerInvList = new JList<>(playerInv);
     JList<String> roomInvList;
     JList<String> npcInvList;
-    JList<String> reactionList = new JList<>(reactionInv);
 
     String text;
 
@@ -100,20 +102,20 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         topPanel = new JPanel();
 
         topPanel.setBounds(0, 20, 1200, 50);
-        topPanel.setBackground(new Color(0,0,0,100));
+        topPanel.setBackground(new Color(0, 0, 0, 100));
 
         location = new JLabel("Location: " + player.getCurrentLocation());
         location.setForeground(Color.red);
-        location.setFont(new Font("arial",Font.BOLD,18));
+        location.setFont(new Font("arial", Font.BOLD, 18));
         weapon = new JLabel(" || Weapon: " + player.getWeapon());
         weapon.setForeground(Color.red);
-        weapon.setFont(new Font("arial",Font.BOLD,18));
+        weapon.setFont(new Font("arial", Font.BOLD, 18));
         HP = new JLabel(" || HP: " + player.getHitPoints());
         HP.setForeground(Color.red);
-        HP.setFont(new Font("arial",Font.BOLD,18));
+        HP.setFont(new Font("arial", Font.BOLD, 18));
         disguised = new JLabel(" || Disguised: " + player.getEquipment());
         disguised.setForeground(Color.red);
-        disguised.setFont(new Font("arial",Font.BOLD,18));
+        disguised.setFont(new Font("arial", Font.BOLD, 18));
 
         volume = new JToggleButton("Music ON");
         volume.setForeground(Color.GREEN);
@@ -197,19 +199,22 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         centerWestPanel.add(roomInvList);
         centerWestPanel.add(reactionList);
         centerWestPanel.add(itemInvList);
-        reactionList.setSize(100,100);
+        centerWestPanel.add(playerInvList);
+        itemInvList.setSize(100, 100);
+        reactionList.setSize(100, 100);
+        playerInvList.setSize(100,100);
         centerWestPanel.add(npcInvList);
     }
-    public void drawMap(){
+
+    public void drawMap() {
         playerMap1.build();
         playerMap2.build();
         String playerLocation = player.getCurrentLocation();
 
-        if (node.get("room").get(playerLocation).get("Phase").intValue()==1){
+        if (node.get("room").get(playerLocation).get("Phase").intValue() == 1) {
             playerMap1.positionUpdate(player, locationVar);
             playerMap1.show();
-        }
-        else {
+        } else {
             playerMap2.positionUpdate(player, locationVar);
             playerMap2.show();
         }
@@ -299,36 +304,36 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
 
     public void createButtonActionPallet() {
         take = new JButton("Take");
-        take.setFont(new Font("Arial",Font.BOLD,20));
-        take.setSize(50,50);
+        take.setFont(new Font("Arial", Font.BOLD, 20));
+        take.setSize(50, 50);
         take.addActionListener(this);
         look = new JButton("Look");
-        look.setFont(new Font("Arial",Font.BOLD,20));
-        look.setSize(50,50);
+        look.setFont(new Font("Arial", Font.BOLD, 20));
+        look.setSize(50, 50);
         look.addActionListener(this);
         attack = new JButton("Attack");
-        attack.setFont(new Font("Arial",Font.BOLD,20));
-        attack.setSize(50,50);
+        attack.setFont(new Font("Arial", Font.BOLD, 20));
+        attack.setSize(50, 50);
         attack.addActionListener(this);
-        use =  new JButton("Use");
-        use.setFont(new Font("Arial",Font.BOLD,20));
-        use.setSize(50,50);
+        use = new JButton("Use");
+        use.setFont(new Font("Arial", Font.BOLD, 20));
+        use.setSize(50, 50);
         use.addActionListener(this);
         unlock = new JButton("Equip");
-        unlock.setFont(new Font("Arial",Font.BOLD,20));
-        unlock.setSize(50,50);
+        unlock.setFont(new Font("Arial", Font.BOLD, 20));
+        unlock.setSize(50, 50);
         unlock.addActionListener(this);
         heal = new JButton("Heal");
-        heal.setFont(new Font("Arial",Font.BOLD,20));
-        heal.setSize(50,50);
+        heal.setFont(new Font("Arial", Font.BOLD, 20));
+        heal.setSize(50, 50);
         heal.addActionListener(this);
         talk = new JButton("Talk");
-        talk.setFont(new Font("Arial",Font.BOLD,20));
-        talk.setSize(50,50);
+        talk.setFont(new Font("Arial", Font.BOLD, 20));
+        talk.setSize(50, 50);
         talk.addActionListener(this);
         equip = new JButton("Equip");
-        equip.setFont(new Font("Arial",Font.BOLD,20));
-        equip.setSize(50,50);
+        equip.setFont(new Font("Arial", Font.BOLD, 20));
+        equip.setSize(50, 50);
         equip.addActionListener(this);
     }
 
@@ -485,9 +490,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == north) {
             player.move("north", locationVar, doors);
-            text = "gaurav";
             text = player.getLastAction().get(player.getLastAction().size() - 1);
-//            text= String.join(" ", player.getLastAction());
             actionField.setText(text);
         } else if (e.getSource() == south) {
             player.move("south", locationVar, doors);
@@ -522,26 +525,9 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                         reactionInv.addElement(item);
                     }
                 }
-
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-
-//            String item = roomInvList.getSelectedValue();
-//            String item1 = reactionList.getSelectedValue();
-//            System.out.println(item);
-//            System.out.println(item1);
-//            KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory").get(item).get(item1).get("name"), InventoryGlobal.itemList);
-//
-//            for (String i : InventoryGlobal.itemList) {
-//                if (!itemInv.contains(i)) {
-//                    itemInv.addElement(i);
-//                    System.out.println(i);
-//                    System.out.println(i);
-//                }
-//            }
-
-
         }
         if (e.getSource() == use) {
             try {
@@ -549,24 +535,36 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 player.use(child, val, locationVar);
                 text = player.getLastAction().get(player.getLastAction().size() - 1);
                 actionField.setText(text);
+                // Check for use of items and open the directions
 
+                //Display found items at this point
+                for (Item item : player.getFoundItems()) {
+                    if (!itemInv.contains(item.getName())) {
+                        itemInv.addElement(item.getName());
+                        // Adding to global inventory function for take purposes
+                        // Check if item already exists on global inventory list
+                        if (!InventoryGlobal.itemList.contains(itemInv)) {
+                            InventoryGlobal.itemList.add(item.getName());
+                        }
+                    }
+                }
             } catch (Exception ae) {
                 ae.printStackTrace();
             }
         }
-        if(e.getSource() == take) {
+        if (e.getSource() == take) {
             try {
-                //Found items iterate
-                // The item needs to go on to the inventory list
-                // Take, after use, the directions should
-                String foundItem  = String.valueOf(player.getFoundItems().get(0));
-                player.take(foundItem, "", locationVar);
-                text = player.getLastAction().get(player.getLastAction().size() - 1);
-                actionField.setText(text);
+                // Making sure there is item to take first
+                // Verify against the global inventory list that the item is not already in the player inventory
+                // Once that is done, display the list of player's inventory
+                for (String item : InventoryGlobal.itemList) {
+                    if (!playerInv.contains(item)) {
+                        playerInv.addElement(item);
+                    }
+                }
             } catch (Exception a) {
                 a.printStackTrace();
             }
-
         }
     }
 

@@ -1,6 +1,6 @@
 package com.caged;
 
-class Item {
+public class Item {
 
     String name;
     String description;
