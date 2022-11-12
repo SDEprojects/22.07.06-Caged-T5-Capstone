@@ -82,7 +82,7 @@ public class GameControl<K, V> {
             // This will become a JPanels w/ text field output (remove println portions)
             System.out.println("\nThings seen in room: ");
             //How is it printing
-            KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory"), InventoryGlobal.roomInvList);
+            KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory"), InventoryGlobal.getRoomInvList());
             System.out.println("\nPeople seen in room: ");
             KeyValueParser.key(node.get("room").get(playerLocation).get("NPCs"), InventoryGlobal.npcList);
             System.out.println("\nDirections you can move: ");

@@ -5,9 +5,15 @@ import java.util.List;
 
 public class InventoryGlobal {
 
-   public static List<String> roomInvList = new ArrayList<>();
+   private static final List<String> roomInvList = new ArrayList<>();
    public static List<String> npcList = new ArrayList<>();
    public static List<String> locationList = new ArrayList<>();
-   public static List <String> itemsList = new ArrayList<>();
+   public static List <String> reactionList = new ArrayList<>();
+   public static List <String> itemList = new ArrayList<>();
+   public static List <String> collectedItems = new ArrayList<>();
+
+   public static List<String> getRoomInvList() {
+      return roomInvList;
+   }
 
 }

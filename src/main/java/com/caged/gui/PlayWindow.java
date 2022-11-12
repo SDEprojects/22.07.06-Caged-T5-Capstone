@@ -17,15 +17,15 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     JPanel inventoryPanel;
     JPanel playerActionPanel;
 
-    ImageIcon northImg,southImg,eastImg,westImg;
+    ImageIcon northImg, southImg, eastImg, westImg;
 
-    ImageIcon bedImg,wallImg,windowImg,deskImg,map;
+    ImageIcon bedImg, wallImg, windowImg, deskImg, map;
 
     JTextArea actionField;
 
-    JButton north,south,east,west;
-    JButton inv1,inv2,inv3,inv4;
-    JButton take,look,talk,attack,use,unlock,equip,heal;
+    JButton north, south, east, west;
+    JButton inv1, inv2, inv3, inv4;
+    JButton take, look, talk, attack, use, unlock, equip, heal;
 
     //MAIN Panel
     JPanel panel, bottomPanel, topPanel, centerPanel;
@@ -36,7 +36,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     JLabel location, weapon, HP, disguised, help;
     JToggleButton volume;
     JSlider minMaxVolume;
-    ImageIcon displayImage,textBackground;
+    ImageIcon displayImage, textBackground;
     //BOTTOM///
     JButton quitBtn;
     //CENTER PANEL///
@@ -44,10 +44,13 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     JLabel mapLabel;
 
     DefaultListModel<String> inv = new DefaultListModel<>();
-    DefaultListModel<String> itemsInv = new DefaultListModel<>();
-    JList <String> roomInvList;
-    JList <String> npcInvList;
-    JList<String> itemList = new JList<>(itemsInv);
+    DefaultListModel<String> reactionInv = new DefaultListModel<>();
+    DefaultListModel<String> itemInv = new DefaultListModel<>();
+
+    JList<String> itemInvList = new JList<>(itemInv);
+    JList<String> roomInvList;
+    JList<String> npcInvList;
+    JList<String> reactionList = new JList<>(reactionInv);
 
     String text;
 
@@ -58,7 +61,6 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     Player player = yamlReader.playerLoader(); //sets default player stats
     LocationGetter locationVar = yamlReader.locationLoader(); //TODO: used for map update
     List<Doors> doors = yamlReader.doorLoader(); // TODO: used for viewable paths
-
     YAMLMapper mapper = new YAMLMapper();
     JsonNode node = mapper.valueToTree(locationVar);
     GameMap playerMap1 = new GameMap();
@@ -171,7 +173,8 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         centerPanel.add(centerSouthPanel, BorderLayout.SOUTH);
         centerPanel.add(centerWestPanel, BorderLayout.WEST);
     }
-    public void createCenterWestPanel(){
+
+    public void createCenterWestPanel() {
         centerWestPanel = new JPanel();
         centerWestPanel.setOpaque(false);
         centerWestPanel.setPreferredSize(new Dimension(300, 480));
@@ -180,32 +183,37 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         createNPCList();
 //        createItemList();
         centerWestPanel.add(roomInvList);
-        centerWestPanel.add(itemList);
-        itemList.setSize(100,100);
+        centerWestPanel.add(reactionList);
+        reactionList.setSize(100, 100);
+        centerWestPanel.add(itemInvList);
+        itemInvList.setSize(100, 100);
         centerWestPanel.add(npcInvList);
     }
-    public void createRoomInventoryList(){
+
+    public void createRoomInventoryList() {
 
         String playerLocation = player.getCurrentLocation();
-        KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory"), InventoryGlobal.roomInvList);
-        for (String item: InventoryGlobal.roomInvList){
+        KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory"), InventoryGlobal.getRoomInvList());
+        for (String item : InventoryGlobal.getRoomInvList()) {
             inv.addElement(item);
         }
         roomInvList = new JList<>(inv);
-        roomInvList.setSize(100,100);
+        roomInvList.setSize(100, 100);
     }
-    public void createNPCList(){
+
+    public void createNPCList() {
         DefaultListModel<String> inv = new DefaultListModel<>();
         String playerLocation = player.getCurrentLocation();
         KeyValueParser.key(node.get("room").get(playerLocation).get("NPCs"), InventoryGlobal.npcList);
 
-        for (String item: InventoryGlobal.npcList){
+        for (String item : InventoryGlobal.npcList) {
             inv.addElement(item);
         }
         npcInvList = new JList<>(inv);
         npcInvList.setBounds(100, 100, 75, 75);
     }
-//    public void createItemList(){
+
+    //    public void createItemList(){
 //        String playerLocation = player.getCurrentLocation();
 //        KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory"));
 //        for (String item: InventoryGlobal.roomInvList){
@@ -214,7 +222,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
 //        roomInvList = new JList<>(inv);
 //        roomInvList.setBounds(100, 100, 75, 75);
 //    }
-    public void createCenterSouthPanel(){
+    public void createCenterSouthPanel() {
         centerSouthPanel = new JPanel();
         centerSouthPanel.setOpaque(false);
         centerSouthPanel.setPreferredSize(new Dimension(1200, 120));
@@ -223,7 +231,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         textBackground = new ImageIcon(url.imageGetter("textBGImage.png"));
         textBGPic = new JLabel(textBackground);
         textBGPic.setSize(1200, 120);
-        textBGPic.setLayout(new GridLayout(1,2));
+        textBGPic.setLayout(new GridLayout(1, 2));
 
         createActionInfoArea();
         createPlayerActionPanel();
@@ -232,6 +240,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         textBGPic.add(playerActionPanel);
         centerSouthPanel.add(textBGPic);
     }
+
     public void createActionInfoArea() {
         text = String.join(" ", player.getLastAction());
         actionField = new JTextArea(5, 30);
@@ -246,9 +255,9 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         actionField.setEditable(true);
 
 
-
     }
-    public void createPlayerActionPanel(){
+
+    public void createPlayerActionPanel() {
         playerActionPanel = new JPanel();
         playerActionPanel.setSize(600, 120);
         playerActionPanel.setOpaque(false);
@@ -264,41 +273,43 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         playerActionPanel.add(equip);
 
     }
-    public void createButtonActionPallet(){
+
+    public void createButtonActionPallet() {
         take = new JButton("Take");
-        take.setFont(new Font("Arial",Font.BOLD,15));
-        take.setSize(50,50);
+        take.setFont(new Font("Arial", Font.BOLD, 15));
+        take.setSize(50, 50);
         take.addActionListener(this);
         look = new JButton("Look");
-        look.setFont(new Font("Arial",Font.BOLD,15));
-        look.setSize(50,50);
+        look.setFont(new Font("Arial", Font.BOLD, 15));
+        look.setSize(50, 50);
         look.addActionListener(this);
         attack = new JButton("Attack");
-        attack.setFont(new Font("Arial",Font.BOLD,15));
-        attack.setSize(50,50);
+        attack.setFont(new Font("Arial", Font.BOLD, 15));
+        attack.setSize(50, 50);
         attack.addActionListener(this);
-        use =  new JButton("Use");
-        use.setFont(new Font("Arial",Font.BOLD,15));
-        use.setSize(50,50);
+        use = new JButton("Use");
+        use.setFont(new Font("Arial", Font.BOLD, 15));
+        use.setSize(50, 50);
         use.addActionListener(this);
         unlock = new JButton("Equip");
-        unlock.setFont(new Font("Arial",Font.BOLD,15));
-        unlock.setSize(50,50);
+        unlock.setFont(new Font("Arial", Font.BOLD, 15));
+        unlock.setSize(50, 50);
         unlock.addActionListener(this);
         heal = new JButton("Heal");
-        heal.setFont(new Font("Arial",Font.BOLD,15));
-        heal.setSize(50,50);
+        heal.setFont(new Font("Arial", Font.BOLD, 15));
+        heal.setSize(50, 50);
         heal.addActionListener(this);
         talk = new JButton("Talk");
-        talk.setFont(new Font("Arial",Font.BOLD,15));
-        talk.setSize(50,50);
+        talk.setFont(new Font("Arial", Font.BOLD, 15));
+        talk.setSize(50, 50);
         talk.addActionListener(this);
         equip = new JButton("Equip");
-        equip.setFont(new Font("Arial",Font.BOLD,15));
-        equip.setSize(50,50);
+        equip.setFont(new Font("Arial", Font.BOLD, 15));
+        equip.setSize(50, 50);
         equip.addActionListener(this);
     }
-    public void createCenterMidPanel(){
+
+    public void createCenterMidPanel() {
         centerMidPanel = new JPanel();
         centerMidPanel.setLayout(new BorderLayout());
         //centerMidPanel.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 1, true));
@@ -308,11 +319,13 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         centerMidPanel.add(inventoryPanel, BorderLayout.NORTH);
         centerMidPanel.add(mapLabel, BorderLayout.CENTER);
     }
+
     public void createMap() {
         map = new ImageIcon(url.imageGetter("map.jpeg"));
         mapLabel = new JLabel(map);
 
     }
+
     public void createInventoryPanel() {
         inventoryPanel = new JPanel();
         inventoryPanel.setPreferredSize(new Dimension(600, 200));
@@ -325,10 +338,11 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         inventoryPanel.add(inv4);
 
     }
+
     public void createInvButtons() {
         bedImg = new ImageIcon(url.imageGetter("bed.png"));
         wallImg = new ImageIcon(url.imageGetter("wall.jpg"));
-        windowImg  = new ImageIcon(url.imageGetter("window.jpg"));
+        windowImg = new ImageIcon(url.imageGetter("window.jpg"));
         deskImg = new ImageIcon(url.imageGetter("desk.jpeg"));
         inv1 = new JButton(bedImg);
         inv1.setOpaque(false);
@@ -352,6 +366,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         inv4.setBorder(null);
         inv4.addMouseListener(this);
     }
+
     public void createCenterEastPanels() {
         centerEastPanel = new JPanel();
         centerEastPanel.setOpaque(false);
@@ -364,6 +379,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         centerEastPanel.add(north, BorderLayout.NORTH);
         centerEastPanel.add(south, BorderLayout.SOUTH);
     }
+
     public void createDirectionalButtons() {
         northImg = new ImageIcon(url.imageGetter("north.png"));
         southImg = new ImageIcon(url.imageGetter("south.png"));
@@ -447,29 +463,29 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         if (e.getSource() == north) {
             player.move("north", locationVar, doors);
             text = "gaurav";
-            text = player.getLastAction().get(player.getLastAction().size()-1);
+            text = player.getLastAction().get(player.getLastAction().size() - 1);
 //            text= String.join(" ", player.getLastAction());
             actionField.setText(text);
         } else if (e.getSource() == south) {
             player.move("south", locationVar, doors);
-            text = player.getLastAction().get(player.getLastAction().size()-1);
+            text = player.getLastAction().get(player.getLastAction().size() - 1);
             actionField.setText(text);
 
         } else if (e.getSource() == east) {
             player.move("east", locationVar, doors);
-            text = player.getLastAction().get(player.getLastAction().size()-1);
+            text = player.getLastAction().get(player.getLastAction().size() - 1);
             actionField.setText(text);
         } else if (e.getSource() == west) {
             player.move("west", locationVar, doors);
-            text = player.getLastAction().get(player.getLastAction().size()-1);
+            text = player.getLastAction().get(player.getLastAction().size() - 1);
             actionField.setText(text);
         }
 
         String val = roomInvList.getSelectedValue();
-        if (e.getSource() == look){
+        if (e.getSource() == look) {
             try {
                 player.look(val, locationVar);
-                text=  node.get("room").get(player.getCurrentLocation()).get("Inventory").get(val).get("description").textValue();
+                text = node.get("room").get(player.getCurrentLocation()).get("Inventory").get(val).get("description").textValue();
                 actionField.setText(text);
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -477,27 +493,69 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
             //populate Jlist for the items seen in the rooms
             String playerLocation = player.getCurrentLocation();
             try {
-                KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory").get(val).get("items"), InventoryGlobal.itemsList);
-                for (String item: InventoryGlobal.itemsList){
-                    if(!itemsInv.contains(item)){
-                        itemsInv.addElement(item);
+                KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory").get(val).get("items"), InventoryGlobal.reactionList);
+                for (String item : InventoryGlobal.reactionList) {
+                    if (!reactionInv.contains(item)) {
+                        reactionInv.addElement(item);
                     }
                 }
+
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+
+//            String item = roomInvList.getSelectedValue();
+//            String item1 = reactionList.getSelectedValue();
+//            System.out.println(item);
+//            System.out.println(item1);
+//            KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory").get(item).get(item1).get("name"), InventoryGlobal.itemList);
+//
+//            for (String i : InventoryGlobal.itemList) {
+//                if (!itemInv.contains(i)) {
+//                    itemInv.addElement(i);
+//                    System.out.println(i);
+//                    System.out.println(i);
+//                }
+//            }
+
+
+        }
+        if (e.getSource() == use) {
+            try {
+                String child = reactionList.getSelectedValue();
+                player.use(child, val, locationVar);
+                text = player.getLastAction().get(player.getLastAction().size() - 1);
+                actionField.setText(text);
+
+            } catch (Exception ae) {
+                ae.printStackTrace();
+            }
+        }
+        if(e.getSource() == take) {
+            try {
+                //Found items iterate
+                // The item needs to go on to the inventory list
+                // Take, after use, the directions should
+                String foundItem  = String.valueOf(player.getFoundItems().get(0));
+                player.take(foundItem, "", locationVar);
+                text = player.getLastAction().get(player.getLastAction().size() - 1);
+                actionField.setText(text);
+            } catch (Exception a) {
+                a.printStackTrace();
+            }
+
         }
     }
-    public void drawMap(){
+
+    public void drawMap() {
         playerMap1.build();
         playerMap2.build();
         String playerLocation = player.getCurrentLocation();
 
-        if (node.get("room").get(playerLocation).get("Phase").intValue()==1){
+        if (node.get("room").get(playerLocation).get("Phase").intValue() == 1) {
             playerMap1.positionUpdate(player, locationVar);
             playerMap1.show();
-        }
-        else {
+        } else {
             playerMap2.positionUpdate(player, locationVar);
             playerMap2.show();
         }
