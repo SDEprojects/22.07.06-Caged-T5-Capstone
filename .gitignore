@@ -1,12 +1,13 @@
 # Compiled class file
 *.class
-*.idea
-*.idea/*
-*.iml
 .idea/*
+!.idea/artifacts/
+!.idea/libraries/
+*.iml
 *.MF
 src/main/java/META-INF/*
-
+out/
+target/
 # Log file
 *.log
 
@@ -27,3 +28,4 @@ src/main/java/META-INF/*
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+.DS_Store

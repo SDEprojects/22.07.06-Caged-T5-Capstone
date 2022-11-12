@@ -295,7 +295,7 @@ public class Player {
         }
     }
 
-    private void take(String item, String itemPrefix, LocationGetter location) { //private
+    public void take(String item, String itemPrefix, LocationGetter location) { //private
         String playerLocation = getCurrentLocation();
         try {
             for (Item i :
@@ -320,7 +320,7 @@ public class Player {
         }
     }
 
-    private void drop(String item, String itemPrefix, LocationGetter location) {
+    public void drop(String item, String itemPrefix, LocationGetter location) {
         String playerLocation = getCurrentLocation();
         try {
             for (Item i :
@@ -345,7 +345,7 @@ public class Player {
         }
     }
 
-    private void use(String subThing, String parentThing, LocationGetter location) {
+    public  void use(String subThing, String parentThing, LocationGetter location) {
         String playerLocation = getCurrentLocation();
         JsonNode node = mapper.valueToTree(location);
         try {
