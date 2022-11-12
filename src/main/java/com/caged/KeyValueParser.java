@@ -49,7 +49,7 @@ public class KeyValueParser {
 
                 if (node.get(entry.getKey()).get("door").isNull()){
                     System.out.println("\u001b[35m" + entry.getKey() + "\u001b[0m" + "  ---->  " + location);
-                    InventoryGlobal.locationList.add(entry.getKey());
+                    InventoryGlobal.locationList.add(location);
                     System.out.println(location);
 
                 }
