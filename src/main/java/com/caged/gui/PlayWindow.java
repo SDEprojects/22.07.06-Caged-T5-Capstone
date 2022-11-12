@@ -52,7 +52,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
 
     JList<String> itemInvList = new JList<>(itemInv);
     JList<String> reactionList = new JList<>(reactionInv);
-    JList <String> playerInvList = new JList<>(playerInv);
+    JList<String> playerInvList = new JList<>(playerInv);
     JList<String> roomInvList;
     JList<String> npcInvList;
 
@@ -65,6 +65,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     Player player = yamlReader.playerLoader(); //sets default player stats
     LocationGetter locationVar = yamlReader.locationLoader(); //TODO: used for map update
     List<Doors> doors = yamlReader.doorLoader(); // TODO: used for viewable paths
+    Doors door = new Doors();
     YAMLMapper mapper = new YAMLMapper();
     JsonNode node = mapper.valueToTree(locationVar);
     GameMap playerMap1 = new GameMap();
@@ -202,7 +203,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         centerWestPanel.add(playerInvList);
         itemInvList.setSize(100, 100);
         reactionList.setSize(100, 100);
-        playerInvList.setSize(100,100);
+        playerInvList.setSize(100, 100);
         centerWestPanel.add(npcInvList);
     }
 
@@ -442,6 +443,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         east.setFocusPainted(false);
         east.addActionListener(this);
         east.setActionCommand("east");
+//        east.setEnabled(false);
 
         west = new JButton(westImg);
         west.setOpaque(false);
@@ -451,41 +453,44 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         west.setFocusPainted(false);
         west.addActionListener(this);
         west.setActionCommand("west");
-
-
-        String playerLocation = player.getCurrentLocation();
-        KeyValueParser.locationKeyValue(node.get("room").get(playerLocation).get("Moves"), player, doors);
-
-        for (String item : InventoryGlobal.locationList) {
-
-            if (north.getActionCommand().equals(item)) {
-
-                north.setEnabled(true);
-            } else {
-                north.setEnabled(false);
-            }
-
-            if (south.getActionCommand().equals(item)) {
-
-                south.setEnabled(true);
-            } else {
-                south.setEnabled(false);
-            }
-            if (west.getActionCommand().equals(item)) {
-
-                west.setEnabled(true);
-            } else {
-                west.setEnabled(false);
-            }
-            if (east.getActionCommand().equals(item)) {
-
-                east.setEnabled(true);
-            } else {
-                east.setEnabled(false);
-            }
-        }
+//        west.setEnabled(false);
     }
 
+    private void movePlayer() {
+        String playerLocation = player.getCurrentLocation();
+        KeyValueParser.locationKeyValue(node.get("room").get(playerLocation).get("Moves"), player, doors);
+//        for (String item: InventoryGlobal.locationList){
+//            System.out.println(item);
+//        }
+//        for (String item : InventoryGlobal.locationList) {
+//
+//            if (north.getActionCommand().equals(item)) {
+//
+//                north.setEnabled(true);
+//            } else {
+//                north.setEnabled(false);
+//            }
+//
+//            if (south.getActionCommand().equals(item)) {
+//
+//                south.setEnabled(true);
+//            } else {
+//                south.setEnabled(false);
+//            }
+//            if (west.getActionCommand().equals(item)) {
+//
+//                west.setEnabled(true);
+//            } else {
+//                west.setEnabled(false);
+//            }
+//            if (east.getActionCommand().equals(item)) {
+//
+//                east.setEnabled(true);
+//            } else {
+//                east.setEnabled(false);
+//            }
+//        }
+    }
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == north) {
@@ -536,9 +541,13 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 text = player.getLastAction().get(player.getLastAction().size() - 1);
                 actionField.setText(text);
                 // Check for use of items and open the directions
-
                 //Display found items at this point
                 for (Item item : player.getFoundItems()) {
+                    //If item found is key, unlock the door
+                    if (item.getName().equals("brick")) {
+                        door.setLocked(false);
+                        movePlayer();
+                    }
                     if (!itemInv.contains(item.getName())) {
                         itemInv.addElement(item.getName());
                         // Adding to global inventory function for take purposes

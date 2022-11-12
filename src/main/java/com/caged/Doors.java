@@ -17,6 +17,9 @@ public class Doors {
         setDescription(description);
     }
 
+    public Doors() {
+    }
+
     public String getDoorName() {
         return doorName;
     }
