@@ -26,6 +26,7 @@ public class LoadingScreen {
         frame.setSize(1200, 900);
         //frame.getContentPane().setLayout(null);
         frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
 
 
         panel = new JPanel();

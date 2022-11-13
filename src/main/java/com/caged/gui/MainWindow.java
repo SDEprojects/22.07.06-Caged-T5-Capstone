@@ -19,6 +19,7 @@ public class MainWindow extends JPanel{
     public MainWindow(JFrame frame){
         gameMusic.setFile("MainPageSong.wav");
         gameMusic.play();
+        gameMusic.loopSound();
         initialize(frame);
         frame.setVisible(true);
     }
@@ -38,10 +39,10 @@ public class MainWindow extends JPanel{
         title.setBorder((BorderFactory.createEmptyBorder(4, 4, 4, 4)));
         title.setForeground(Color.red);
 
-        thanksTo = new JTextArea("A game by:\n" +
-                "GROUP 1\n" +
-                "    &\n" +
-                "GROUP5");
+        thanksTo = new JTextArea("A game by:\n\n" +
+                "  GROUP 1\n" +
+                "       &\n" +
+                "  GROUP 5");
 
         thanksTo.setBounds(525, 550, 200, 500);
         thanksTo.setFont(new Font("SansSerif", Font.BOLD, 20));

@@ -20,7 +20,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
 
     ImageIcon northImg, southImg, eastImg, westImg;
 
-    ImageIcon bedImg, wallImg, windowImg, deskImg, map;
+    ImageIcon bedImg, wallImg, windowImg, deskImg, scene1;
 
     JTextArea actionField;
 
@@ -70,15 +70,18 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     JsonNode node = mapper.valueToTree(locationVar);
     GameMap playerMap1 = new GameMap();
     GameMap playerMap2 = new GameMap();
-    private JLabel topPanelBGLabel;
+    private JPanel directionalPanel;
+    JPanel mapSupportPanel;
+    private JPanel[] mapPanels = new JPanel[20];
+    private JPanel actionFieldPanel;
 
     public PlayWindow(JFrame frame) {
         gameMusic.setFile("gamePlaySong.wav");
         gameMusic.play();
         gameMusic.loopSound();
-        TopPanel(frame);
-        BottomPanel(frame);
-        CenterPanel(frame);
+        topPanel(frame);
+        bottomPanel(frame);
+        centerPanel(frame);
         playWindow(frame);
         frame.setVisible(true);
         drawMap();
@@ -99,11 +102,11 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
 
     }
 
-    public void TopPanel(JFrame frame) {
+    public void topPanel(JFrame frame) {
         topPanel = new JPanel();
-
         topPanel.setBounds(0, 20, 1200, 50);
-        topPanel.setBackground(new Color(0, 0, 0, 100));
+        topPanel.setOpaque(true);
+        topPanel.setBackground(new Color(0, 0, 0, 120));
 
         location = new JLabel("Location: " + player.getCurrentLocation());
         location.setForeground(Color.red);
@@ -119,7 +122,10 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         disguised.setFont(new Font("arial", Font.BOLD, 18));
 
         volume = new JToggleButton("Music ON");
+        volume.setFont(new Font("arial", Font.BOLD, 18));
         volume.setForeground(Color.GREEN);
+        volume.setFocusable(false);
+        volume.setBorder(BorderFactory.createEtchedBorder());
         volume.addActionListener(e -> {
             gameMusic.mute(minMaxVolume);
             if (volume.isSelected()) {
@@ -154,27 +160,27 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
 
     }
 
-    public void BottomPanel(JFrame frame) {
+    public void bottomPanel(JFrame frame) {
         bottomPanel = new JPanel();
-        bottomPanel.setBounds(0, 700, 1200, 70);
+        bottomPanel.setBounds(0, 700, 1200, 150);
         bottomPanel.setOpaque(false);
 
         quitBtn = new JButton("Quit");
         quitBtn.setFont(new Font("Arial", Font.BOLD, 20));
         quitBtn.setBounds(600, 350, 150, 100);
         quitBtn.addActionListener(e -> {
-            int userInput = JOptionPane.showConfirmDialog(frame, "Are you your you want to quit?",
+            int userInput = JOptionPane.showConfirmDialog(frame, "Are you sure you want to exit the the game?",
                     "Caged", JOptionPane.YES_NO_OPTION);
             if (userInput == 0) {
-                frame.dispose();
+                new MainWindow(frame);
             }
         });
         bottomPanel.add(quitBtn);
     }
 
-    public void CenterPanel(JFrame frame) {
+    public void centerPanel(JFrame frame) {
         centerPanel = new JPanel();
-        centerPanel.setBounds(0, 70, 1200, 600);
+        centerPanel.setBounds(0, 70, 1200, 620);
         centerPanel.setOpaque(false);
         centerPanel.setLayout(new BorderLayout());
 
@@ -188,11 +194,29 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         centerPanel.add(centerWestPanel, BorderLayout.WEST);
     }
 
+    public void createCenterMidPanel() {
+        centerMidPanel = new JPanel();
+        centerMidPanel.setLayout(new BorderLayout());
+        centerMidPanel.setOpaque(false);
+        cinematicBackground();
+        centerMidPanel.add(gameWindow[1]);
+    }
+
+    public void cinematicBackground() {
+        gameWindow[1] = new JPanel();
+        gameWindow[1].setBounds(0, 0, 600, 600);
+        scene1 = new ImageIcon(url.imageGetter("prisonCell.png"));
+        mapLabel = new JLabel(scene1);
+
+        gameWindow[1].add(mapLabel);
+    }
+
+
     public void createCenterWestPanel() {
         centerWestPanel = new JPanel();
         centerWestPanel.setOpaque(false);
-        centerWestPanel.setPreferredSize(new Dimension(300, 480));
-
+        centerWestPanel.setPreferredSize(new Dimension(300, 500));
+        createInventoryPanel();
         createRoomInventoryList();
         createNPCList();
 
@@ -205,6 +229,48 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         reactionList.setSize(100, 100);
         playerInvList.setSize(100, 100);
         centerWestPanel.add(npcInvList);
+        centerWestPanel.add(inventoryPanel, BorderLayout.SOUTH);
+    }
+
+    public void createInventoryPanel() {
+        inventoryPanel = new JPanel();
+        inventoryPanel.setPreferredSize(new Dimension(300, 200));
+        inventoryPanel.setLayout(new FlowLayout());
+        inventoryPanel.setOpaque(false);
+        createInvButtons();
+        inventoryPanel.add(inv1);
+        inventoryPanel.add(inv2);
+        inventoryPanel.add(inv3);
+        inventoryPanel.add(inv4);
+
+    }
+
+    public void createInvButtons() {
+        bedImg = new ImageIcon(url.imageGetter("bed.png"));
+        wallImg = new ImageIcon(url.imageGetter("wall.jpg"));
+        windowImg = new ImageIcon(url.imageGetter("window.jpg"));
+        deskImg = new ImageIcon(url.imageGetter("desk.jpeg"));
+        inv1 = new JButton(bedImg);
+        inv1.setOpaque(false);
+        inv1.setBorderPainted(false);
+        inv1.setBorder(null);
+        inv1.setFocusPainted(false);
+        inv1.addMouseListener(this);
+        inv2 = new JButton(wallImg);
+        inv2.setOpaque(false);
+        inv2.setBorderPainted(false);
+        inv2.setBorder(null);
+        inv2.addMouseListener(this);
+        inv3 = new JButton(windowImg);
+        inv3.setOpaque(false);
+        inv3.setBorderPainted(false);
+        inv3.setBorder(null);
+        inv3.addMouseListener(this);
+        inv4 = new JButton(deskImg);
+        inv4.setOpaque(false);
+        inv4.setBorderPainted(false);
+        inv4.setBorder(null);
+        inv4.addMouseListener(this);
     }
 
     public void drawMap() {
@@ -224,13 +290,15 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
 
     public void createRoomInventoryList() {
 
+
         String playerLocation = player.getCurrentLocation();
         KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory"), InventoryGlobal.getRoomInvList());
         for (String item : InventoryGlobal.getRoomInvList()) {
             inv.addElement(item);
         }
         roomInvList = new JList<>(inv);
-        roomInvList.setSize(100, 100);
+        roomInvList.setSize(150, 200);
+        roomInvList.setFont(new Font("arial", Font.BOLD, 16));
     }
 
     public void createNPCList() {
@@ -243,6 +311,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         }
         npcInvList = new JList<>(inv);
         npcInvList.setBounds(100, 100, 75, 75);
+        npcInvList.setFont(new Font("arial", Font.BOLD, 16));
     }
 
     //    public void createItemList(){
@@ -261,21 +330,24 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         textBackground = new ImageIcon(url.imageGetter("textBGImage.png"));
         textBGPic = new JLabel(textBackground);
         textBGPic.setSize(1200, 120);
-        textBGPic.setLayout(new GridLayout(1, 2));
+        //textBGPic.setLayout(new GridLayout(1, 2));
 
         createActionInfoArea();
         createPlayerActionPanel();
 
-        textBGPic.add(actionField);
-        textBGPic.add(playerActionPanel);
+        textBGPic.add(actionFieldPanel, BorderLayout.NORTH);
+        textBGPic.add(playerActionPanel, BorderLayout.SOUTH);
         centerSouthPanel.add(textBGPic);
     }
 
     public void createActionInfoArea() {
+        actionFieldPanel = new JPanel();
+        actionFieldPanel.setOpaque(false);
+        actionFieldPanel.setBounds(300, 0, 600, 80);
         text = String.join(" ", player.getLastAction());
         actionField = new JTextArea(5, 30);
         actionField.setFont(new Font("SansSerif Bold", Font.BOLD, 19));
-
+        actionField.setBounds(300, 0, 600, 80);
         actionField.setBackground(Color.white);
         actionField.setForeground(Color.red);
         actionField.setText(text);
@@ -283,12 +355,12 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         actionField.setWrapStyleWord(true);
         actionField.setOpaque(false);
         actionField.setEditable(true);
-
+        actionFieldPanel.add(actionField);
     }
 
     public void createPlayerActionPanel() {
         playerActionPanel = new JPanel();
-        playerActionPanel.setSize(600, 120);
+        playerActionPanel.setBounds(0, 70, 1200, 70);
         playerActionPanel.setOpaque(false);
         playerActionPanel.setLayout(new FlowLayout());
         createButtonActionPallet();
@@ -338,85 +410,37 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         equip.addActionListener(this);
     }
 
-    public void createCenterMidPanel() {
-        centerMidPanel = new JPanel();
-        centerMidPanel.setLayout(new BorderLayout());
-
-        centerMidPanel.setOpaque(false);
-        createInventoryPanel();
-        createMap();
-        centerMidPanel.add(inventoryPanel, BorderLayout.NORTH);
-        centerMidPanel.add(mapLabel, BorderLayout.CENTER);
-    }
-
-    public void createMap() {
-        map = new ImageIcon(url.imageGetter("map.jpeg"));
-        mapLabel = new JLabel(map);
-
-    }
-
-    public void createInventoryPanel() {
-        inventoryPanel = new JPanel();
-        inventoryPanel.setPreferredSize(new Dimension(600, 200));
-        inventoryPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 40));
-        inventoryPanel.setOpaque(false);
-        createInvButtons();
-        inventoryPanel.add(inv1);
-        inventoryPanel.add(inv2);
-        inventoryPanel.add(inv3);
-        inventoryPanel.add(inv4);
-
-    }
-
-    public void createInvButtons() {
-        bedImg = new ImageIcon(url.imageGetter("bed.png"));
-        wallImg = new ImageIcon(url.imageGetter("wall.jpg"));
-        windowImg = new ImageIcon(url.imageGetter("window.jpg"));
-        deskImg = new ImageIcon(url.imageGetter("desk.jpeg"));
-        inv1 = new JButton(bedImg);
-        inv1.setOpaque(false);
-        inv1.setBorderPainted(false);
-        inv1.setBorder(null);
-        inv1.setFocusPainted(false);
-        inv1.addMouseListener(this);
-        inv2 = new JButton(wallImg);
-        inv2.setOpaque(false);
-        inv2.setBorderPainted(false);
-        inv2.setBorder(null);
-        inv2.addMouseListener(this);
-        inv3 = new JButton(windowImg);
-        inv3.setOpaque(false);
-        inv3.setBorderPainted(false);
-        inv3.setBorder(null);
-        inv3.addMouseListener(this);
-        inv4 = new JButton(deskImg);
-        inv4.setOpaque(false);
-        inv4.setBorderPainted(false);
-        inv4.setBorder(null);
-        inv4.addMouseListener(this);
-    }
-
     public void createCenterEastPanels() {
         centerEastPanel = new JPanel();
         centerEastPanel.setOpaque(false);
-        centerEastPanel.setPreferredSize(new Dimension(300, 480));
-        centerEastPanel.setLayout(new BorderLayout());
-
+        centerEastPanel.setPreferredSize(new Dimension(300, 600));
+        //centerEastPanel.setLayout(new BorderLayout());
+        activeMap();
         createDirectionalButtons();
-        centerEastPanel.add(east, BorderLayout.EAST);
-        centerEastPanel.add(west, BorderLayout.WEST);
-        centerEastPanel.add(north, BorderLayout.NORTH);
-        centerEastPanel.add(south, BorderLayout.SOUTH);
+        centerEastPanel.add(mapSupportPanel, BorderLayout.NORTH);
+        centerEastPanel.add(directionalPanel, BorderLayout.SOUTH);
+
+    }
+
+    public void activeMap() {
+        mapSupportPanel = new JPanel();
+        mapSupportPanel.setOpaque(false);
+        mapSupportPanel.setPreferredSize(new Dimension(300, 200));
+
     }
 
     public void createDirectionalButtons() {
+        directionalPanel = new JPanel();
+        directionalPanel.setBackground(new Color(0, 0, 0, 100));
+        directionalPanel.setPreferredSize(new Dimension(300, 300));
+        directionalPanel.setLayout(new BorderLayout());
         northImg = new ImageIcon(url.imageGetter("north.png"));
         southImg = new ImageIcon(url.imageGetter("south.png"));
         eastImg = new ImageIcon(url.imageGetter("east.png"));
         westImg = new ImageIcon(url.imageGetter("west.png"));
 
         north = new JButton(northImg);
-        north.setPreferredSize(new Dimension(100, 190));
+        north.setPreferredSize(new Dimension(80, 120));
         north.setOpaque(false);
         north.setBorderPainted(false);
         north.setBorder(null);
@@ -430,7 +454,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         south.setBorderPainted(false);
         south.setBorder(null);
         south.setFocusPainted(false);
-        south.setPreferredSize(new Dimension(100, 190));
+        south.setPreferredSize(new Dimension(80, 120));
         south.addActionListener(this);
         south.setActionCommand("south");
 
@@ -439,7 +463,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         east.setBorderPainted(false);
         east.setOpaque(false);
         east.setBorder(null);
-        east.setPreferredSize(new Dimension(130, 195));
+        east.setPreferredSize(new Dimension(80, 120));
         east.setFocusPainted(false);
         east.addActionListener(this);
         east.setActionCommand("east");
@@ -449,11 +473,16 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         west.setOpaque(false);
         west.setBorderPainted(false);
         west.setBorder(null);
-        west.setPreferredSize(new Dimension(130, 195));
+        west.setPreferredSize(new Dimension(80, 120));
         west.setFocusPainted(false);
         west.addActionListener(this);
         west.setActionCommand("west");
 //        west.setEnabled(false);
+
+        directionalPanel.add(east, BorderLayout.EAST);
+        directionalPanel.add(west, BorderLayout.WEST);
+        directionalPanel.add(north, BorderLayout.NORTH);
+        directionalPanel.add(south, BorderLayout.SOUTH);
     }
 
     private void movePlayer() {
@@ -575,6 +604,10 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 a.printStackTrace();
             }
         }
+        directionalPanel.add(east, BorderLayout.EAST);
+        directionalPanel.add(west, BorderLayout.WEST);
+        directionalPanel.add(north, BorderLayout.NORTH);
+        directionalPanel.add(south, BorderLayout.SOUTH);
     }
 
 
@@ -615,5 +648,4 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     public void mouseExited(MouseEvent e) {
 
     }
-
 }
