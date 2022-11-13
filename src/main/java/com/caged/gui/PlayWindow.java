@@ -172,6 +172,8 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
             int userInput = JOptionPane.showConfirmDialog(frame, "Are you sure you want to exit the the game?",
                     "Caged", JOptionPane.YES_NO_OPTION);
             if (userInput == 0) {
+                gameMusic.turnOff();
+                panel.setVisible(false);
                 new MainWindow(frame);
             }
         });
@@ -183,7 +185,6 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         centerPanel.setBounds(0, 70, 1200, 620);
         centerPanel.setOpaque(false);
         centerPanel.setLayout(new BorderLayout());
-
         createCenterMidPanel();
         createCenterEastPanels();
         createCenterSouthPanel();
@@ -219,8 +220,6 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         createInventoryPanel();
         createRoomInventoryList();
         createNPCList();
-
-//        createItemList();
         centerWestPanel.add(roomInvList);
         centerWestPanel.add(reactionList);
         centerWestPanel.add(itemInvList);
@@ -604,10 +603,6 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 a.printStackTrace();
             }
         }
-        directionalPanel.add(east, BorderLayout.EAST);
-        directionalPanel.add(west, BorderLayout.WEST);
-        directionalPanel.add(north, BorderLayout.NORTH);
-        directionalPanel.add(south, BorderLayout.SOUTH);
     }
 
 

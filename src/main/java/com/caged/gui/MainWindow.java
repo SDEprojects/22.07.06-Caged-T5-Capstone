@@ -19,7 +19,7 @@ public class MainWindow extends JPanel{
     public MainWindow(JFrame frame){
         gameMusic.setFile("MainPageSong.wav");
         gameMusic.play();
-        gameMusic.loopSound();
+//        gameMusic.loopSound();
         initialize(frame);
         frame.setVisible(true);
     }
