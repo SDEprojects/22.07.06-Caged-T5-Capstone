@@ -50,12 +50,13 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     DefaultListModel<String> reactionInv = new DefaultListModel<>();
     DefaultListModel<String> itemInv = new DefaultListModel<>();
     DefaultListModel<String> playerInv = new DefaultListModel<>();
+    DefaultListModel<String> npcInv = new DefaultListModel<>();
 
     JList<String> itemInvList = new JList<>(itemInv);
     JList<String> reactionList = new JList<>(reactionInv);
     JList<String> playerInvList = new JList<>(playerInv);
     JList<String> roomInvList;
-    JList<String> npcInvList;
+    JList<String> npcInvList = new JList<>(npcInv);
 
     String text;
 
@@ -222,12 +223,14 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         createRoomInventoryList();
         createNPCList();
         centerWestPanel.add(roomInvList);
+        centerWestPanel.add(npcInvList);
         centerWestPanel.add(reactionList);
         centerWestPanel.add(itemInvList);
         centerWestPanel.add(playerInvList);
         itemInvList.setSize(100, 100);
         reactionList.setSize(100, 100);
         playerInvList.setSize(100, 100);
+        npcInvList.setSize(100,100);
         centerWestPanel.add(npcInvList);
         centerWestPanel.add(inventoryPanel, BorderLayout.SOUTH);
     }
@@ -300,15 +303,14 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     }
 
     public void createNPCList() {
-        DefaultListModel<String> inv = new DefaultListModel<>();
         String playerLocation = player.getCurrentLocation();
         KeyValueParser.key(node.get("room").get(playerLocation).get("NPCs"), InventoryGlobal.npcList);
 
         for (String item : InventoryGlobal.npcList) {
-            inv.addElement(item);
+            npcInv.addElement(item);
         }
-        npcInvList = new JList<>(inv);
-        npcInvList.setBounds(100, 100, 75, 75);
+        npcInvList = new JList<>(npcInv);
+        npcInvList.setSize(150,250);
         npcInvList.setFont(new Font("arial", Font.BOLD, 16));
     }
 
@@ -510,6 +512,16 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
             InventoryGlobal.reactionList.clear();
             playerInv.clear();
         }
+        InventoryGlobal.npcList.clear();
+
+        npcInv.clear();
+        KeyValueParser.key(node.get("room").get(playerLocation).get("NPCs"), InventoryGlobal.npcList);
+        for(String item: InventoryGlobal.npcList){
+            npcInv.addElement(item);
+            System.out.println(item);
+        }
+
+
     }
 
     private void movePlayer() {
@@ -534,6 +546,8 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
             if (selected) {
                 player.unlock(" ", "north", locationVar, doors);
                 selected = false;
+                text = player.getLastAction().get(player.getLastAction().size() - 1);
+                actionField.setText(text);
             } else {
                 player.move("north", locationVar, doors);
                 text = player.getLastAction().get(player.getLastAction().size() - 1);
@@ -545,6 +559,8 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
             if (selected) {
                 player.unlock(" ", "south", locationVar, doors);
                 selected = false;
+                text = player.getLastAction().get(player.getLastAction().size() - 1);
+                actionField.setText(text);
             } else {
                 player.move("south", locationVar, doors);
                 text = player.getLastAction().get(player.getLastAction().size() - 1);
@@ -556,6 +572,8 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
             if (selected) {
                 player.unlock(" ", "east", locationVar, doors);
                 selected = false;
+                text = player.getLastAction().get(player.getLastAction().size() - 1);
+                actionField.setText(text);
             } else {
                 player.move("east", locationVar, doors);
                 text = player.getLastAction().get(player.getLastAction().size() - 1);
@@ -567,6 +585,8 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
             if (selected) {
                 player.unlock(" ", "west", locationVar, doors);
                 selected = false;
+                text = player.getLastAction().get(player.getLastAction().size() - 1);
+                actionField.setText(text);
             } else {
                 player.move("west", locationVar, doors);
                 text = player.getLastAction().get(player.getLastAction().size() - 1);
