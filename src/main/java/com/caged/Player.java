@@ -302,6 +302,7 @@ public class Player {
                     foundItems) {
                 if (i.name.equals(item) && !i.isTaken && i.currentLocation.equals(playerLocation)) {
                     Inventory.add(i);
+                    InventoryGlobal.itemList.add(i.getName());
                     i.setTaken(true);
                     i.setCurrentLocation("Inventory");
                     System.out.println(item + " has been taken!");
