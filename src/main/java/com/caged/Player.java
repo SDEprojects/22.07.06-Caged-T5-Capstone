@@ -14,7 +14,7 @@ public class Player {
     private String weapon;
     private int HitPoints;
     private boolean playGame = true;
-    private List<Item> Inventory = new ArrayList<>();
+    public List<Item> Inventory = new ArrayList<>();
     private List<Item> foundItems = new ArrayList<>();
     YAMLMapper mapper = new YAMLMapper();
     private final Scanner scanner = new Scanner(System.in);

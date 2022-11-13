@@ -70,8 +70,8 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     JsonNode node = mapper.valueToTree(locationVar);
     GameMap playerMap1 = new GameMap();
     GameMap playerMap2 = new GameMap();
-    private JPanel directionalPanel;
     JPanel mapSupportPanel;
+    private JPanel directionalPanel;
     private JPanel[] mapPanels = new JPanel[20];
     private JPanel actionFieldPanel;
 
@@ -288,8 +288,6 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     }
 
     public void createRoomInventoryList() {
-
-
         String playerLocation = player.getCurrentLocation();
         KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory"), InventoryGlobal.getRoomInvList());
         for (String item : InventoryGlobal.getRoomInvList()) {
@@ -425,7 +423,10 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         mapSupportPanel = new JPanel();
         mapSupportPanel.setOpaque(false);
         mapSupportPanel.setPreferredSize(new Dimension(300, 200));
-
+        JTextArea mapArea = new JTextArea();
+        mapArea.setSize(300, 200);
+        mapArea.setLineWrap(true);
+        mapArea.setWrapStyleWord(true);
     }
 
     public void createDirectionalButtons() {
@@ -433,6 +434,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         directionalPanel.setBackground(new Color(0, 0, 0, 100));
         directionalPanel.setPreferredSize(new Dimension(300, 300));
         directionalPanel.setLayout(new BorderLayout());
+        directionalPanel.setOpaque(false);
         northImg = new ImageIcon(url.imageGetter("north.png"));
         southImg = new ImageIcon(url.imageGetter("south.png"));
         eastImg = new ImageIcon(url.imageGetter("east.png"));
@@ -456,6 +458,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         south.setPreferredSize(new Dimension(80, 120));
         south.addActionListener(this);
         south.setActionCommand("south");
+//        south.setEnabled(false);
 
 
         east = new JButton(eastImg);
@@ -477,47 +480,41 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         west.addActionListener(this);
         west.setActionCommand("west");
 //        west.setEnabled(false);
-
         directionalPanel.add(east, BorderLayout.EAST);
         directionalPanel.add(west, BorderLayout.WEST);
         directionalPanel.add(north, BorderLayout.NORTH);
         directionalPanel.add(south, BorderLayout.SOUTH);
+        movePlayer();
+    }
+
+    public void locationStatus() {
+        location.setText("Location: " + player.getCurrentLocation());
+        weapon.setText(" || Weapon: " + player.getWeapon());
+        HP.setText(" || HP: " + player.getHitPoints());
+        disguised.setText(" || Disguised: " + player.getEquipment());
+    }
+
+    public void playerInvStatus() {
+        // Remove prior first
+        // Update player inv list
+        InventoryGlobal.getRoomInvList().clear();
+        inv.clear();
+        String playerLocation = player.getCurrentLocation();
+        KeyValueParser.key(node.get("room").get(playerLocation).get("Inventory"), InventoryGlobal.getRoomInvList());
+        for (String item : InventoryGlobal.getRoomInvList()) {
+            inv.addElement(item);
+        }
+        if (inv.isEmpty()) {
+            reactionInv.clear();
+            InventoryGlobal.reactionList.clear();
+            itemInv.clear();
+            InventoryGlobal.itemList.clear();
+        }
     }
 
     private void movePlayer() {
         String playerLocation = player.getCurrentLocation();
         KeyValueParser.locationKeyValue(node.get("room").get(playerLocation).get("Moves"), player, doors);
-//        for (String item: InventoryGlobal.locationList){
-//            System.out.println(item);
-//        }
-//        for (String item : InventoryGlobal.locationList) {
-//
-//            if (north.getActionCommand().equals(item)) {
-//
-//                north.setEnabled(true);
-//            } else {
-//                north.setEnabled(false);
-//            }
-//
-//            if (south.getActionCommand().equals(item)) {
-//
-//                south.setEnabled(true);
-//            } else {
-//                south.setEnabled(false);
-//            }
-//            if (west.getActionCommand().equals(item)) {
-//
-//                west.setEnabled(true);
-//            } else {
-//                west.setEnabled(false);
-//            }
-//            if (east.getActionCommand().equals(item)) {
-//
-//                east.setEnabled(true);
-//            } else {
-//                east.setEnabled(false);
-//            }
-//        }
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -525,19 +522,26 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
             player.move("north", locationVar, doors);
             text = player.getLastAction().get(player.getLastAction().size() - 1);
             actionField.setText(text);
+            locationStatus();
+            playerInvStatus();
         } else if (e.getSource() == south) {
             player.move("south", locationVar, doors);
             text = player.getLastAction().get(player.getLastAction().size() - 1);
             actionField.setText(text);
-
+            locationStatus();
+            playerInvStatus();
         } else if (e.getSource() == east) {
             player.move("east", locationVar, doors);
             text = player.getLastAction().get(player.getLastAction().size() - 1);
             actionField.setText(text);
+            locationStatus();
+            playerInvStatus();
         } else if (e.getSource() == west) {
             player.move("west", locationVar, doors);
             text = player.getLastAction().get(player.getLastAction().size() - 1);
             actionField.setText(text);
+            locationStatus();
+            playerInvStatus();
         }
 
         String val = roomInvList.getSelectedValue();
@@ -575,14 +579,13 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                     if (item.getName().equals("brick")) {
                         door.setLocked(false);
                         movePlayer();
+                        text = player.getLastAction().get(player.getLastAction().size() - 1);
+                        actionField.setText(text);
+                        playerInvStatus();
+
                     }
                     if (!itemInv.contains(item.getName())) {
                         itemInv.addElement(item.getName());
-                        // Adding to global inventory function for take purposes
-                        // Check if item already exists on global inventory list
-                        if (!InventoryGlobal.itemList.contains(itemInv)) {
-                            InventoryGlobal.itemList.add(item.getName());
-                        }
                     }
                 }
             } catch (Exception ae) {
@@ -591,13 +594,13 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         }
         if (e.getSource() == take) {
             try {
-                // Making sure there is item to take first
-                // Verify against the global inventory list that the item is not already in the player inventory
-                // Once that is done, display the list of player's inventory
-                for (String item : InventoryGlobal.itemList) {
-                    if (!playerInv.contains(item)) {
-                        playerInv.addElement(item);
-                    }
+                String child = itemInvList.getSelectedValue();
+                player.take(child, "", locationVar);
+                text = player.getLastAction().get(player.getLastAction().size() - 1);
+                actionField.setText(text);
+                //TODO: implement add to inventory method and display on gui
+                for(Item item: player.getFoundItems()){
+                    playerInv.addElement(item.getName());
                 }
             } catch (Exception a) {
                 a.printStackTrace();

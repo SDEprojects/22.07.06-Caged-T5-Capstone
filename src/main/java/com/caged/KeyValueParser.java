@@ -43,13 +43,11 @@ public class KeyValueParser {
         while (nodes.hasNext()) {
             Map.Entry<String, JsonNode> entry = (Map.Entry<String, JsonNode>) nodes.next();
             String location = node.get(entry.getKey()).get("location").textValue();
-
             Doors door = doors.stream().filter(doorSeek -> doorSeek.getDoorName().equals(node.get(entry.getKey()).get("door").textValue())).findFirst().orElse(null);
             if (!node.get(entry.getKey()).get("hidden").booleanValue()) {
-
                 if (node.get(entry.getKey()).get("door").isNull()){
                     System.out.println("\u001b[35m" + entry.getKey() + "\u001b[0m" + "  ---->  " + location);
-                    InventoryGlobal.locationList.add(location);
+//                    InventoryGlobal.locationList.add(entry.getKey());
                     System.out.println(location);
 
                 }
@@ -57,12 +55,12 @@ public class KeyValueParser {
                     //Doors door = doors.stream().filter(doorSeek -> doorSeek.getDoorName().equals(node.get(entry.getKey()).get("door").textValue())).findFirst().orElse(null);
                     if (door.isLocked()){
                         System.out.println("\u001b[35m" + entry.getKey() + "\u001b[0m" + "  ---->  " + location + "  ---->  ***DOOR LOCKED***");
-                        InventoryGlobal.locationList.add(entry.getKey());
-                        System.out.println(location);
+//                        InventoryGlobal.locationList.add(entry.getKey());
+
                     }
                     else {
                         System.out.println("\u001b[35m" + entry.getKey() + "\u001b[0m" + "  ---->  " + location + "  ---->  DOOR UNLOCKED!");;
-                        InventoryGlobal.locationList.add(entry.getKey());
+//                        InventoryGlobal.locationList.add(entry.getKey());
 
                     }
                     //System.out.println("\u001b[35m" + entry.getKey() + "\u001b[0m" + "  ---->  " + reaction)
@@ -76,7 +74,6 @@ public class KeyValueParser {
                         System.out.println("\u001b[35m" + entry.getKey() + "\u001b[0m" + "  ---->  " + reaction);
                     }
                 }
-
             }
         }
     }
