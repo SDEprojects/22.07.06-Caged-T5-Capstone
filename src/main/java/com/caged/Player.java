@@ -88,7 +88,7 @@ public class Player {
     }
 
     // TODO: added heal for testing - JS
-    private void heal(String noun) {
+    public void heal(String noun) {
         for (Item i : Inventory) {
             if (i.getName().contains("chocolate")) {
                 Inventory.remove(i);
@@ -101,7 +101,7 @@ public class Player {
         }
     }
 
-    private void equip() {
+    public void equip() {
         for (Item item : Inventory) {
             if (item.getName().contains("guard uniform")) {
                 setEquipment(item.getName());
@@ -115,7 +115,7 @@ public class Player {
         }
     }
 
-    private void attack(String firstName, String lastName, LocationGetter location) {
+    public void attack(String firstName, String lastName, LocationGetter location) {
         String playerLocation = getCurrentLocation();
         JsonNode node = mapper.valueToTree(location);
         CharacterPlayer player = new CharacterPlayer(getHitPoints());
@@ -200,7 +200,7 @@ public class Player {
         }
     }
 
-    private void talk(String lastName, String firstName, LocationGetter location) {
+    public void talk(String lastName, String firstName, LocationGetter location) {
         String playerLocation = getCurrentLocation();
         JsonNode node = mapper.valueToTree(location);
         YAMLReader yamlReader = new YAMLReader();

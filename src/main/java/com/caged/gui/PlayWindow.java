@@ -26,7 +26,8 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
 
     JButton north, south, east, west;
     JButton inv1, inv2, inv3, inv4;
-    JButton take, look, talk, attack, use, unlock, equip, heal;
+    JButton take, look, talk, attack, use, equip, heal;
+    JToggleButton unlock;
 
     //MAIN Panel
     JPanel panel, bottomPanel, topPanel, centerPanel;
@@ -389,10 +390,10 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         use.setFont(new Font("Arial", Font.BOLD, 20));
         use.setSize(50, 50);
         use.addActionListener(this);
-        unlock = new JButton("Unlock");
+        unlock = new JToggleButton("Unlock");
         unlock.setFont(new Font("Arial", Font.BOLD, 20));
         unlock.setSize(50, 50);
-        unlock.addActionListener(this);
+        unlock.addActionListener(this::toggle);
         heal = new JButton("Heal");
         heal.setFont(new Font("Arial", Font.BOLD, 20));
         heal.setSize(50, 50);
@@ -516,31 +517,63 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         KeyValueParser.locationKeyValue(node.get("room").get(playerLocation).get("Moves"), player, doors);
     }
 
+    // Creates toggle listener
+    boolean selected = false; // this is used by the actionPerformed listener for directional functions
+
+    public void toggle(ActionEvent actionEvent) {
+        AbstractButton abstractButton =
+                (AbstractButton) actionEvent.getSource();
+
+        // return true or false according to the
+        // selection or deselection of the button
+        selected = abstractButton.getModel().isSelected();
+    }
+
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == north) {
-            player.move("north", locationVar, doors);
-            text = player.getLastAction().get(player.getLastAction().size() - 1);
-            actionField.setText(text);
-            locationStatus();
-            playerInvStatus();
+            if (selected) {
+                player.unlock(" ", "north", locationVar, doors);
+                selected = false;
+            } else {
+                player.move("north", locationVar, doors);
+                text = player.getLastAction().get(player.getLastAction().size() - 1);
+                actionField.setText(text);
+                locationStatus();
+                playerInvStatus();
+            }
         } else if (e.getSource() == south) {
-            player.move("south", locationVar, doors);
-            text = player.getLastAction().get(player.getLastAction().size() - 1);
-            actionField.setText(text);
-            locationStatus();
-            playerInvStatus();
+            if (selected) {
+                player.unlock(" ", "south", locationVar, doors);
+                selected = false;
+            } else {
+                player.move("south", locationVar, doors);
+                text = player.getLastAction().get(player.getLastAction().size() - 1);
+                actionField.setText(text);
+                locationStatus();
+                playerInvStatus();
+            }
         } else if (e.getSource() == east) {
-            player.move("east", locationVar, doors);
-            text = player.getLastAction().get(player.getLastAction().size() - 1);
-            actionField.setText(text);
-            locationStatus();
-            playerInvStatus();
+            if (selected) {
+                player.unlock(" ", "east", locationVar, doors);
+                selected = false;
+            } else {
+                player.move("east", locationVar, doors);
+                text = player.getLastAction().get(player.getLastAction().size() - 1);
+                actionField.setText(text);
+                locationStatus();
+                playerInvStatus();
+            }
         } else if (e.getSource() == west) {
-            player.move("west", locationVar, doors);
-            text = player.getLastAction().get(player.getLastAction().size() - 1);
-            actionField.setText(text);
-            locationStatus();
-            playerInvStatus();
+            if (selected) {
+                player.unlock(" ", "west", locationVar, doors);
+                selected = false;
+            } else {
+                player.move("west", locationVar, doors);
+                text = player.getLastAction().get(player.getLastAction().size() - 1);
+                actionField.setText(text);
+                locationStatus();
+                playerInvStatus();
+            }
         }
 
         String val = roomInvList.getSelectedValue();
@@ -565,6 +598,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 ex.printStackTrace();
             }
         }
+
         if (e.getSource() == use) {
             try {
                 String child = reactionList.getSelectedValue();
@@ -591,6 +625,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 ae.printStackTrace();
             }
         }
+
         if (e.getSource() == take) {
             try {
                 String child = itemInvList.getSelectedValue();
@@ -606,7 +641,6 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 a.printStackTrace();
             }
         }
-
     }
 
 
