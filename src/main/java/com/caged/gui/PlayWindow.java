@@ -389,7 +389,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         use.setFont(new Font("Arial", Font.BOLD, 20));
         use.setSize(50, 50);
         use.addActionListener(this);
-        unlock = new JButton("Equip");
+        unlock = new JButton("Unlock");
         unlock.setFont(new Font("Arial", Font.BOLD, 20));
         unlock.setSize(50, 50);
         unlock.addActionListener(this);
@@ -507,8 +507,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         if (inv.isEmpty()) {
             reactionInv.clear();
             InventoryGlobal.reactionList.clear();
-            itemInv.clear();
-            InventoryGlobal.itemList.clear();
+            playerInv.clear();
         }
     }
 
@@ -598,14 +597,16 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 player.take(child, "", locationVar);
                 text = player.getLastAction().get(player.getLastAction().size() - 1);
                 actionField.setText(text);
-                //TODO: implement add to inventory method and display on gui
-                for(Item item: player.getFoundItems()){
-                    playerInv.addElement(item.getName());
+                if (InventoryGlobal.itemList.contains(itemInvList.getSelectedValue())) {
+                    // TODO: don't let player take it twice
+                    playerInv.add(itemInvList.getSelectedIndex(), child);
                 }
+
             } catch (Exception a) {
                 a.printStackTrace();
             }
         }
+
     }
 
 
