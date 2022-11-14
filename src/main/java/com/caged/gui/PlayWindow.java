@@ -14,38 +14,55 @@ import java.util.List;
 import java.util.Objects;
 
 public class PlayWindow extends JPanel implements MouseListener, ActionListener {
+    private FileGetter url = new FileGetter();
+    private MusicPlayer gameMusic = new MusicPlayer();
+
+    int bgNum;
+
+    public int playerMaxLife;
+    public int playerLife;
+
+    public int hasOrangeKey;
+    public int hasChocolate;
+    public int hasBedSpring;
+    public int hasBrick;
+    public int hasGuardUniform;
+    public int hasKeyCard;
 
     JPanel inventoryPanel;
     JPanel playerActionPanel;
-
-    ImageIcon northImg, southImg, eastImg, westImg;
-
-    ImageIcon bedImg, wallImg, windowImg, deskImg, scene1;
-
     JTextArea actionField;
-
-    JButton north, south, east, west;
-    JButton inv1, inv2, inv3, inv4;
-    JButton take, look, talk, attack, use, equip, heal;
-    JToggleButton unlock;
-
+    //images for the arrow buttons
+    private JPanel directionalPanel;
+    private ImageIcon northImg, southImg, eastImg, westImg;
+    private JButton north, south, east, west;
+    //images for items on cage1
+    private JButton windowBars, bed, desk, thrashBin, wallRubble;
+    private ImageIcon trashImg, cage1;
+    //All Level 1 in-game halls
+    private ImageIcon westHall, southWestHall, southHall, northHall, eastHall;
+    //All level 2 in-game halls and vents
+    private ImageIcon SouthWest2F, south2F, centralCorridor,north2F,northEast2F,ventW,ventNW,ventN,ventNE;
     //MAIN Panel
-    JPanel panel, bottomPanel, topPanel, centerPanel;
-    JPanel[] gameWindow = new JPanel[15];
-    JLabel[] gameLabel = new JLabel[15];
-    JLabel backgroundPic, textBGPic;
+    private JPanel panel, bottomPanel, topPanel, centerPanel;
+    private JPanel[] gameWindow = new JPanel[15];
+    private JLabel[] gameLabel = new JLabel[15];
+    private JLabel backgroundPic, textBGPic;
     //TOP PANEL///
-    JLabel location, weapon, HP, disguised;
-    JButton help;
-    JToggleButton volume;
-    JSlider minMaxVolume;
-    ImageIcon displayImage, textBackground;
+    private JLabel location, weapon, HP, disguised;
+    private JButton help;
+    private JToggleButton volume;
+    private JSlider minMaxVolume;
+    private ImageIcon displayImage, textBackground;
     //BOTTOM///
-    JButton quitBtn;
+    private JButton quitBtn;
+    ImageIcon lifeIcon;
     //CENTER PANEL///
-    JPanel centerMidPanel, centerSouthPanel, centerEastPanel, centerWestPanel;
-    JLabel mapLabel;
-
+    private JPanel centerSouthPanel, centerEastPanel, centerWestPanel;
+    //CENTER BOTTOM PANEL
+    private JPanel actionFieldPanel;
+    private JButton take, look, talk, attack, use, equip, heal;
+    private JToggleButton unlock;
     DefaultListModel<String> inv = new DefaultListModel<>();
     DefaultListModel<String> reactionInv = new DefaultListModel<>();
     DefaultListModel<String> itemInv = new DefaultListModel<>();
@@ -57,12 +74,9 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     JList<String> playerInvList = new JList<>(playerInv);
     JList<String> roomInvList;
     JList<String> npcInvList = new JList<>(npcInv);
+    JLabel[] invItem = new JLabel[10];
 
-    String text;
-
-    FileGetter url = new FileGetter();
-    MusicPlayer gameMusic = new MusicPlayer();
-
+    private String text;
     YAMLReader yamlReader = new YAMLReader(); //initiates the yaml loader
     Player player = yamlReader.playerLoader(); //sets default player stats
     LocationGetter locationVar = yamlReader.locationLoader(); //TODO: used for map update
@@ -73,9 +87,9 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     GameMap playerMap1 = new GameMap();
     GameMap playerMap2 = new GameMap();
     JPanel mapSupportPanel;
-    private JPanel directionalPanel;
-    private JPanel[] mapPanels = new JPanel[20];
-    private JPanel actionFieldPanel;
+    private ImageIcon chocolate,brick,orangeKey,bedSpring;
+    private JPanel lifePanel;
+    private JLabel[] heartLabel = new JLabel[4];
 
     public PlayWindow(JFrame frame) {
         gameMusic.setFile("gamePlaySong.wav");
@@ -93,7 +107,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         panel = new JPanel();
         panel.setLayout(null);
 
-        displayImage = new ImageIcon(url.imageGetter("gamePlayBG.jpeg"));
+        displayImage = new ImageIcon(url.imageGetter("gameplayBG.png"));
         backgroundPic = new JLabel(displayImage);
         backgroundPic.setBounds(0, 0, 1200, 900);
         panel.add(topPanel);
@@ -139,7 +153,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
             }
         });
 
-        minMaxVolume = new JSlider(-60, 6);
+        minMaxVolume = new JSlider(-70, 6);
         minMaxVolume.setPreferredSize(new Dimension(100, 50));
         minMaxVolume.setPaintTicks(true);
         minMaxVolume.addChangeListener(e -> {
@@ -150,6 +164,10 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         });
         help = new JButton("Help");
         help.addActionListener(e -> {
+            JOptionPane.showMessageDialog(frame, "<html>Find your way to get out <br>"+
+                                                    "search for clues in certain cages or cell.<br>"+
+                                                    "Do anything it takes to scape <br>"+
+                                                    "use the in-screen menu to set desire volume or mute");
         });
 
         topPanel.add(minMaxVolume);
@@ -164,8 +182,10 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
 
     public void bottomPanel(JFrame frame) {
         bottomPanel = new JPanel();
-        bottomPanel.setBounds(0, 700, 1200, 150);
+        bottomPanel.setBounds(0, 750, 1200, 300);
+        bottomPanel.setLayout(new FlowLayout());
         bottomPanel.setOpaque(false);
+        playerHP();
 
         quitBtn = new JButton("Quit");
         quitBtn.setFont(new Font("Arial", Font.BOLD, 20));
@@ -179,7 +199,44 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 new MainWindow(frame);
             }
         });
+        bottomPanel.add(lifePanel, BorderLayout.WEST);
         bottomPanel.add(quitBtn);
+    }
+    public void playerHP(){
+        lifePanel = new JPanel();
+        lifePanel.setBounds(0, 0, 400, 300);
+        lifePanel.setOpaque(false);
+
+        lifeIcon = new ImageIcon(url.imageGetter("healthHeart.png"));
+        int i=1;
+        while(i<4){
+            heartLabel[i] = new JLabel(lifeIcon);
+            heartLabel[i].setIcon(lifeIcon);
+            lifePanel.add(heartLabel[i]);
+            i++;
+        }
+    }
+    public void setPlayerDefaultStatus() {
+        playerMaxLife = 3;
+        playerLife = 3;
+        hasBrick = 0;
+        hasOrangeKey = 0;
+        hasChocolate = 0;
+        hasGuardUniform = 0;
+        hasKeyCard = 0;
+    }
+    public void updatePlayerStatus() {
+        //remove life icon
+        int i = 1;
+        while (i < 4) {
+            heartLabel[i].setVisible(false);
+            i++;
+        }
+        int lifeCount = playerLife;
+        while (lifeCount!=0){
+            heartLabel[lifeCount].setVisible(true);
+            lifeCount--;
+        }
     }
 
     public void centerPanel(JFrame frame) {
@@ -187,31 +244,75 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         centerPanel.setBounds(0, 70, 1200, 620);
         centerPanel.setOpaque(false);
         centerPanel.setLayout(new BorderLayout());
-        createCenterMidPanel();
+        cinematicBackground();
         createCenterEastPanels();
         createCenterSouthPanel();
         createCenterWestPanel();
-        centerPanel.add(centerMidPanel, BorderLayout.CENTER);
+        centerPanel.add(gameWindow[1], BorderLayout.CENTER);
         centerPanel.add(centerEastPanel, BorderLayout.EAST);
         centerPanel.add(centerSouthPanel, BorderLayout.SOUTH);
         centerPanel.add(centerWestPanel, BorderLayout.WEST);
     }
 
-    public void createCenterMidPanel() {
-        centerMidPanel = new JPanel();
-        centerMidPanel.setLayout(new BorderLayout());
-        centerMidPanel.setOpaque(false);
-        cinematicBackground();
-        centerMidPanel.add(gameWindow[1]);
-    }
 
     public void cinematicBackground() {
         gameWindow[1] = new JPanel();
-        gameWindow[1].setBounds(0, 0, 600, 600);
-        scene1 = new ImageIcon(url.imageGetter("prisonCell.png"));
-        mapLabel = new JLabel(scene1);
+        gameWindow[1].setLayout(null);
+        gameWindow[1].setOpaque(false);
 
-        gameWindow[1].add(mapLabel);
+        cage1 = new ImageIcon(url.imageGetter("prisonCell.png"));
+        gameLabel[1] = new JLabel(cage1);
+        gameLabel[1].setBounds(0, 0, 600, 500);
+        cage1Buttons();
+        gameWindow[1].add(thrashBin);
+        gameWindow[1].add(desk);
+        gameWindow[1].add(wallRubble);
+        gameWindow[1].add(bed);
+        gameWindow[1].add(windowBars);
+        gameWindow[1].add(gameLabel[1]);
+    }
+
+    public void cage1Buttons() {
+        windowBars = new JButton("window bars");
+        windowBars.setBounds(45, 50, 50, 155);
+        //windowBars.setOpaque(false);
+        windowBars.setBorderPainted(false);
+        windowBars.setBorder(null);
+        windowBars.setFocusPainted(false);
+        windowBars.addMouseListener(this);
+
+        bed = new JButton();
+        bed.setBounds(180, 330, 270, 35);
+        bed.setOpaque(false);
+        bed.setBorderPainted(false);
+        bed.setBorder(null);
+        bed.setFocusPainted(false);
+        bed.addMouseListener(this);
+
+        wallRubble = new JButton();
+        wallRubble.setBounds(320, 210, 125, 125);
+        wallRubble.setOpaque(false);
+        wallRubble.setBorderPainted(false);
+        wallRubble.setBorder(null);
+        wallRubble.setFocusPainted(false);
+        wallRubble.addMouseListener(this);
+
+        trashImg = new ImageIcon(url.imageGetter("trashbin.png"));
+        thrashBin = new JButton(trashImg);
+        thrashBin.setBounds(60, 400, 50, 50);
+        thrashBin.setOpaque(false);
+        thrashBin.setBorderPainted(false);
+        thrashBin.setBorder(null);
+        thrashBin.setFocusPainted(false);
+        thrashBin.addMouseListener(this);
+
+        desk = new JButton();
+        desk.setBounds(50, 280, 120, 100);
+        desk.setOpaque(false);
+        desk.setBorderPainted(false);
+        desk.setBorder(null);
+        desk.setFocusPainted(false);
+        desk.addMouseListener(this);
     }
 
 
@@ -230,66 +331,59 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         itemInvList.setSize(100, 100);
         reactionList.setSize(100, 100);
         playerInvList.setSize(100, 100);
-        npcInvList.setSize(100,100);
+        npcInvList.setSize(100, 100);
         centerWestPanel.add(npcInvList);
         centerWestPanel.add(inventoryPanel, BorderLayout.SOUTH);
     }
 
     public void createInventoryPanel() {
         inventoryPanel = new JPanel();
-        inventoryPanel.setPreferredSize(new Dimension(300, 200));
+        inventoryPanel.setPreferredSize(new Dimension(300, 300));
         inventoryPanel.setLayout(new FlowLayout());
         inventoryPanel.setOpaque(false);
-        createInvButtons();
-        inventoryPanel.add(inv1);
-        inventoryPanel.add(inv2);
-        inventoryPanel.add(inv3);
-        inventoryPanel.add(inv4);
-
+        inventoryItemList();
+        inventoryPanel.add(invItem[1]);
+        inventoryPanel.add(invItem[2]);
+        inventoryPanel.add(invItem[3]);
+        inventoryPanel.add(invItem[4]);
     }
-
-    public void createInvButtons() {
-        bedImg = new ImageIcon(url.imageGetter("bed.png"));
-        wallImg = new ImageIcon(url.imageGetter("wall.jpg"));
-        windowImg = new ImageIcon(url.imageGetter("window.jpg"));
-        deskImg = new ImageIcon(url.imageGetter("desk.jpeg"));
-        inv1 = new JButton(bedImg);
-        inv1.setOpaque(false);
-        inv1.setBorderPainted(false);
-        inv1.setBorder(null);
-        inv1.setFocusPainted(false);
-        inv1.addMouseListener(this);
-        inv2 = new JButton(wallImg);
-        inv2.setOpaque(false);
-        inv2.setBorderPainted(false);
-        inv2.setBorder(null);
-        inv2.addMouseListener(this);
-        inv3 = new JButton(windowImg);
-        inv3.setOpaque(false);
-        inv3.setBorderPainted(false);
-        inv3.setBorder(null);
-        inv3.addMouseListener(this);
-        inv4 = new JButton(deskImg);
-        inv4.setOpaque(false);
-        inv4.setBorderPainted(false);
-        inv4.setBorder(null);
-        inv4.addMouseListener(this);
+    public void inventoryItemList() {
+        chocolate = new ImageIcon(url.imageGetter("chocolate.png"));
+        brick = new ImageIcon(url.imageGetter("brickImg.png"));
+        orangeKey  = new ImageIcon(url.imageGetter("orangeKey.png"));
+        bedSpring = new ImageIcon(url.imageGetter("bedSpring.png"));
+        invItem[1] = new JLabel(brick);
+        invItem[2] = new JLabel(chocolate);
+        invItem[3] = new JLabel(bedSpring);
+        invItem[4] = new JLabel(orangeKey);
     }
-
-    public void drawMap() {
-        playerMap1.build();
-        playerMap2.build();
-        String playerLocation = player.getCurrentLocation();
-
-        if (node.get("room").get(playerLocation).get("Phase").intValue() == 1) {
-            playerMap1.positionUpdate(player, locationVar);
-            playerMap1.show();
-        } else {
-            playerMap2.positionUpdate(player, locationVar);
-            playerMap2.show();
+    public void updateInventory(){
+        if(hasBrick == 0){
+            invItem[1].setVisible(false);
         }
-
+        if(hasBrick == 1){
+            invItem[1].setVisible(true);
+        }
+        if(hasChocolate == 0) {
+            invItem[2].setVisible(false);
+        }
+        if(hasChocolate == 1) {
+            invItem[2].setVisible(true);
+        }
+        if(hasBedSpring == 0) {
+            invItem[3].setVisible(false);
+        }
+        if(hasBedSpring == 1) {
+            invItem[3].setVisible(true);
+        }
+        if(hasOrangeKey == 0) {
+            invItem[4].setVisible(false);
+        }
+        if(hasOrangeKey == 1) {
+            invItem[4].setVisible(true);
+        }
     }
+
 
     public void createRoomInventoryList() {
         String playerLocation = player.getCurrentLocation();
@@ -310,7 +404,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
             npcInv.addElement(item);
         }
         npcInvList = new JList<>(npcInv);
-        npcInvList.setSize(150,250);
+        npcInvList.setSize(150, 250);
         npcInvList.setFont(new Font("arial", Font.BOLD, 16));
     }
 
@@ -327,6 +421,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         centerSouthPanel = new JPanel();
         centerSouthPanel.setOpaque(false);
         centerSouthPanel.setPreferredSize(new Dimension(1200, 120));
+
         textBackground = new ImageIcon(url.imageGetter("textBGImage.png"));
         textBGPic = new JLabel(textBackground);
         textBGPic.setSize(1200, 120);
@@ -421,7 +516,20 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         centerEastPanel.add(directionalPanel, BorderLayout.SOUTH);
 
     }
+    public void drawMap() {
+        playerMap1.build();
+        playerMap2.build();
+        String playerLocation = player.getCurrentLocation();
 
+        if (node.get("room").get(playerLocation).get("Phase").intValue() == 1) {
+            playerMap1.positionUpdate(player, locationVar);
+            playerMap1.show();
+        } else {
+            playerMap2.positionUpdate(player, locationVar);
+            playerMap2.show();
+        }
+
+    }
     public void activeMap() {
         mapSupportPanel = new JPanel();
         mapSupportPanel.setOpaque(false);
@@ -516,7 +624,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
 
         npcInv.clear();
         KeyValueParser.key(node.get("room").get(playerLocation).get("NPCs"), InventoryGlobal.npcList);
-        for(String item: InventoryGlobal.npcList){
+        for (String item : InventoryGlobal.npcList) {
             npcInv.addElement(item);
             System.out.println(item);
         }
@@ -680,20 +788,36 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     }
 
     public void mouseEntered(MouseEvent e) {
-        String itemInfo = "<html>Heavily reinforced metal, <br> maybe you can wiggle and <br> 'use' the 'window bars</html>";
+        String windowInfo = "<html>Heavily reinforced metal, <br> " +
+                "maybe you can wiggle and <br> " +
+                "'use' the 'window bars</html>";
+        String trashBinInfo = "<html>a small trash bin...maybe <br> " +
+                "you can 'use' the 'trash bin' <br> " +
+                "to find something useful...</html>";
+        String bedInfo = "<html>Full-size bed sits directly under window <br> " +
+                "with uncomfortable mattress with exposed loose spring. <br>" +
+                "Maybe 'use' the 'bed mattress' and get a spring ... </html>";
+        String wallRubbleInfo = "<html>The wall seems to be falling apart, <br>" +
+                "maybe you can 'use' the 'wall rubble' <br>" +
+                "to find something useful.</html>";
+        String deskInfo = "<html>Old worn out wooden desk with a 'desk drawer' you may be able to 'use'</html>";
+
         UIManager.put("ToolTip.foreground", Color.PINK);
         UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 14));
-        if (e.getSource() == inv1) {
-            inv1.setToolTipText(itemInfo);
+        if (e.getSource() == windowBars) {
+            windowBars.setToolTipText(windowInfo);
         }
-        if (e.getSource() == inv2) {
-            inv2.setToolTipText(itemInfo);
+        if (e.getSource() == bed) {
+            bed.setToolTipText(bedInfo);
         }
-        if (e.getSource() == inv3) {
-            inv3.setToolTipText(itemInfo);
+        if (e.getSource() == thrashBin) {
+            thrashBin.setToolTipText(trashBinInfo);
         }
-        if (e.getSource() == inv4) {
-            inv4.setToolTipText(itemInfo);
+        if (e.getSource() == desk) {
+            desk.setToolTipText(deskInfo);
+        }
+        if (e.getSource() == wallRubble) {
+            wallRubble.setToolTipText(wallRubbleInfo);
         }
     }
 
@@ -701,4 +825,101 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     public void mouseExited(MouseEvent e) {
 
     }
+
+    public void generatePictureLocations() {
+        //1-5 are HALLS
+        gameWindow[2].setLayout(null);
+        gameWindow[2].setOpaque(false);
+
+        westHall = new ImageIcon(url.imageGetter("westHall.jpeg"));
+        gameLabel[2] = new JLabel(westHall);
+        gameLabel[2].setBounds(0, 0, 600, 500);
+
+        gameWindow[3].setLayout(null);
+        gameWindow[3].setOpaque(false);
+
+        southWestHall = new ImageIcon(url.imageGetter("SouthWestHall.bmp"));
+        gameLabel[3] = new JLabel(southWestHall);
+        gameLabel[3].setBounds(0, 0, 600, 500);
+
+        gameWindow[4].setLayout(null);
+        gameWindow[4].setOpaque(false);
+
+        southHall = new ImageIcon(url.imageGetter("southHall.png"));
+        gameLabel[4] = new JLabel(southHall);
+        gameLabel[4].setBounds(0, 0, 600, 500);
+
+        gameWindow[5].setLayout(null);
+        gameWindow[5].setOpaque(false);
+
+        southHall = new ImageIcon(url.imageGetter("southHall.png"));
+        gameLabel[5] = new JLabel(southHall);
+        gameLabel[5].setBounds(0, 0, 600, 500);
+
+        gameWindow[6].setLayout(null);
+        gameWindow[6].setOpaque(false);
+
+        southHall = new ImageIcon(url.imageGetter("southHall.png"));
+        gameLabel[6] = new JLabel(southHall);
+        gameLabel[6].setBounds(0, 0, 600, 500);
+
+        gameWindow[7].setLayout(null);
+        gameWindow[7].setOpaque(false);
+
+        southHall = new ImageIcon(url.imageGetter("southHall.png"));
+        gameLabel[7] = new JLabel(southHall);
+        gameLabel[7].setBounds(0, 0, 600, 500);
+
+        gameWindow[8].setLayout(null);
+        gameWindow[8].setOpaque(false);
+
+        southHall = new ImageIcon(url.imageGetter("southHall.png"));
+        gameLabel[8] = new JLabel(southHall);
+        gameLabel[8].setBounds(0, 0, 600, 500);
+
+        gameWindow[9].setLayout(null);
+        gameWindow[9].setOpaque(false);
+
+        southHall = new ImageIcon(url.imageGetter("southHall.png"));
+        gameLabel[9] = new JLabel(southHall);
+        gameLabel[9].setBounds(0, 0, 600, 500);
+
+        gameWindow[10].setLayout(null);
+        gameWindow[10].setOpaque(false);
+
+        southHall = new ImageIcon(url.imageGetter("southHall.png"));
+        gameLabel[10] = new JLabel(southHall);
+        gameLabel[10].setBounds(0, 0, 600, 500);
+
+        gameWindow[11].setLayout(null);
+        gameWindow[11].setOpaque(false);
+
+        southHall = new ImageIcon(url.imageGetter("southHall.png"));
+        gameLabel[11] = new JLabel(southHall);
+        gameLabel[11].setBounds(0, 0, 600, 500);
+
+        gameWindow[12].setLayout(null);
+        gameWindow[12].setOpaque(false);
+
+        southHall = new ImageIcon(url.imageGetter("southHall.png"));
+        gameLabel[12] = new JLabel(southHall);
+        gameLabel[12].setBounds(0, 0, 600, 500);
+
+        gameWindow[13].setLayout(null);
+        gameWindow[13].setOpaque(false);
+
+        southHall = new ImageIcon(url.imageGetter("southHall.png"));
+        gameLabel[13] = new JLabel(southHall);
+        gameLabel[13].setBounds(0, 0, 600, 500);
+
+        gameWindow[14].setLayout(null);
+        gameWindow[14].setOpaque(false);
+
+        southHall = new ImageIcon(url.imageGetter("southHall.png"));
+        gameLabel[14] = new JLabel(southHall);
+        gameLabel[14].setBounds(0, 0, 600, 500);
+
+
+    }
+
 }
