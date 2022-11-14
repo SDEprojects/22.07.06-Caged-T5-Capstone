@@ -120,12 +120,12 @@ public class Player {
         String playerLocation = getCurrentLocation();
         JsonNode node = mapper.valueToTree(location);
         CharacterPlayer player = new CharacterPlayer(getHitPoints());
-        int hp = 0;
-        try {
-            hp = node.get("room").get(playerLocation).get("NPCs").get(lastName + " " + firstName).get("hp").intValue();
-        } catch (Exception e) {
-            System.out.println("Use help command for valid entry.");
-        }
+//        int hp = 0;
+//        try {
+//            hp = node.get("room").get(playerLocation).get("NPCs").get(lastName + " " + firstName).get("hp").intValue();
+//        } catch (Exception e) {
+//            lastAction.add("Not a valid choice, use help command for valid entry.");
+//        }
         Item item = Inventory.stream()
                 .filter(i -> i.getName().equals("brick"))
                 .findFirst()
@@ -137,66 +137,73 @@ public class Player {
             }
         }
 
-        CharacterEnemy enemy = new CharacterEnemy(hp);
-        double flee = 0.6;
+        CharacterEnemy enemy = new CharacterEnemy(InventoryGlobal.enemyHP);
+        //double flee = 0.6;
 
         try {
             if (node.get("room").get(playerLocation).get("NPCs").get(lastName + " " + firstName).has("enemy")) {
-                System.out.println("You attacked " + lastName + " " + firstName + "\u001B[31m\u001B[1m \nPrepare for battle!!\u001b[0m");
-                System.out.println("Type fight to battle\nType run to run away");
+                //System.out.println("You attacked " + lastName + " " + firstName + "\nPrepare for battle!!");
+                //System.out.println("Type fight to battle\nType run to run away");
                 int playerHp = player.getHp();
                 int npcHp = enemy.getHp();
-                System.out.println("Players initial HP: " + playerHp);
-                System.out.println("NPC initial HP: " + npcHp);
-                while (true) {
-                    String userInput = Console.readInput(">>>>");
-                    if (Objects.equals(userInput, "fight")) {
+//                System.out.println("Players initial HP: " + playerHp);
+//                System.out.println("NPC initial HP: " + npcHp);
+//                while (true) {
+                    //String userInput = Console.readInput(">>>>");
+                    if (Objects.equals("fight", "fight")) {
+                        System.out.println(npcHp);
                         playerHp = playerHp - enemy.attack(1);
                         npcHp = npcHp - player.attack(multiplier);
-                        System.out.println("Players HP: " + playerHp);
-                        System.out.println("NPC HP: " + npcHp);
+                        InventoryGlobal.enemyHP = npcHp;
+//                        System.out.println("Players HP: " + playerHp);
+//                        System.out.println("NPC HP: " + npcHp);
+                        lastAction.add("You attack "+lastName+"!!\nPlayer HP: " + playerHp + "\nNPC HP: "+ npcHp);
+                        System.out.println(npcHp);
+//                        Thread.sleep(250);
                         if (npcHp < 0) {
-                            System.out.println("\u001b[36mYou won the battle!");
+                            //System.out.println("\u001b[36mYou won the battle!");
                             lastAction.add("Tried to fight...You won the battle!...");
                             try {
                                 JsonNode nodeItem = node.get("room").get(playerLocation).get("NPCs").get(lastName + " " + firstName).get("NPC Inventory");
                                 Item foundItem = new Item(nodeItem.get("name").textValue(), nodeItem.get("description").textValue(), nodeItem.get("strength").intValue(), nodeItem.get("opens").textValue(), playerLocation, false, playerLocation);
                                 foundItems.add(foundItem);
-                                System.out.println(lastName + " " + firstName + " dropped " + foundItem.name + "!");
+                                //System.out.println(lastName + " " + firstName + " dropped " + foundItem.name + "!");
                                 lastAction.add("You won the battle!... " + lastName + " " + firstName + " was knocked out and dropped " + foundItem.name + "!");
                             } catch (Exception ignored) {
 
                             }
-                            break;
+//                            break;
                         }
                         if (playerHp < 0) {
-                            System.out.println("\u001B[31m\u001B[1mYou LOSE!\u001b[0m");
+                            //System.out.println("\u001B[31m\u001B[1mYou LOSE!\u001b[0m");
                             setCurrentLocation("Cage 1");
                             setEquipment("prison clothing");
-                            setHitPoints(20);
+//                            setHitPoints(20);
                             setWeapon("nothing");
                             lastAction.add("Tried to fight...you lost and were thrown back into the cage!...back to crying in cage...");
-                            break;
+                            playerHp = 20;
+//                            break;
                         }
                     }
-                    if (Objects.equals(userInput, "run")) {
-                        if (flee > Math.random()) {
-                            System.out.println("You have successfully ran away!");
-                            lastAction.add("Tried to fight...\"You have successfully ran away!\"...");
-                            break;
-                        } else {
-                            playerHp = playerHp - 1;
-                            System.out.println("You failed to escape the fight. Good luck on your battle!");
-                        }
-                    }
+                    // Will not be present in the v2.3 release version
+//                    if (Objects.equals(userInput, "run")) {
+//                        if (flee > Math.random()) {
+//                            System.out.println("You have successfully ran away!");
+//                            lastAction.add("Tried to fight...\"You have successfully ran away!\"...");
+//                            break;
+//                        } else {
+//                            playerHp = playerHp - 1;
+//                            System.out.println("You failed to escape the fight. Good luck on your battle!");
+//                        }
+//                    }
                     setHitPoints(playerHp);
-                }
+//                }
             } else {
-                System.out.println("You can't attack that!");
+                //System.out.println("You can't attack that!");
                 lastAction.add("Tried to fight...\"You can't attack that!\"...");
             }
         } catch (Exception e) {
-            System.out.println("Nothing happened...");
+            //System.out.println("Nothing happened...");
             lastAction.add("Tried to fight...Nothing happened...");
         }
     }
@@ -447,6 +454,8 @@ public class Player {
         }
         HitEnter.enter();
     }
+
+
 
     //getter & setters
     public String getName() {
