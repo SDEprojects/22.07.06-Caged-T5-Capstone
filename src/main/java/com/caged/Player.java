@@ -153,6 +153,7 @@ public class Player {
                     if (Objects.equals("fight", "fight")) {
                         System.out.println(npcHp);
                         playerHp = playerHp - enemy.attack(1);
+                        //send to global
                         npcHp = npcHp - player.attack(multiplier);
                         InventoryGlobal.enemyHP = npcHp;
 //                        System.out.println("Players HP: " + playerHp);
@@ -168,6 +169,8 @@ public class Player {
                                 Item foundItem = new Item(nodeItem.get("name").textValue(), nodeItem.get("description").textValue(), nodeItem.get("strength").intValue(), nodeItem.get("opens").textValue(), playerLocation, false, playerLocation);
                                 foundItems.add(foundItem);
                                 //System.out.println(lastName + " " + firstName + " dropped " + foundItem.name + "!");
+                                //TODO: Add this to item list
+                                InventoryGlobal.itemList.add(foundItem.getName());
                                 lastAction.add("You won the battle!... " + lastName + " " + firstName + " was knocked out and dropped " + foundItem.name + "!");
                             } catch (Exception ignored) {
 
