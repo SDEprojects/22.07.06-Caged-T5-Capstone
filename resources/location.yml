@@ -384,7 +384,7 @@ room:
         enemy:
         hp: 30
         NPC Inventory:
-          name: "chocolate"
+          name: "chocolate bar"
           description: "mmmm chocolate warmed by the pockets of another"
           strength: 1
           opens: null

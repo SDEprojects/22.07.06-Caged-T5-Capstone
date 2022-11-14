@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.lang.Character;
 import java.util.List;
 import java.util.Objects;
 
@@ -42,7 +43,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     //All Level 1 in-game halls
     private ImageIcon westHall, southWestHall, southHall, northHall, eastHall;
     //All level 2 in-game halls and vents
-    private ImageIcon SouthWest2F, south2F, centralCorridor,north2F,northEast2F,ventW,ventNW,ventN,ventNE;
+    private ImageIcon SouthWest2F, south2F, centralCorridor, north2F, northEast2F, ventW, ventNW, ventN, ventNE;
     //MAIN Panel
     private JPanel panel, bottomPanel, topPanel, centerPanel;
     private JPanel[] gameWindow = new JPanel[15];
@@ -87,9 +88,10 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     GameMap playerMap1 = new GameMap();
     GameMap playerMap2 = new GameMap();
     JPanel mapSupportPanel;
-    private ImageIcon chocolate,brick,orangeKey,bedSpring;
+    private ImageIcon chocolate, brick, orangeKey, bedSpring;
     private JPanel lifePanel;
     private JLabel[] heartLabel = new JLabel[4];
+
 
     public PlayWindow(JFrame frame) {
         gameMusic.setFile("gamePlaySong.wav");
@@ -164,10 +166,10 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         });
         help = new JButton("Help");
         help.addActionListener(e -> {
-            JOptionPane.showMessageDialog(frame, "<html>Find your way to get out <br>"+
-                                                    "search for clues in certain cages or cell.<br>"+
-                                                    "Do anything it takes to scape <br>"+
-                                                    "use the in-screen menu to set desire volume or mute");
+            JOptionPane.showMessageDialog(frame, "<html>Find your way to get out <br>" +
+                    "search for clues in certain cages or cell.<br>" +
+                    "Do anything it takes to scape <br>" +
+                    "use the in-screen menu to set desire volume or mute");
         });
 
         topPanel.add(minMaxVolume);
@@ -202,20 +204,22 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         bottomPanel.add(lifePanel, BorderLayout.WEST);
         bottomPanel.add(quitBtn);
     }
-    public void playerHP(){
+
+    public void playerHP() {
         lifePanel = new JPanel();
         lifePanel.setBounds(0, 0, 400, 300);
         lifePanel.setOpaque(false);
 
         lifeIcon = new ImageIcon(url.imageGetter("healthHeart.png"));
-        int i=1;
-        while(i<4){
+        int i = 1;
+        while (i < 4) {
             heartLabel[i] = new JLabel(lifeIcon);
             heartLabel[i].setIcon(lifeIcon);
             lifePanel.add(heartLabel[i]);
             i++;
         }
     }
+
     public void setPlayerDefaultStatus() {
         playerMaxLife = 3;
         playerLife = 3;
@@ -225,6 +229,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         hasGuardUniform = 0;
         hasKeyCard = 0;
     }
+
     public void updatePlayerStatus() {
         //remove life icon
         int i = 1;
@@ -233,7 +238,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
             i++;
         }
         int lifeCount = playerLife;
-        while (lifeCount!=0){
+        while (lifeCount != 0) {
             heartLabel[lifeCount].setVisible(true);
             lifeCount--;
         }
@@ -347,39 +352,41 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         inventoryPanel.add(invItem[3]);
         inventoryPanel.add(invItem[4]);
     }
+
     public void inventoryItemList() {
         chocolate = new ImageIcon(url.imageGetter("chocolate.png"));
         brick = new ImageIcon(url.imageGetter("brickImg.png"));
-        orangeKey  = new ImageIcon(url.imageGetter("orangeKey.png"));
+        orangeKey = new ImageIcon(url.imageGetter("orangeKey.png"));
         bedSpring = new ImageIcon(url.imageGetter("bedSpring.png"));
         invItem[1] = new JLabel(brick);
         invItem[2] = new JLabel(chocolate);
         invItem[3] = new JLabel(bedSpring);
         invItem[4] = new JLabel(orangeKey);
     }
-    public void updateInventory(){
-        if(hasBrick == 0){
+
+    public void updateInventory() {
+        if (hasBrick == 0) {
             invItem[1].setVisible(false);
         }
-        if(hasBrick == 1){
+        if (hasBrick == 1) {
             invItem[1].setVisible(true);
         }
-        if(hasChocolate == 0) {
+        if (hasChocolate == 0) {
             invItem[2].setVisible(false);
         }
-        if(hasChocolate == 1) {
+        if (hasChocolate == 1) {
             invItem[2].setVisible(true);
         }
-        if(hasBedSpring == 0) {
+        if (hasBedSpring == 0) {
             invItem[3].setVisible(false);
         }
-        if(hasBedSpring == 1) {
+        if (hasBedSpring == 1) {
             invItem[3].setVisible(true);
         }
-        if(hasOrangeKey == 0) {
+        if (hasOrangeKey == 0) {
             invItem[4].setVisible(false);
         }
-        if(hasOrangeKey == 1) {
+        if (hasOrangeKey == 1) {
             invItem[4].setVisible(true);
         }
     }
@@ -516,6 +523,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         centerEastPanel.add(directionalPanel, BorderLayout.SOUTH);
 
     }
+
     public void drawMap() {
         playerMap1.build();
         playerMap2.build();
@@ -530,6 +538,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         }
 
     }
+
     public void activeMap() {
         mapSupportPanel = new JPanel();
         mapSupportPanel.setOpaque(false);
@@ -637,6 +646,14 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         KeyValueParser.locationKeyValue(node.get("room").get(playerLocation).get("Moves"), player, doors);
     }
 
+    public void resetNpcHP(){
+        if (player.getCurrentLocation().equals("North Hall - 2F")){
+            InventoryGlobal.enemyHP = 40;
+        }else {
+            InventoryGlobal.enemyHP = 30;
+        }
+    }
+
     // Creates toggle listener
     boolean selected = false; // this is used by the actionPerformed listener for directional functions
 
@@ -662,6 +679,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 actionField.setText(text);
                 locationStatus();
                 playerInvStatus();
+                resetNpcHP();
             }
         } else if (e.getSource() == south) {
             if (selected) {
@@ -675,6 +693,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 actionField.setText(text);
                 locationStatus();
                 playerInvStatus();
+                resetNpcHP();
             }
         } else if (e.getSource() == east) {
             if (selected) {
@@ -688,6 +707,10 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 actionField.setText(text);
                 locationStatus();
                 playerInvStatus();
+                resetNpcHP();
+                if (player.getCurrentLocation().equals("Exit")) {
+                    // THIS IS WHERE WE SHOW THE VICTORY SCREEN!!!
+                }
             }
         } else if (e.getSource() == west) {
             if (selected) {
@@ -701,6 +724,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 actionField.setText(text);
                 locationStatus();
                 playerInvStatus();
+                resetNpcHP();
             }
         }
 
@@ -779,6 +803,8 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 player.attack(firstName, lastName, locationVar);
                 text = player.getLastAction().get(player.getLastAction().size() - 1);
                 actionField.setText(text);
+                topPanel.repaint();
+
             } catch (Exception ea) {
                 ea.printStackTrace();
             }
@@ -813,7 +839,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
 
         }
 
-        if(e.getSource() ==heal){
+        if (e.getSource() == heal) {
             String heal = playerInvList.getSelectedValue();
             player.heal(heal);
             text = player.getLastAction().get(player.getLastAction().size() - 1);

@@ -11,6 +11,7 @@ public class InventoryGlobal {
    public static List <String> reactionList = new ArrayList<>();
    public static List <String> itemList = new ArrayList<>();
    public static List <String> collectedItems = new ArrayList<>();
+   public static int enemyHP = 30;
 
    public static List<String> getRoomInvList() {
       return roomInvList;
