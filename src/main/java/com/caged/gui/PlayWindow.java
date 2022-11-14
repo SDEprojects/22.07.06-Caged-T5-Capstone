@@ -62,7 +62,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     private JPanel centerSouthPanel, centerEastPanel, centerWestPanel;
     //CENTER BOTTOM PANEL
     private JPanel actionFieldPanel;
-    private JButton take, look, talk, attack, use, equip, heal;
+    private JButton take, look, talk, attack, use, equip, heal, drop;
     private JToggleButton unlock;
     DefaultListModel<String> inv = new DefaultListModel<>();
     DefaultListModel<String> reactionInv = new DefaultListModel<>();
@@ -474,6 +474,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         playerActionPanel.add(heal);
         playerActionPanel.add(talk);
         playerActionPanel.add(equip);
+        playerActionPanel.add(drop);
 
     }
 
@@ -510,6 +511,10 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         equip.setFont(new Font("Arial", Font.BOLD, 20));
         equip.setSize(50, 50);
         equip.addActionListener(this);
+        drop = new JButton("Drop");
+        drop.setFont(new Font("Arial", Font.BOLD, 20));
+        drop.setSize(50, 50);
+        drop.addActionListener(this);
     }
 
     public void createCenterEastPanels() {
@@ -627,7 +632,8 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         if (inv.isEmpty()) {
             reactionInv.clear();
             InventoryGlobal.reactionList.clear();
-            playerInv.clear();
+            InventoryGlobal.itemList.clear();
+            itemInv.clear();
         }
         InventoryGlobal.npcList.clear();
 
@@ -784,8 +790,11 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 player.take(child, "", locationVar);
                 text = player.getLastAction().get(player.getLastAction().size() - 1);
                 actionField.setText(text);
-                if (InventoryGlobal.itemList.contains(itemInvList.getSelectedValue())) {
-                    // TODO: don't let player take it twice
+//                if (InventoryGlobal.itemList.contains(itemInvList.getSelectedValue())) {
+//                    // TODO: don't let player take it twice
+//                    playerInv.add(itemInvList.getSelectedIndex(), child);
+//                }
+                if(!playerInv.contains(child)){
                     playerInv.add(itemInvList.getSelectedIndex(), child);
                 }
 
@@ -844,6 +853,14 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
             player.heal(heal);
             text = player.getLastAction().get(player.getLastAction().size() - 1);
             actionField.setText(text);
+        }
+        if(e.getSource()  == drop){
+            String drop = playerInvList.getSelectedValue();
+            player.drop(drop, " ", locationVar);
+            playerInv.removeElement(drop);
+            text = player.getLastAction().get(player.getLastAction().size() - 1);
+            actionField.setText(text);
+
         }
 
 
