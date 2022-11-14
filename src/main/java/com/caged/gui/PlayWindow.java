@@ -769,8 +769,59 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 a.printStackTrace();
             }
         }
-    }
 
+        if (e.getSource() == attack) {
+            try {
+                String name = npcInvList.getSelectedValue();
+                String[] npcName = name.split(" ", 0);
+                String firstName = npcName[1];
+                String lastName = npcName[0];
+                player.attack(firstName, lastName, locationVar);
+                text = player.getLastAction().get(player.getLastAction().size() - 1);
+                actionField.setText(text);
+            } catch (Exception ea) {
+                ea.printStackTrace();
+            }
+        }
+
+        if (e.getSource() == talk) {
+
+            try {
+                String name = npcInvList.getSelectedValue();
+                String[] npcName = name.split(" ", 0);
+                String firstName = npcName[1];
+                String lastName = npcName[0];
+                player.talk(firstName, lastName, locationVar);
+                text = player.getLastAction().get(player.getLastAction().size() - 1);
+                actionField.setText(text);
+            } catch (Exception ab) {
+                ab.printStackTrace();
+            }
+
+        }
+
+        if (e.getSource() == equip) {
+
+            try {
+                player.equip();
+                text = player.getLastAction().get(player.getLastAction().size() - 1);
+                actionField.setText(text);
+
+            } catch (Exception ac) {
+                ac.printStackTrace();
+            }
+
+        }
+
+        if(e.getSource() ==heal){
+            String heal = playerInvList.getSelectedValue();
+            player.heal(heal);
+            text = player.getLastAction().get(player.getLastAction().size() - 1);
+            actionField.setText(text);
+        }
+
+
+    }
 
     @Override
     public void mouseClicked(MouseEvent e) {
