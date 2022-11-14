@@ -96,7 +96,7 @@ public class Player {
                 lastAction.add("Used a chocolate to heal!!!");
                 break;
             }else {
-                lastAction.add("That is not in your inventory!!!");
+                System.out.println("That is not in your inventory!!!");
             }
         }
     }
@@ -110,7 +110,6 @@ public class Player {
             if (item.getName().contains("brick")) {
                 setWeapon(item.getName());
                 lastAction.add("Equipped the brick!");
-
             }
 
         }
