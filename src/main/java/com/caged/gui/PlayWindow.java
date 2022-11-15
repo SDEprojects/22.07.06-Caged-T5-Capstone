@@ -2291,6 +2291,12 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         southHall = new ImageIcon(url.imageGetter("southHall.png"));
         gameLabel[4] = new JLabel(southHall);
         gameLabel[4].setBounds(0, 0, 600, 500);
+
+        ImageIcon guard = new ImageIcon(url.imageGetter("prisonGuard.png"));
+        JLabel guardLabel = new JLabel(guard);
+        guardLabel.setOpaque(false);
+        guardLabel.setBounds(300, 200, 150, 400);
+        gameWindow[4].add(guardLabel);
         gameWindow[4].add(gameLabel[4]);
 
         gameWindow[5] = new JPanel();
@@ -2383,6 +2389,11 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         northHall2F = new ImageIcon(url.imageGetter("northHall2F.png"));
         gameLabel[13] = new JLabel(northHall2F);
         gameLabel[13].setBounds(0, 0, 600, 500);
+
+        ImageIcon guardBoss = new ImageIcon(url.imageGetter("bossGuard.png"));
+        JLabel boss = new JLabel(guardBoss);
+        boss.setBounds(300, 200, 150, 400);
+        gameWindow[13].add(boss);
         gameWindow[13].add(gameLabel[13]);
 
         gameWindow[14] = new JPanel();
