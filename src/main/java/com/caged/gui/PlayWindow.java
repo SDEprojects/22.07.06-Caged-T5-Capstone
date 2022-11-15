@@ -62,11 +62,12 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     //All Level 1 in-game halls
     private ImageIcon westHall, southWestHall, southHall, northHall, eastHall;
     //All level 2 in-game halls and vents
-    private ImageIcon SouthWest2F, south2F, centralCorridor, north2F, northEast2F, ventW, ventNW, ventN, ventNE;
+    private ImageIcon southWestHall2F, southHall2F, prisonCorridor, northHall2F, northEast2F, ventW, ventNW, ventN, ventNE;
+    private ImageIcon prisonExit, storage2F, breakRoom;
     //MAIN Panel
     private JPanel panel, bottomPanel, topPanel, centerPanel;
-    private JPanel[] gameWindow = new JPanel[15];
-    private JLabel[] gameLabel = new JLabel[15];
+    private JPanel[] gameWindow = new JPanel[22];
+    private JLabel[] gameLabel = new JLabel[22];
     private JLabel backgroundPic, textBGPic;
     //TOP PANEL///
     private JLabel location, weapon, HP, disguised;
@@ -78,6 +79,11 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     private JButton quitBtn;
     //CENTER PANEL///
     private JPanel centerSouthPanel, centerEastPanel, centerWestPanel;
+    private JPanel[] mapPanelLocation = new JPanel[20];
+    private JLabel[] maps = new JLabel[20];
+    private ImageIcon sHall, swHall, wHall, nHall, eHall, cage1Loc, npc1Loc, npcLoc, storageLoc;
+    private ImageIcon swHall2F, sHall2F, cCorridorLoc, nHall2F, neHall2F, storageLoc2F, breakRoomLoc,
+            wVentLoc, nwVentLoc, nVentLoc, getNwVentLoc;
     //CENTER BOTTOM PANEL
     private JPanel actionFieldPanel;
     private JButton take, look, talk, attack, use, equip, heal, drop;
@@ -86,6 +92,8 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     private ImageIcon chocolate, brick, orangeKey, bedSpring;
     private JPanel lifePanel;
     private JLabel[] heartLabel = new JLabel[4];
+    private ImageIcon southCage, northCage, storageRoom;
+    private JPanel centerMidPanel;
 
     public PlayWindow(JFrame frame) {
         gameMusic.setFile("gamePlaySong.wav");
@@ -93,7 +101,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         gameMusic.loopSound();
         topPanel(frame);
         bottomPanel(frame);
-        centerPanel(frame);
+        centerPanel();
         playWindow(frame);
         frame.setVisible(true);
         drawMap();
@@ -183,15 +191,16 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         bottomPanel.setOpaque(false);
         playerHP();
 
-        quitBtn = new JButton("Quit");
+        quitBtn = new JButton("EXIT");
         quitBtn.setFont(new Font("Arial", Font.BOLD, 20));
         quitBtn.setBounds(600, 350, 150, 100);
         quitBtn.addActionListener(e -> {
             int userInput = JOptionPane.showConfirmDialog(frame, "Are you sure you want to exit the the game?",
                     "Caged", JOptionPane.YES_NO_OPTION);
             if (userInput == 0) {
+
                 gameMusic.turnOff();
-                panel.setVisible(false);
+                frame.remove(panel);
                 new MainWindow(frame);
             }
         });
@@ -238,23 +247,40 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         }
     }
 
-    public void centerPanel(JFrame frame) {
+    public void centerPanel() {
         centerPanel = new JPanel();
         centerPanel.setBounds(0, 70, 1200, 620);
         centerPanel.setOpaque(false);
         centerPanel.setLayout(new BorderLayout());
-        cinematicBackground();
+        cinematicWindow();
         createCenterEastPanels();
         createCenterSouthPanel();
         createCenterWestPanel();
-        centerPanel.add(gameWindow[1], BorderLayout.CENTER);
+        centerPanel.add(centerMidPanel, BorderLayout.CENTER);
         centerPanel.add(centerEastPanel, BorderLayout.EAST);
         centerPanel.add(centerSouthPanel, BorderLayout.SOUTH);
         centerPanel.add(centerWestPanel, BorderLayout.WEST);
     }
+    public void cinematicWindow(){
+        centerMidPanel = new JPanel();
+        //centerMidPanel.setLayout(null);
+        centerMidPanel.setOpaque(false);
+        centerMidPanel.setPreferredSize(new Dimension (600,600));
+        cinematicBackground();
+        panelForCinematic();
+
+//        centerMidPanel.add(gameWindow[7]);
+//        centerMidPanel.add(gameWindow[6]);
+//        centerMidPanel.add(gameWindow[5]);
+//        centerMidPanel.add(gameWindow[4]);
+//        centerMidPanel.add(gameWindow[3]);
+        centerMidPanel.add(gameWindow[2]);
+        centerMidPanel.add(gameWindow[1]);
+    }
 
     public void cinematicBackground() {
         gameWindow[1] = new JPanel();
+        gameWindow[1].setPreferredSize(new Dimension(600, 500));
         gameWindow[1].setLayout(null);
         gameWindow[1].setOpaque(false);
 
@@ -513,9 +539,10 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         centerEastPanel.setOpaque(false);
         centerEastPanel.setPreferredSize(new Dimension(300, 600));
         //centerEastPanel.setLayout(new BorderLayout());
-        activeMap();
+        //activeMap();
+        flipMap();
         createDirectionalButtons();
-        centerEastPanel.add(mapSupportPanel, BorderLayout.NORTH);
+        centerEastPanel.add(mapPanelLocation[1], BorderLayout.NORTH);
         centerEastPanel.add(directionalPanel, BorderLayout.SOUTH);
 
     }
@@ -535,15 +562,24 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
 
     }
 
-    public void activeMap() {
-        mapSupportPanel = new JPanel();
-        mapSupportPanel.setOpaque(false);
-        mapSupportPanel.setPreferredSize(new Dimension(300, 200));
-        JTextArea mapArea = new JTextArea();
-        mapArea.setSize(300, 200);
-        mapArea.setLineWrap(true);
-        mapArea.setWrapStyleWord(true);
+    public void flipMap() {
+        mapPanelLocation[1] = new JPanel();
+        mapPanelLocation[1].setLayout(null);
+        mapPanelLocation[1].setOpaque(false);
+        mapPanelLocation[1].setPreferredSize(new Dimension(300, 200));
+        mapPanelLocation[1].setLayout(null);
+
+
     }
+//    public void activeMap() {
+//        mapSupportPanel = new JPanel();
+//        mapSupportPanel.setOpaque(false);
+//        mapSupportPanel.setPreferredSize(new Dimension(300, 200));
+//        JTextArea mapArea = new JTextArea();
+//        mapArea.setSize(300, 200);
+//        mapArea.setLineWrap(true);
+//        mapArea.setWrapStyleWord(true);
+//    }
 
     public void createDirectionalButtons() {
         directionalPanel = new JPanel();
@@ -596,11 +632,12 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         west.addActionListener(this);
         west.setActionCommand("west");
 //        west.setEnabled(false);
+        //movePlayer();
         directionalPanel.add(east, BorderLayout.EAST);
         directionalPanel.add(west, BorderLayout.WEST);
         directionalPanel.add(north, BorderLayout.NORTH);
         directionalPanel.add(south, BorderLayout.SOUTH);
-        movePlayer();
+
     }
 
     public void locationStatus() {
@@ -634,14 +671,37 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
             npcInv.addElement(item);
             System.out.println(item);
         }
-
-
     }
 
-    private void movePlayer() {
+    public void movePlayer() {
         String playerLocation = player.getCurrentLocation();
         KeyValueParser.locationKeyValue(node.get("room").get(playerLocation).get("Moves"), player, doors);
     }
+////        for (String item : InventoryGlobal.locationList) {
+//////            System.out.println(item);
+//////        }
+//
+//        if (InventoryGlobal.locationList.contains(north.getActionCommand())) {
+//            north.setEnabled(true);
+//        } else {
+//            north.setEnabled(false);
+//        }
+//        if (InventoryGlobal.locationList.contains(south.getActionCommand())) {
+//            south.setEnabled(true);
+//        } else {
+//            south.setEnabled(false);
+//        }
+//        if (InventoryGlobal.locationList.contains(east.getActionCommand())) {
+//            east.setEnabled(true);
+//        } else {
+//            east.setEnabled(false);
+//        }
+//        if (InventoryGlobal.locationList.contains(west.getActionCommand())) {
+//            west.setEnabled(true);
+//        } else {
+//            west.setEnabled(false);
+//        }
+//    }
 
     public void resetNpcHP() {
         if (player.getCurrentLocation().equals("North Hall - 2F")) {
@@ -935,8 +995,217 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
 
     }
 
-    public void generatePictureLocations() {
-        //1-5 are HALLS
+    public void cage1ToWestHall() {
+        gameWindow[1].setVisible(false);//1=cage1
+        gameWindow[2].setVisible(true);//2=west hall
+    }
+
+    public void WestHallToCage1() {
+        gameWindow[1].setVisible(true);
+        gameWindow[2].setVisible(false);
+    }
+
+    public void WestHallToNorthHall() {
+        gameWindow[5].setVisible(true);//5=north hall
+        gameWindow[2].setVisible(false);
+    }
+
+    public void NorthHallToWestHall() {
+        gameWindow[5].setVisible(false);
+        gameWindow[2].setVisible(true);
+    }
+
+    public void NorthHallToNorthCage() {
+        gameWindow[5].setVisible(false);
+        gameWindow[8].setVisible(true); //8 = north cage
+    }
+
+    public void NorthCageToNorthHall() {
+        gameWindow[5].setVisible(true);
+        gameWindow[8].setVisible(false);
+    }
+
+    public void NorthHallToEastHall() {
+        gameWindow[5].setVisible(false);
+        gameWindow[6].setVisible(true);//6 = east hall
+    }
+
+    public void EastHallToNorthHall() {
+        gameWindow[5].setVisible(true);
+        gameWindow[6].setVisible(false);
+    }
+
+    /////
+    public void WestHallToSWHall() {
+        gameWindow[2].setVisible(false);
+        gameWindow[3].setVisible(true);//3 = southwest hall
+    }
+
+    public void SWHallToWestHall() {
+        gameWindow[2].setVisible(true);
+        gameWindow[3].setVisible(false);
+    }
+
+    public void SWHallToStorage() {
+        gameWindow[3].setVisible(false);
+        gameWindow[9].setVisible(true); //9 = storage room
+    }
+
+    public void StorageToSWHall() {
+        gameWindow[3].setVisible(true);
+        gameWindow[9].setVisible(false);
+    }
+
+    public void SWHallToSouth() {
+        gameWindow[3].setVisible(false);
+        gameWindow[4].setVisible(true);//4 = south hall
+    }
+
+    public void SouthToSWHall() {
+        gameWindow[4].setVisible(false);
+        gameWindow[3].setVisible(true);
+    }
+
+    public void SouthToCage1() {
+        gameWindow[4].setVisible(false);
+        gameWindow[1].setVisible(true);
+    }
+
+    public void cage1ToSouthHall() {
+        gameWindow[4].setVisible(true);
+        gameWindow[1].setVisible(false);
+    }
+
+    public void southNpcCageToSouthHall() {
+        gameWindow[4].setVisible(true);
+        gameWindow[7].setVisible(false);// 7= south cage
+    }
+
+    public void SouthHallToSouthNpcCage() {
+        gameWindow[4].setVisible(false);
+        gameWindow[7].setVisible(true);
+    }
+
+    public void EastHallToSWHall2F() {
+        gameWindow[6].setVisible(false);
+        gameWindow[10].setVisible(true);//10 = 2FL South West hall
+    }
+
+    public void SWHall2FToEastHall() {
+        gameWindow[6].setVisible(true);
+        gameWindow[10].setVisible(false);
+    }
+
+    public void SWestHall2FToSouthHall2F() {
+        gameWindow[10].setVisible(true);
+        gameWindow[11].setVisible(false);//
+    }
+
+    public void southHall2FToSWHall2F() {
+        gameWindow[10].setVisible(true);
+        gameWindow[11].setVisible(false);// 11=South Hall 2nd FL
+    }
+
+    public void southHall2FToBreakRoom() {
+        gameWindow[11].setVisible(false);// 11=South Hall 2nd FL
+        gameWindow[20].setVisible(true);
+    }
+
+    public void breakRoomToSouthHall() {
+        gameWindow[11].setVisible(true);// 11=South Hall 2nd FL
+        gameWindow[20].setVisible(false);//20 = break room
+    }
+
+    public void southHall2FToCorridor() {
+        gameWindow[11].setVisible(false);// 11=South Hall 2nd FL
+        gameWindow[12].setVisible(true);//12=corridor
+    }
+
+    public void corridorToSouthHall2F() {
+        gameWindow[11].setVisible(true);//
+        gameWindow[12].setVisible(false);//
+    }
+
+    public void corridorToNorthHall2F() {
+        gameWindow[12].setVisible(false);
+        gameWindow[13].setVisible(true);
+
+    }
+
+    public void northHall2FToCorridor() {
+        gameWindow[12].setVisible(true);
+        gameWindow[13].setVisible(false);
+    }
+
+    public void NorthHall2FToNorthEastHall() {
+        gameWindow[13].setVisible(false);
+        gameWindow[14].setVisible(true);
+    }
+
+    public void northEastHall2fToNorthHall2F() {
+        gameWindow[13].setVisible(true);
+        gameWindow[14].setVisible(false);
+    }
+
+    public void NEHall2fToNEVent() {
+        gameWindow[14].setVisible(false);
+        gameWindow[18].setVisible(true);//north east vent
+    }
+
+    public void NEVentToNEHall2f() {
+        gameWindow[14].setVisible(true);
+        gameWindow[18].setVisible(false);//north east vent
+    }
+
+    public void NEVentToNVent() {
+        gameWindow[18].setVisible(false);
+        gameWindow[17].setVisible(true);
+    }
+
+    public void NVentToNEVent() {
+        gameWindow[18].setVisible(true);
+        gameWindow[17].setVisible(false);
+    }
+
+    public void NVentToNWVent() {
+        gameWindow[17].setVisible(false);
+        gameWindow[16].setVisible(true);
+    }
+
+    public void NWVentToNVent() {
+        gameWindow[17].setVisible(true);
+        gameWindow[16].setVisible(false);
+    }
+
+    public void NWVentToStorageRoom2f() {
+        gameWindow[16].setVisible(false);
+        gameWindow[20].setVisible(true);
+    }
+
+    public void StorageRoom2fToNWVent() {
+        gameWindow[16].setVisible(true);
+        gameWindow[20].setVisible(false);
+    }
+
+    public void storageRoom2fToWVent() {
+        gameWindow[20].setVisible(false);
+        gameWindow[15].setVisible(true);
+    }
+
+    public void WVentToSWHall2F() {
+        gameWindow[15].setVisible(false);
+        gameWindow[10].setVisible(true);
+    }
+
+    public void winGame() {
+        gameWindow[14].setVisible(false);
+        gameWindow[19].setVisible(true);
+    }
+
+    //////////////////////
+    public void panelForCinematic() {
+        //First Lest HALLS
+        gameWindow[2] = new JPanel();
         gameWindow[2].setLayout(null);
         gameWindow[2].setOpaque(false);
 
@@ -944,6 +1213,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         gameLabel[2] = new JLabel(westHall);
         gameLabel[2].setBounds(0, 0, 600, 500);
 
+        gameWindow[3] = new JPanel();
         gameWindow[3].setLayout(null);
         gameWindow[3].setOpaque(false);
 
@@ -951,6 +1221,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         gameLabel[3] = new JLabel(southWestHall);
         gameLabel[3].setBounds(0, 0, 600, 500);
 
+        gameWindow[4] = new JPanel();
         gameWindow[4].setLayout(null);
         gameWindow[4].setOpaque(false);
 
@@ -958,77 +1229,302 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         gameLabel[4] = new JLabel(southHall);
         gameLabel[4].setBounds(0, 0, 600, 500);
 
+        gameWindow[5] = new JPanel();
         gameWindow[5].setLayout(null);
         gameWindow[5].setOpaque(false);
 
-        southHall = new ImageIcon(url.imageGetter("southHall.png"));
-        gameLabel[5] = new JLabel(southHall);
+        northHall = new ImageIcon(url.imageGetter("northHall.png"));
+        gameLabel[5] = new JLabel(northHall);
         gameLabel[5].setBounds(0, 0, 600, 500);
 
+        gameWindow[6] = new JPanel();
         gameWindow[6].setLayout(null);
         gameWindow[6].setOpaque(false);
 
-        southHall = new ImageIcon(url.imageGetter("southHall.png"));
-        gameLabel[6] = new JLabel(southHall);
+        eastHall = new ImageIcon(url.imageGetter("eastHall.png"));
+        gameLabel[6] = new JLabel(eastHall);
         gameLabel[6].setBounds(0, 0, 600, 500);
-
+////////1st floor Cages - Rooms/////
+        gameWindow[7] = new JPanel();
         gameWindow[7].setLayout(null);
         gameWindow[7].setOpaque(false);
 
-        southHall = new ImageIcon(url.imageGetter("southHall.png"));
-        gameLabel[7] = new JLabel(southHall);
+        southCage = new ImageIcon(url.imageGetter("southCageInmate.png"));
+        gameLabel[7] = new JLabel(southCage);
         gameLabel[7].setBounds(0, 0, 600, 500);
 
+        gameWindow[8] = new JPanel();
         gameWindow[8].setLayout(null);
         gameWindow[8].setOpaque(false);
 
-        southHall = new ImageIcon(url.imageGetter("southHall.png"));
-        gameLabel[8] = new JLabel(southHall);
+        northCage = new ImageIcon(url.imageGetter("northCageInmate.png"));
+        gameLabel[8] = new JLabel(northCage);
         gameLabel[8].setBounds(0, 0, 600, 500);
 
+        gameWindow[9] = new JPanel();
         gameWindow[9].setLayout(null);
         gameWindow[9].setOpaque(false);
 
-        southHall = new ImageIcon(url.imageGetter("southHall.png"));
-        gameLabel[9] = new JLabel(southHall);
+        storageRoom = new ImageIcon(url.imageGetter("storageroom.jpeg"));
+        gameLabel[9] = new JLabel(storageRoom);
         gameLabel[9].setBounds(0, 0, 600, 500);
-
+        //////2nd Floor halls and vents////
+        gameWindow[10] = new JPanel();
         gameWindow[10].setLayout(null);
         gameWindow[10].setOpaque(false);
 
-        southHall = new ImageIcon(url.imageGetter("southHall.png"));
-        gameLabel[10] = new JLabel(southHall);
+        southWestHall2F = new ImageIcon(url.imageGetter("southWestHall2F.png"));
+        gameLabel[10] = new JLabel(southWestHall2F);
         gameLabel[10].setBounds(0, 0, 600, 500);
 
+        gameWindow[11] = new JPanel();
         gameWindow[11].setLayout(null);
         gameWindow[11].setOpaque(false);
 
-        southHall = new ImageIcon(url.imageGetter("southHall.png"));
-        gameLabel[11] = new JLabel(southHall);
+        southHall2F = new ImageIcon(url.imageGetter("southHall2F.png"));
+        gameLabel[11] = new JLabel(southHall2F);
         gameLabel[11].setBounds(0, 0, 600, 500);
 
+        gameWindow[12] = new JPanel();
         gameWindow[12].setLayout(null);
         gameWindow[12].setOpaque(false);
 
-        southHall = new ImageIcon(url.imageGetter("southHall.png"));
-        gameLabel[12] = new JLabel(southHall);
+        prisonCorridor = new ImageIcon(url.imageGetter("prisonCorridor.png"));
+        gameLabel[12] = new JLabel(prisonCorridor);
         gameLabel[12].setBounds(0, 0, 600, 500);
 
+
+        gameWindow[13] = new JPanel();
         gameWindow[13].setLayout(null);
         gameWindow[13].setOpaque(false);
 
-        southHall = new ImageIcon(url.imageGetter("southHall.png"));
-        gameLabel[13] = new JLabel(southHall);
+        northHall2F = new ImageIcon(url.imageGetter("northHall.png"));
+        gameLabel[13] = new JLabel(northHall2F);
         gameLabel[13].setBounds(0, 0, 600, 500);
 
+        gameWindow[14] = new JPanel();
         gameWindow[14].setLayout(null);
         gameWindow[14].setOpaque(false);
 
-        southHall = new ImageIcon(url.imageGetter("southHall.png"));
-        gameLabel[14] = new JLabel(southHall);
+        northEast2F = new ImageIcon(url.imageGetter("northEastHall2ndFL.jpeg"));
+        gameLabel[14] = new JLabel(northEast2F);
         gameLabel[14].setBounds(0, 0, 600, 500);
+////
+        gameWindow[15] = new JPanel();
+        gameWindow[15].setLayout(null);
+        gameWindow[15].setOpaque(false);
+
+        ventW = new ImageIcon(url.imageGetter("vent1.png"));
+        gameLabel[15] = new JLabel(ventW);
+        gameLabel[15].setBounds(0, 0, 600, 500);
+
+        gameWindow[16] = new JPanel();
+        gameWindow[16].setLayout(null);
+        gameWindow[16].setOpaque(false);
+
+        ventNW = new ImageIcon(url.imageGetter("vent2.png"));
+        gameLabel[16] = new JLabel(ventNW);
+        gameLabel[16].setBounds(0, 0, 600, 500);
+
+        gameWindow[17] = new JPanel();
+        gameWindow[17].setLayout(null);
+        gameWindow[17].setOpaque(false);
+
+        ventN = new ImageIcon(url.imageGetter("vent2.png"));
+        gameLabel[17] = new JLabel(ventN);
+        gameLabel[17].setBounds(0, 0, 600, 500);
+
+        gameWindow[18] = new JPanel();
+        gameWindow[18].setLayout(null);
+        gameWindow[18].setOpaque(false);
+
+        ventNE = new ImageIcon(url.imageGetter("vent1.png"));
+        gameLabel[18] = new JLabel(ventNE);
+        gameLabel[18].setBounds(0, 0, 600, 500);
+//////LEVEL 2 Rooms and Exit//////
+        gameWindow[19] = new JPanel();
+        gameWindow[19].setLayout(null);
+        gameWindow[19].setOpaque(false);
+
+        prisonExit = new ImageIcon(url.imageGetter("escapedTheGame.png"));
+        gameLabel[19] = new JLabel(prisonExit);
+        gameLabel[19].setBounds(0, 0, 600, 500);
 
 
+        gameWindow[20] = new JPanel();
+        gameWindow[20].setLayout(null);
+        gameWindow[20].setOpaque(false);
+
+        storage2F = new ImageIcon(url.imageGetter("2ndFloorStorage.png"));
+        gameLabel[20] = new JLabel(storage2F);
+        gameLabel[20].setBounds(0, 0, 600, 500);
+
+        gameWindow[21] = new JPanel();
+        gameWindow[21].setLayout(null);
+        gameWindow[21].setOpaque(false);
+
+        breakRoom = new ImageIcon(url.imageGetter("breakRoom.png"));
+        gameLabel[21] = new JLabel(breakRoom);
+        gameLabel[21].setBounds(0, 0, 600, 500);
+    }
+
+    public void mapGenerator() {
+        mapPanelLocation[2] = new JPanel();
+        mapPanelLocation[2].setLayout(null);
+        mapPanelLocation[2].setOpaque(false);
+
+        westHall = new ImageIcon(url.imageGetter("westHall.jpeg"));
+        maps[2] = new JLabel(westHall);
+        maps[2].setBounds(0, 0, 600, 500);
+
+        mapPanelLocation[2] = new JPanel();
+        mapPanelLocation[3].setLayout(null);
+        mapPanelLocation[3].setOpaque(false);
+
+        southWestHall = new ImageIcon(url.imageGetter("SouthWestHall.bmp"));
+        maps[3] = new JLabel(southWestHall);
+        maps[3].setBounds(0, 0, 600, 500);
+
+        mapPanelLocation[4] = new JPanel();
+        mapPanelLocation[4].setLayout(null);
+        mapPanelLocation[4].setOpaque(false);
+
+        southHall = new ImageIcon(url.imageGetter("southHall.png"));
+        maps[4] = new JLabel(southHall);
+        maps[4].setBounds(0, 0, 600, 500);
+
+        mapPanelLocation[5] = new JPanel();
+        mapPanelLocation[5].setLayout(null);
+        mapPanelLocation[5].setOpaque(false);
+
+        northHall = new ImageIcon(url.imageGetter("northHall.png"));
+        maps[5] = new JLabel(northHall);
+        maps[5].setBounds(0, 0, 600, 500);
+
+        mapPanelLocation[6] = new JPanel();
+        mapPanelLocation[6].setLayout(null);
+        mapPanelLocation[6].setOpaque(false);
+
+        eastHall = new ImageIcon(url.imageGetter("eastHall.png"));
+        maps[6] = new JLabel(eastHall);
+        maps[6].setBounds(0, 0, 600, 500);
+////////1st floor Cages - Rooms/////
+        mapPanelLocation[7] = new JPanel();
+        mapPanelLocation[7].setLayout(null);
+        mapPanelLocation[7].setOpaque(false);
+
+        southCage = new ImageIcon(url.imageGetter("southCageInmate.png"));
+        maps[7] = new JLabel(southCage);
+        maps[7].setBounds(0, 0, 600, 500);
+
+        mapPanelLocation[8] = new JPanel();
+        mapPanelLocation[8].setLayout(null);
+        mapPanelLocation[8].setOpaque(false);
+
+        northCage = new ImageIcon(url.imageGetter("northCageInmate.png"));
+        maps[8] = new JLabel(northCage);
+        maps[8].setBounds(0, 0, 600, 500);
+
+        mapPanelLocation[9] = new JPanel();
+        mapPanelLocation[9].setLayout(null);
+        mapPanelLocation[9].setOpaque(false);
+
+        storageRoom = new ImageIcon(url.imageGetter("storageroom.jpeg"));
+        maps[9] = new JLabel(storageRoom);
+        maps[9].setBounds(0, 0, 600, 500);
+        //////2nd Floor halls and vents////
+        mapPanelLocation[10] = new JPanel();
+        mapPanelLocation[10].setLayout(null);
+        mapPanelLocation[10].setOpaque(false);
+
+        southWestHall2F = new ImageIcon(url.imageGetter("southWestHall2F.png"));
+        maps[10] = new JLabel(southWestHall2F);
+        maps[10].setBounds(0, 0, 600, 500);
+
+        mapPanelLocation[11] = new JPanel();
+        mapPanelLocation[11].setLayout(null);
+        mapPanelLocation[11].setOpaque(false);
+
+        southHall2F = new ImageIcon(url.imageGetter("southHall2F.png"));
+        maps[11] = new JLabel(southHall2F);
+        maps[11].setBounds(0, 0, 600, 500);
+
+        mapPanelLocation[12] = new JPanel();
+        mapPanelLocation[12].setLayout(null);
+        mapPanelLocation[12].setOpaque(false);
+
+        prisonCorridor = new ImageIcon(url.imageGetter("prisonCorridor.png"));
+        maps[12] = new JLabel(prisonCorridor);
+        maps[12].setBounds(0, 0, 600, 500);
+
+        mapPanelLocation[13] = new JPanel();
+        mapPanelLocation[13].setLayout(null);
+        mapPanelLocation[13].setOpaque(false);
+
+        northHall2F = new ImageIcon(url.imageGetter("northHall.png"));
+        maps[13] = new JLabel(northHall2F);
+        maps[13].setBounds(0, 0, 600, 500);
+
+        mapPanelLocation[14] = new JPanel();
+        mapPanelLocation[14].setLayout(null);
+        mapPanelLocation[14].setOpaque(false);
+
+        northEast2F = new ImageIcon(url.imageGetter("northEastHall2ndFL.jpeg"));
+        maps[14] = new JLabel(northEast2F);
+        maps[14].setBounds(0, 0, 600, 500);
+////
+        mapPanelLocation[15] = new JPanel();
+        mapPanelLocation[15].setLayout(null);
+        mapPanelLocation[15].setOpaque(false);
+
+        ventW = new ImageIcon(url.imageGetter("vent1.png"));
+        maps[15] = new JLabel(ventW);
+        maps[15].setBounds(0, 0, 600, 500);
+
+        mapPanelLocation[16] = new JPanel();
+        mapPanelLocation[16].setLayout(null);
+        mapPanelLocation[16].setOpaque(false);
+
+        ventNW = new ImageIcon(url.imageGetter("vent2.png"));
+        maps[16] = new JLabel(ventNW);
+        maps[16].setBounds(0, 0, 600, 500);
+
+        mapPanelLocation[17] = new JPanel();
+        mapPanelLocation[17].setLayout(null);
+        mapPanelLocation[17].setOpaque(false);
+
+        ventN = new ImageIcon(url.imageGetter("vent2.png"));
+        maps[17] = new JLabel(ventN);
+        maps[17].setBounds(0, 0, 600, 500);
+
+        mapPanelLocation[18] = new JPanel();
+        mapPanelLocation[18].setLayout(null);
+        mapPanelLocation[18].setOpaque(false);
+
+        ventNE = new ImageIcon(url.imageGetter("vent1.png"));
+        maps[18] = new JLabel(ventNE);
+        maps[18].setBounds(0, 0, 600, 500);
+//////LEVEL 2 Rooms and Exit//////
+        mapPanelLocation[19].setLayout(null);
+        mapPanelLocation[19].setOpaque(false);
+
+        prisonExit = new ImageIcon(url.imageGetter("escapedTheGame.png"));
+        maps[19] = new JLabel(prisonExit);
+        maps[19].setBounds(0, 0, 600, 500);
+
+        mapPanelLocation[20].setLayout(null);
+        mapPanelLocation[20].setOpaque(false);
+
+        storage2F = new ImageIcon(url.imageGetter("2ndFloorStorage.png"));
+        maps[20] = new JLabel(storage2F);
+        maps[20].setBounds(0, 0, 600, 500);
+
+        mapPanelLocation[21].setLayout(null);
+        mapPanelLocation[21].setOpaque(false);
+
+        breakRoom = new ImageIcon(url.imageGetter("breakRoom.png"));
+        maps[21] = new JLabel(breakRoom);
+        maps[21].setBounds(0, 0, 600, 500);
     }
     //Caged got us locked up
 }
