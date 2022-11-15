@@ -269,13 +269,30 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         cinematicBackground();
         panelForCinematic();
 
-//        centerMidPanel.add(gameWindow[7]);
-//        centerMidPanel.add(gameWindow[6]);
-//        centerMidPanel.add(gameWindow[5]);
-//        centerMidPanel.add(gameWindow[4]);
-//        centerMidPanel.add(gameWindow[3]);
-        centerMidPanel.add(gameWindow[2]);
+
+
+
         centerMidPanel.add(gameWindow[1]);
+        centerMidPanel.add(gameWindow[2]);
+        centerMidPanel.add(gameWindow[3]);
+        centerMidPanel.add(gameWindow[4]);
+        centerMidPanel.add(gameWindow[5]);
+        centerMidPanel.add(gameWindow[6]);
+        centerMidPanel.add(gameWindow[7]);
+        centerMidPanel.add(gameWindow[8]);
+        centerMidPanel.add(gameWindow[9]);
+        centerMidPanel.add(gameWindow[10]);
+        centerMidPanel.add(gameWindow[11]);
+        centerMidPanel.add(gameWindow[12]);
+        centerMidPanel.add(gameWindow[13]);
+        centerMidPanel.add(gameWindow[14]);
+        centerMidPanel.add(gameWindow[15]);
+        centerMidPanel.add(gameWindow[16]);
+        centerMidPanel.add(gameWindow[17]);
+        centerMidPanel.add(gameWindow[18]);
+        centerMidPanel.add(gameWindow[19]);
+        centerMidPanel.add(gameWindow[20]);
+        centerMidPanel.add(gameWindow[21]);
     }
 
     public void cinematicBackground() {
@@ -735,6 +752,48 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 locationStatus();
                 playerInvStatus();
                 resetNpcHP();
+                if (player.getCurrentLocation().equals("Cage 1")){
+                    SouthToCage1();
+                }
+                if (player.getCurrentLocation().equals("South Hall")){
+                    southNpcCageToSouthHall();
+                }
+                if (player.getCurrentLocation().equals("Southwest Hall")){
+                    StorageToSWHall();
+                }
+                if (player.getCurrentLocation().equals("West Hall")){
+                    SWHallToWestHall();
+                }
+                if (player.getCurrentLocation().equals("North Hall")){
+                    WestHallToNorthHall();
+                }
+                if (player.getCurrentLocation().equals("NPC Cage 2")){
+                    NorthHallToNorthCage();
+                }
+                //////////2nd Floor//////////
+                if (player.getCurrentLocation().equals("West Vent")){
+                    SWHall2FToWVent();//
+                }
+
+                if (player.getCurrentLocation().equals("Storage Room - 2F")){
+                    WVentToStorageRoom2f();
+                }
+
+                if (player.getCurrentLocation().equals("North West Vent")){
+                    StorageRoom2fToNWVent();
+                }
+                if (player.getCurrentLocation().equals("North East Vent")){
+                    NEHall2fToNEVent();
+                }
+                if (player.getCurrentLocation().equals("North Hall - 2F")){
+                    corridorToNorthHall2F();//
+                }
+                if (player.getCurrentLocation().equals("Central Corridor - 2F")){
+                    southHall2FToCorridor();//
+                }
+                if (player.getCurrentLocation().equals("South Hall - 2F")){
+                    breakRoomToSouthHall();//
+                }
             }
         } else if (e.getSource() == south) {
             if (selected) {
@@ -750,7 +809,53 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 locationStatus();
                 playerInvStatus();
                 resetNpcHP();
+
+                if (player.getCurrentLocation().equals("South Hall")){
+                    cage1ToSouthHall();
+                }
+                if (player.getCurrentLocation().equals("Southwest Hall")){
+                    WestHallToSWHall();
+                }
+                if (player.getCurrentLocation().equals("West Hall")){
+                    NorthHallToWestHall();//
+                }
+                if (player.getCurrentLocation().equals("Storage Room")){
+                    SWHallToStorage();//
+                }
+                if (player.getCurrentLocation().equals("North Hall")){
+                    NorthCageToNorthHall();
+                }
+                if (player.getCurrentLocation().equals("NPC Cage 1")){
+                    SouthHallToSouthNpcCage();
+                }
+                //////////2nd Floor//////////
+
+
+                if (player.getCurrentLocation().equals("West Vent")){
+                    storageRoom2fToWVent();//
+                }
+
+                if (player.getCurrentLocation().equals("Storage Room - 2F")){
+                    NWVentToStorageRoom2f();
+                }
+
+                if (player.getCurrentLocation().equals("North East Hall - 2F")){
+                    NEVentToNEHall2f();
+                }
+                if (player.getCurrentLocation().equals("South West Hall - 2F")){
+                    WVentToSWHall2F();//
+                }
+                if (player.getCurrentLocation().equals("Central Corridor - 2F")){
+                    northHall2FToCorridor();//
+                }
+                if (player.getCurrentLocation().equals("South Hall - 2F")){
+                    corridorToSouthHall2F();//
+                }
+                if (player.getCurrentLocation().equals("Break Room - 2F")){
+                    southHall2FToBreakRoom();//
+                }
             }
+
         } else if (e.getSource() == east) {
             if (selected) {
                 player.unlock("door", "east", locationVar, doors);
@@ -764,9 +869,38 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 locationStatus();
                 playerInvStatus();
                 resetNpcHP();
+                if (player.getCurrentLocation().equals("West Hall")){
+                    cage1ToWestHall();
+                }
+                if (player.getCurrentLocation().equals("Southwest Hall")){
+                    SouthToSWHall();
+                }
+                if (player.getCurrentLocation().equals("East Hall")){
+                    NorthHallToEastHall();
+                }
+                if (player.getCurrentLocation().equals("South West Hall - 2F")){
+                    EastHallToSWHall2F();
+                }
+                if (player.getCurrentLocation().equals("South Hall - 2F")){
+                    SWestHall2FToSouthHall2F();
+                }
+                if (player.getCurrentLocation().equals("North East Hall - 2F")){
+                    NorthHall2FToNorthEastHall();
+                }
+                ////
+                if (player.getCurrentLocation().equals("North Vent")){
+                    NWVentToNVent();
+                }
+                if (player.getCurrentLocation().equals("North East Vent")){
+                    NVentToNEVent();
+                }
+                if (player.getCurrentLocation().equals("North Hall - 2F")){
+                    storage2FToNorthHall();
+                }
                 if (player.getCurrentLocation().equals("Exit")) {
                     actionField.setText("Congratulations! You escaped the Cage!!!" +
                             "\nTry to be mindful when pumping gas in the future...");
+                    winGame();
                     north.setVisible(false);
                     south.setVisible(false);
                     east.setVisible(false);
@@ -786,6 +920,36 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 locationStatus();
                 playerInvStatus();
                 resetNpcHP();
+                if (player.getCurrentLocation().equals("Cage 1")){
+                    WestHallToCage1();
+                }
+                if (player.getCurrentLocation().equals("South Hall")){
+                    SWHallToSouthHall();
+                }
+                if (player.getCurrentLocation().equals("North Hall")){
+                    EastHallToNorthHall();
+                }
+                if (player.getCurrentLocation().equals("East Hall")){
+                    SWHall2FToEastHall();
+                }
+                ///
+                if (player.getCurrentLocation().equals("South West Hall - 2F")){
+                    southHall2FToSWHall2F();//
+                }
+
+                if (player.getCurrentLocation().equals("Storage Room - 2F")){
+                    NorthHallToStorageRoom2F();
+                }
+
+                if (player.getCurrentLocation().equals("North Vent")){
+                    NEVentToNVent();
+                }
+                if (player.getCurrentLocation().equals("North West Vent")){
+                    NVentToNWVent();
+                }
+                if (player.getCurrentLocation().equals("North Hall - 2F")){
+                    northEastHall2fToNorthHall2F();//
+                }
             }
         }
 
@@ -1056,7 +1220,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         gameWindow[9].setVisible(false);
     }
 
-    public void SWHallToSouth() {
+    public void SWHallToSouthHall() {
         gameWindow[3].setVisible(false);
         gameWindow[4].setVisible(true);//4 = south hall
     }
@@ -1108,12 +1272,12 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
 
     public void southHall2FToBreakRoom() {
         gameWindow[11].setVisible(false);// 11=South Hall 2nd FL
-        gameWindow[20].setVisible(true);
+        gameWindow[21].setVisible(true);
     }
 
     public void breakRoomToSouthHall() {
         gameWindow[11].setVisible(true);// 11=South Hall 2nd FL
-        gameWindow[20].setVisible(false);//20 = break room
+        gameWindow[21].setVisible(false);//20 = break room
     }
 
     public void southHall2FToCorridor() {
@@ -1191,10 +1355,26 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         gameWindow[20].setVisible(false);
         gameWindow[15].setVisible(true);
     }
+    public void WVentToStorageRoom2f() {
+        gameWindow[20].setVisible(true);
+        gameWindow[15].setVisible(false);
+    }
+    public void storage2FToNorthHall(){
+        gameWindow[20].setVisible(false);
+        gameWindow[13].setVisible(true);
+    }
+    public void NorthHallToStorageRoom2F(){
+        gameWindow[20].setVisible(true);
+        gameWindow[13].setVisible(false);
+    }
 
     public void WVentToSWHall2F() {
         gameWindow[15].setVisible(false);
         gameWindow[10].setVisible(true);
+    }
+    public void SWHall2FToWVent(){
+        gameWindow[15].setVisible(true);
+        gameWindow[10].setVisible(false);
     }
 
     public void winGame() {
@@ -1206,12 +1386,14 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     public void panelForCinematic() {
         //First Lest HALLS
         gameWindow[2] = new JPanel();
+        gameWindow[2].setPreferredSize(new Dimension(600, 500));
         gameWindow[2].setLayout(null);
         gameWindow[2].setOpaque(false);
 
         westHall = new ImageIcon(url.imageGetter("westHall.jpeg"));
         gameLabel[2] = new JLabel(westHall);
         gameLabel[2].setBounds(0, 0, 600, 500);
+        gameWindow[2].add(gameLabel[2]);
 
         gameWindow[3] = new JPanel();
         gameWindow[3].setLayout(null);
@@ -1220,14 +1402,17 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         southWestHall = new ImageIcon(url.imageGetter("SouthWestHall.bmp"));
         gameLabel[3] = new JLabel(southWestHall);
         gameLabel[3].setBounds(0, 0, 600, 500);
+        gameWindow[3].add(gameLabel[3]);
 
         gameWindow[4] = new JPanel();
         gameWindow[4].setLayout(null);
         gameWindow[4].setOpaque(false);
 
+
         southHall = new ImageIcon(url.imageGetter("southHall.png"));
         gameLabel[4] = new JLabel(southHall);
         gameLabel[4].setBounds(0, 0, 600, 500);
+        gameWindow[4].add(gameLabel[4]);
 
         gameWindow[5] = new JPanel();
         gameWindow[5].setLayout(null);
@@ -1236,6 +1421,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         northHall = new ImageIcon(url.imageGetter("northHall.png"));
         gameLabel[5] = new JLabel(northHall);
         gameLabel[5].setBounds(0, 0, 600, 500);
+        gameWindow[5].add(gameLabel[5]);
 
         gameWindow[6] = new JPanel();
         gameWindow[6].setLayout(null);
@@ -1244,6 +1430,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         eastHall = new ImageIcon(url.imageGetter("eastHall.png"));
         gameLabel[6] = new JLabel(eastHall);
         gameLabel[6].setBounds(0, 0, 600, 500);
+        gameWindow[6].add(gameLabel[6]);
 ////////1st floor Cages - Rooms/////
         gameWindow[7] = new JPanel();
         gameWindow[7].setLayout(null);
@@ -1252,6 +1439,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         southCage = new ImageIcon(url.imageGetter("southCageInmate.png"));
         gameLabel[7] = new JLabel(southCage);
         gameLabel[7].setBounds(0, 0, 600, 500);
+        gameWindow[7].add(gameLabel[7]);
 
         gameWindow[8] = new JPanel();
         gameWindow[8].setLayout(null);
@@ -1260,6 +1448,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         northCage = new ImageIcon(url.imageGetter("northCageInmate.png"));
         gameLabel[8] = new JLabel(northCage);
         gameLabel[8].setBounds(0, 0, 600, 500);
+        gameWindow[8].add(gameLabel[8]);
 
         gameWindow[9] = new JPanel();
         gameWindow[9].setLayout(null);
@@ -1268,6 +1457,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         storageRoom = new ImageIcon(url.imageGetter("storageroom.jpeg"));
         gameLabel[9] = new JLabel(storageRoom);
         gameLabel[9].setBounds(0, 0, 600, 500);
+        gameWindow[9].add(gameLabel[9]);
         //////2nd Floor halls and vents////
         gameWindow[10] = new JPanel();
         gameWindow[10].setLayout(null);
@@ -1276,6 +1466,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         southWestHall2F = new ImageIcon(url.imageGetter("southWestHall2F.png"));
         gameLabel[10] = new JLabel(southWestHall2F);
         gameLabel[10].setBounds(0, 0, 600, 500);
+        gameWindow[10].add(gameLabel[10]);
 
         gameWindow[11] = new JPanel();
         gameWindow[11].setLayout(null);
@@ -1284,6 +1475,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         southHall2F = new ImageIcon(url.imageGetter("southHall2F.png"));
         gameLabel[11] = new JLabel(southHall2F);
         gameLabel[11].setBounds(0, 0, 600, 500);
+        gameWindow[11].add(gameLabel[11]);
 
         gameWindow[12] = new JPanel();
         gameWindow[12].setLayout(null);
@@ -1292,7 +1484,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         prisonCorridor = new ImageIcon(url.imageGetter("prisonCorridor.png"));
         gameLabel[12] = new JLabel(prisonCorridor);
         gameLabel[12].setBounds(0, 0, 600, 500);
-
+        gameWindow[12].add(gameLabel[12]);
 
         gameWindow[13] = new JPanel();
         gameWindow[13].setLayout(null);
@@ -1301,6 +1493,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         northHall2F = new ImageIcon(url.imageGetter("northHall.png"));
         gameLabel[13] = new JLabel(northHall2F);
         gameLabel[13].setBounds(0, 0, 600, 500);
+        gameWindow[13].add(gameLabel[13]);
 
         gameWindow[14] = new JPanel();
         gameWindow[14].setLayout(null);
@@ -1309,6 +1502,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         northEast2F = new ImageIcon(url.imageGetter("northEastHall2ndFL.jpeg"));
         gameLabel[14] = new JLabel(northEast2F);
         gameLabel[14].setBounds(0, 0, 600, 500);
+        gameWindow[14].add(gameLabel[14]);
 ////
         gameWindow[15] = new JPanel();
         gameWindow[15].setLayout(null);
@@ -1317,6 +1511,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         ventW = new ImageIcon(url.imageGetter("vent1.png"));
         gameLabel[15] = new JLabel(ventW);
         gameLabel[15].setBounds(0, 0, 600, 500);
+        gameWindow[15].add(gameLabel[15]);
 
         gameWindow[16] = new JPanel();
         gameWindow[16].setLayout(null);
@@ -1325,6 +1520,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         ventNW = new ImageIcon(url.imageGetter("vent2.png"));
         gameLabel[16] = new JLabel(ventNW);
         gameLabel[16].setBounds(0, 0, 600, 500);
+        gameWindow[16].add(gameLabel[16]);
 
         gameWindow[17] = new JPanel();
         gameWindow[17].setLayout(null);
@@ -1333,6 +1529,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         ventN = new ImageIcon(url.imageGetter("vent2.png"));
         gameLabel[17] = new JLabel(ventN);
         gameLabel[17].setBounds(0, 0, 600, 500);
+        gameWindow[17].add(gameLabel[17]);
 
         gameWindow[18] = new JPanel();
         gameWindow[18].setLayout(null);
@@ -1341,6 +1538,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         ventNE = new ImageIcon(url.imageGetter("vent1.png"));
         gameLabel[18] = new JLabel(ventNE);
         gameLabel[18].setBounds(0, 0, 600, 500);
+        gameWindow[18].add(gameLabel[18]);
 //////LEVEL 2 Rooms and Exit//////
         gameWindow[19] = new JPanel();
         gameWindow[19].setLayout(null);
@@ -1349,7 +1547,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         prisonExit = new ImageIcon(url.imageGetter("escapedTheGame.png"));
         gameLabel[19] = new JLabel(prisonExit);
         gameLabel[19].setBounds(0, 0, 600, 500);
-
+        gameWindow[19].add(gameLabel[19]);
 
         gameWindow[20] = new JPanel();
         gameWindow[20].setLayout(null);
@@ -1358,6 +1556,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         storage2F = new ImageIcon(url.imageGetter("2ndFloorStorage.png"));
         gameLabel[20] = new JLabel(storage2F);
         gameLabel[20].setBounds(0, 0, 600, 500);
+        gameWindow[20].add(gameLabel[20]);
 
         gameWindow[21] = new JPanel();
         gameWindow[21].setLayout(null);
@@ -1366,6 +1565,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         breakRoom = new ImageIcon(url.imageGetter("breakRoom.png"));
         gameLabel[21] = new JLabel(breakRoom);
         gameLabel[21].setBounds(0, 0, 600, 500);
+        gameWindow[21].add(gameLabel[21]);
     }
 
     public void mapGenerator() {
