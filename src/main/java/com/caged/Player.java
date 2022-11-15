@@ -95,6 +95,13 @@ public class Player {
                 setHitPoints(getHitPoints() + i.getStrength());
                 lastAction.add("Used a chocolate to heal!!!");
                 break;
+            }
+            if(i.getName().contains("chocolate bar")){
+                Inventory.remove(i);
+                setHitPoints(getHitPoints() + i.getStrength());
+                lastAction.add("Used a chocolate to heal!!!");
+                break;
+
             }else {
                 lastAction.add("That is not in your inventory!!!");
             }
@@ -170,7 +177,6 @@ public class Player {
                                 foundItems.add(foundItem);
                                 //System.out.println(lastName + " " + firstName + " dropped " + foundItem.name + "!");
                                 //TODO: Add this to item list
-                                InventoryGlobal.itemList.add(foundItem.getName());
                                 lastAction.add("You won the battle!... " + lastName + " " + firstName + " was knocked out and dropped " + foundItem.name + "!");
                             } catch (Exception ignored) {
 

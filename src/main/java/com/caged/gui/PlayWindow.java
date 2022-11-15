@@ -10,29 +10,48 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.lang.Character;
 import java.util.List;
 import java.util.Objects;
 
 public class PlayWindow extends JPanel implements MouseListener, ActionListener {
-    private FileGetter url = new FileGetter();
-    private MusicPlayer gameMusic = new MusicPlayer();
-
-    int bgNum;
-
     public int playerMaxLife;
     public int playerLife;
-
     public int hasOrangeKey;
     public int hasChocolate;
     public int hasBedSpring;
     public int hasBrick;
     public int hasGuardUniform;
     public int hasKeyCard;
-
+    int bgNum;
     JPanel inventoryPanel;
     JPanel playerActionPanel;
     JTextArea actionField;
+    ImageIcon lifeIcon;
+    DefaultListModel<String> inv = new DefaultListModel<>();
+    DefaultListModel<String> reactionInv = new DefaultListModel<>();
+    DefaultListModel<String> itemInv = new DefaultListModel<>();
+    DefaultListModel<String> playerInv = new DefaultListModel<>();
+    DefaultListModel<String> npcInv = new DefaultListModel<>();
+    JList<String> itemInvList = new JList<>(itemInv);
+    JList<String> reactionList = new JList<>(reactionInv);
+    JList<String> playerInvList = new JList<>(playerInv);
+    JList<String> roomInvList;
+    JList<String> npcInvList = new JList<>(npcInv);
+    JLabel[] invItem = new JLabel[10];
+    YAMLReader yamlReader = new YAMLReader(); //initiates the yaml loader
+    Player player = yamlReader.playerLoader(); //sets default player stats
+    LocationGetter locationVar = yamlReader.locationLoader(); //TODO: used for map update
+    List<Doors> doors = yamlReader.doorLoader(); // TODO: used for viewable paths
+    Doors door = new Doors();
+    YAMLMapper mapper = new YAMLMapper();
+    JsonNode node = mapper.valueToTree(locationVar);
+    GameMap playerMap1 = new GameMap();
+    GameMap playerMap2 = new GameMap();
+    JPanel mapSupportPanel;
+    // Creates toggle listener
+    boolean selected = false; // this is used by the actionPerformed listener for directional functions
+    private FileGetter url = new FileGetter();
+    private MusicPlayer gameMusic = new MusicPlayer();
     //images for the arrow buttons
     private JPanel directionalPanel;
     private ImageIcon northImg, southImg, eastImg, westImg;
@@ -57,41 +76,16 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     private ImageIcon displayImage, textBackground;
     //BOTTOM///
     private JButton quitBtn;
-    ImageIcon lifeIcon;
     //CENTER PANEL///
     private JPanel centerSouthPanel, centerEastPanel, centerWestPanel;
     //CENTER BOTTOM PANEL
     private JPanel actionFieldPanel;
     private JButton take, look, talk, attack, use, equip, heal, drop;
     private JToggleButton unlock;
-    DefaultListModel<String> inv = new DefaultListModel<>();
-    DefaultListModel<String> reactionInv = new DefaultListModel<>();
-    DefaultListModel<String> itemInv = new DefaultListModel<>();
-    DefaultListModel<String> playerInv = new DefaultListModel<>();
-    DefaultListModel<String> npcInv = new DefaultListModel<>();
-
-    JList<String> itemInvList = new JList<>(itemInv);
-    JList<String> reactionList = new JList<>(reactionInv);
-    JList<String> playerInvList = new JList<>(playerInv);
-    JList<String> roomInvList;
-    JList<String> npcInvList = new JList<>(npcInv);
-    JLabel[] invItem = new JLabel[10];
-
     private String text;
-    YAMLReader yamlReader = new YAMLReader(); //initiates the yaml loader
-    Player player = yamlReader.playerLoader(); //sets default player stats
-    LocationGetter locationVar = yamlReader.locationLoader(); //TODO: used for map update
-    List<Doors> doors = yamlReader.doorLoader(); // TODO: used for viewable paths
-    Doors door = new Doors();
-    YAMLMapper mapper = new YAMLMapper();
-    JsonNode node = mapper.valueToTree(locationVar);
-    GameMap playerMap1 = new GameMap();
-    GameMap playerMap2 = new GameMap();
-    JPanel mapSupportPanel;
     private ImageIcon chocolate, brick, orangeKey, bedSpring;
     private JPanel lifePanel;
     private JLabel[] heartLabel = new JLabel[4];
-
 
     public PlayWindow(JFrame frame) {
         gameMusic.setFile("gamePlaySong.wav");
@@ -259,7 +253,6 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         centerPanel.add(centerWestPanel, BorderLayout.WEST);
     }
 
-
     public void cinematicBackground() {
         gameWindow[1] = new JPanel();
         gameWindow[1].setLayout(null);
@@ -319,7 +312,6 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         desk.setFocusPainted(false);
         desk.addMouseListener(this);
     }
-
 
     public void createCenterWestPanel() {
         centerWestPanel = new JPanel();
@@ -390,7 +382,6 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
             invItem[4].setVisible(true);
         }
     }
-
 
     public void createRoomInventoryList() {
         String playerLocation = player.getCurrentLocation();
@@ -652,16 +643,13 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         KeyValueParser.locationKeyValue(node.get("room").get(playerLocation).get("Moves"), player, doors);
     }
 
-    public void resetNpcHP(){
-        if (player.getCurrentLocation().equals("North Hall - 2F")){
+    public void resetNpcHP() {
+        if (player.getCurrentLocation().equals("North Hall - 2F")) {
             InventoryGlobal.enemyHP = 40;
-        }else {
+        } else {
             InventoryGlobal.enemyHP = 30;
         }
     }
-
-    // Creates toggle listener
-    boolean selected = false; // this is used by the actionPerformed listener for directional functions
 
     public void toggle(ActionEvent actionEvent) {
         AbstractButton abstractButton =
@@ -675,7 +663,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == north) {
             if (selected) {
-                player.unlock(" ", "north", locationVar, doors);
+                player.unlock("door", "north", locationVar, doors);
                 selected = false;
                 text = player.getLastAction().get(player.getLastAction().size() - 1);
                 actionField.setText(text);
@@ -689,7 +677,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
             }
         } else if (e.getSource() == south) {
             if (selected) {
-                player.unlock(" ", "south", locationVar, doors);
+                player.unlock("door", "south", locationVar, doors);
                 selected = false;
                 text = player.getLastAction().get(player.getLastAction().size() - 1);
                 actionField.setText(text);
@@ -703,7 +691,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
             }
         } else if (e.getSource() == east) {
             if (selected) {
-                player.unlock(" ", "east", locationVar, doors);
+                player.unlock("door", "east", locationVar, doors);
                 selected = false;
                 text = player.getLastAction().get(player.getLastAction().size() - 1);
                 actionField.setText(text);
@@ -720,7 +708,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
             }
         } else if (e.getSource() == west) {
             if (selected) {
-                player.unlock(" ", "west", locationVar, doors);
+                player.unlock("door", "west", locationVar, doors);
                 selected = false;
                 text = player.getLastAction().get(player.getLastAction().size() - 1);
                 actionField.setText(text);
@@ -794,7 +782,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
 //                    // TODO: don't let player take it twice
 //                    playerInv.add(itemInvList.getSelectedIndex(), child);
 //                }
-                if(!playerInv.contains(child)){
+                if (!playerInv.contains(child)) {
                     playerInv.add(itemInvList.getSelectedIndex(), child);
                 }
 
@@ -813,6 +801,30 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 text = player.getLastAction().get(player.getLastAction().size() - 1);
                 actionField.setText(text);
                 topPanel.repaint();
+
+                if (InventoryGlobal.enemyHP < 0) {
+                    JsonNode nodeItem = node.get("room").get(player.getCurrentLocation()).get("NPCs").get(lastName + " " + firstName).get("NPC Inventory");
+                    Item foundItem = new Item(nodeItem.get("name").textValue(), nodeItem.get("description").textValue(), nodeItem.get("strength").intValue(),
+                            nodeItem.get("opens").textValue(), player.getCurrentLocation(), false, player.getCurrentLocation());
+
+                    System.out.println( foundItem.getName()+ "for testing purposes");
+                    if (foundItem.getName().equals("red key") ||
+                            foundItem.getName().equals("chocolate bar") ||
+                            foundItem.getName().equals("wallet") ||
+                            foundItem.getName().equals("ladder") ||
+                            foundItem.getName().equals("ladder") ||
+                            foundItem.getName().equals("s cola") ||
+                            foundItem.getName().equals("purple key") ||
+                            foundItem.getName().equals("boss key")) {
+                        if (!playerInv.contains(foundItem.getName())) {
+                            playerInv.addElement(foundItem.getName());
+                          JsonNode  doorNode =node.get("room").get(player.getCurrentLocation()).get("Moves").get(player.getCurrentLocation()).get("door");
+                            door.setLocked(false);
+                        }
+
+                    }
+                }
+
 
             } catch (Exception ea) {
                 ea.printStackTrace();
@@ -854,7 +866,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
             text = player.getLastAction().get(player.getLastAction().size() - 1);
             actionField.setText(text);
         }
-        if(e.getSource()  == drop){
+        if (e.getSource() == drop) {
             String drop = playerInvList.getSelectedValue();
             player.drop(drop, " ", locationVar);
             playerInv.removeElement(drop);
