@@ -313,7 +313,6 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     public void cage1Buttons() {
         windowBars = new JButton("window bars");
         windowBars.setBounds(45, 50, 50, 155);
-        //windowBars.setOpaque(false);
         windowBars.setBorderPainted(false);
         windowBars.setBorder(null);
         windowBars.setFocusPainted(false);
@@ -1235,7 +1234,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     public void NorthHallToWestHall() {
         gameWindow[5].setVisible(false);
         gameWindow[2].setVisible(true);
-        gameWindow[1].setVisible(true);
+        gameWindow[1].setVisible(false);
         gameWindow[3].setVisible(false);//1=cage1
         gameWindow[4].setVisible(false);//1=cage1
         gameWindow[5].setVisible(false);//1=cage1
@@ -1643,8 +1642,8 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
     }
 
     public void SWestHall2FToSouthHall2F() {
-        gameWindow[10].setVisible(true);
-        gameWindow[11].setVisible(false);//
+        gameWindow[11].setVisible(true);//
+        gameWindow[10].setVisible(false);
         gameWindow[1].setVisible(false);//1=cage1
         gameWindow[2].setVisible(false);//1=cage1
         gameWindow[3].setVisible(false);//1=cage1
@@ -2357,6 +2356,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         gameWindow[10].add(gameLabel[10]);
 
         gameWindow[11] = new JPanel();
+        gameWindow[11].setPreferredSize(new Dimension(600, 500));
         gameWindow[11].setLayout(null);
         gameWindow[11].setOpaque(false);
 
@@ -2366,6 +2366,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         gameWindow[11].add(gameLabel[11]);
 
         gameWindow[12] = new JPanel();
+        gameWindow[12].setPreferredSize(new Dimension(600, 500));
         gameWindow[12].setLayout(null);
         gameWindow[12].setOpaque(false);
 
@@ -2375,15 +2376,17 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         gameWindow[12].add(gameLabel[12]);
 
         gameWindow[13] = new JPanel();
+        gameWindow[13].setPreferredSize(new Dimension(600, 500));
         gameWindow[13].setLayout(null);
         gameWindow[13].setOpaque(false);
 
-        northHall2F = new ImageIcon(url.imageGetter("northHall.png"));
+        northHall2F = new ImageIcon(url.imageGetter("northHall2F.png"));
         gameLabel[13] = new JLabel(northHall2F);
         gameLabel[13].setBounds(0, 0, 600, 500);
         gameWindow[13].add(gameLabel[13]);
 
         gameWindow[14] = new JPanel();
+        gameWindow[14].setPreferredSize(new Dimension(600, 500));
         gameWindow[14].setLayout(null);
         gameWindow[14].setOpaque(false);
 
@@ -2393,6 +2396,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         gameWindow[14].add(gameLabel[14]);
 ////
         gameWindow[15] = new JPanel();
+        gameWindow[15].setPreferredSize(new Dimension(600, 500));
         gameWindow[15].setLayout(null);
         gameWindow[15].setOpaque(false);
 
@@ -2402,6 +2406,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         gameWindow[15].add(gameLabel[15]);
 
         gameWindow[16] = new JPanel();
+        gameWindow[16].setPreferredSize(new Dimension(600, 500));
         gameWindow[16].setLayout(null);
         gameWindow[16].setOpaque(false);
 
@@ -2411,6 +2416,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         gameWindow[16].add(gameLabel[16]);
 
         gameWindow[17] = new JPanel();
+        gameWindow[17].setPreferredSize(new Dimension(600, 500));
         gameWindow[17].setLayout(null);
         gameWindow[17].setOpaque(false);
 
@@ -2420,6 +2426,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         gameWindow[17].add(gameLabel[17]);
 
         gameWindow[18] = new JPanel();
+        gameWindow[18].setPreferredSize(new Dimension(600, 500));
         gameWindow[18].setLayout(null);
         gameWindow[18].setOpaque(false);
 
@@ -2429,6 +2436,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         gameWindow[18].add(gameLabel[18]);
 //////LEVEL 2 Rooms and Exit//////
         gameWindow[19] = new JPanel();
+        gameWindow[19].setPreferredSize(new Dimension(600, 500));
         gameWindow[19].setLayout(null);
         gameWindow[19].setOpaque(false);
 
@@ -2438,6 +2446,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         gameWindow[19].add(gameLabel[19]);
 
         gameWindow[20] = new JPanel();
+        gameWindow[20].setPreferredSize(new Dimension(600, 500));
         gameWindow[20].setLayout(null);
         gameWindow[20].setOpaque(false);
 
@@ -2447,6 +2456,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         gameWindow[20].add(gameLabel[20]);
 
         gameWindow[21] = new JPanel();
+        gameWindow[21].setPreferredSize(new Dimension(600, 500));
         gameWindow[21].setLayout(null);
         gameWindow[21].setOpaque(false);
 
