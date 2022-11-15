@@ -78,8 +78,8 @@ room:
         hp: 30
         #      - "Hello comrade, here is the key you asked for. Don't lose it!"
         NPC Inventory:
-          name: "orange key"
-          description: "This key must be used to open the orange marked door"
+          name: "red key"
+          description: "This key must be used to open the red marked door"
           strength: 1
           opens: "Wing 1 Door"
   NPC Cage 1:
