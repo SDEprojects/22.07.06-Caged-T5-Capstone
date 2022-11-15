@@ -667,7 +667,6 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 selected = false;
                 text = player.getLastAction().get(player.getLastAction().size() - 1);
                 actionField.setText(text);
-                north.setEnabled(true);
             } else {
                 player.move("north", locationVar, doors);
                 System.out.println(player.getFoundItems() + " Peter ");
@@ -676,7 +675,6 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 locationStatus();
                 playerInvStatus();
                 resetNpcHP();
-                north.setEnabled(false);
             }
         } else if (e.getSource() == south) {
             if (selected) {
@@ -684,7 +682,6 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 selected = false;
                 text = player.getLastAction().get(player.getLastAction().size() - 1);
                 actionField.setText(text);
-                south.setEnabled(true);
             } else {
                 player.move("south", locationVar, doors);
                 System.out.println("directions from " + player.getCurrentLocation());
@@ -693,7 +690,6 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 locationStatus();
                 playerInvStatus();
                 resetNpcHP();
-                south.setEnabled(false);
             }
         } else if (e.getSource() == east) {
             if (selected) {
@@ -701,7 +697,6 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 selected = false;
                 text = player.getLastAction().get(player.getLastAction().size() - 1);
                 actionField.setText(text);
-                east.setEnabled(true);
             } else {
                 player.move("east", locationVar, doors);
                 text = player.getLastAction().get(player.getLastAction().size() - 1);
@@ -709,9 +704,13 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 locationStatus();
                 playerInvStatus();
                 resetNpcHP();
-                east.setEnabled(false);
                 if (player.getCurrentLocation().equals("Exit")) {
-                    // THIS IS WHERE WE SHOW THE VICTORY SCREEN!!!
+                    actionField.setText("Congratulations! You escaped the Cage!!!" +
+                            "\nTry to be mindful when pumping gas in the future...");
+                    north.setVisible(false);
+                    south.setVisible(false);
+                    east.setVisible(false);
+                    west.setVisible(false);
                 }
             }
         } else if (e.getSource() == west) {
