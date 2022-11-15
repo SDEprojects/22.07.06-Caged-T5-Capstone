@@ -585,7 +585,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         east.setFocusPainted(false);
         east.addActionListener(this);
         east.setActionCommand("east");
-//        east.setEnabled(false);
+
 
         west = new JButton(westImg);
         west.setOpaque(false);
@@ -667,13 +667,16 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 selected = false;
                 text = player.getLastAction().get(player.getLastAction().size() - 1);
                 actionField.setText(text);
+                north.setEnabled(true);
             } else {
                 player.move("north", locationVar, doors);
+                System.out.println(player.getFoundItems() + " Peter ");
                 text = player.getLastAction().get(player.getLastAction().size() - 1);
                 actionField.setText(text);
                 locationStatus();
                 playerInvStatus();
                 resetNpcHP();
+                north.setEnabled(false);
             }
         } else if (e.getSource() == south) {
             if (selected) {
@@ -681,13 +684,16 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 selected = false;
                 text = player.getLastAction().get(player.getLastAction().size() - 1);
                 actionField.setText(text);
+                south.setEnabled(true);
             } else {
                 player.move("south", locationVar, doors);
+                System.out.println("directions from " + player.getCurrentLocation());
                 text = player.getLastAction().get(player.getLastAction().size() - 1);
                 actionField.setText(text);
                 locationStatus();
                 playerInvStatus();
                 resetNpcHP();
+                south.setEnabled(false);
             }
         } else if (e.getSource() == east) {
             if (selected) {
@@ -695,6 +701,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 selected = false;
                 text = player.getLastAction().get(player.getLastAction().size() - 1);
                 actionField.setText(text);
+                east.setEnabled(true);
             } else {
                 player.move("east", locationVar, doors);
                 text = player.getLastAction().get(player.getLastAction().size() - 1);
@@ -702,6 +709,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 locationStatus();
                 playerInvStatus();
                 resetNpcHP();
+                east.setEnabled(false);
                 if (player.getCurrentLocation().equals("Exit")) {
                     // THIS IS WHERE WE SHOW THE VICTORY SCREEN!!!
                 }
@@ -802,29 +810,25 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 actionField.setText(text);
                 topPanel.repaint();
 
-                if (InventoryGlobal.enemyHP < 0) {
-                    JsonNode nodeItem = node.get("room").get(player.getCurrentLocation()).get("NPCs").get(lastName + " " + firstName).get("NPC Inventory");
-                    Item foundItem = new Item(nodeItem.get("name").textValue(), nodeItem.get("description").textValue(), nodeItem.get("strength").intValue(),
-                            nodeItem.get("opens").textValue(), player.getCurrentLocation(), false, player.getCurrentLocation());
+                if (InventoryGlobal.enemyHP <= 0) {
 
-                    System.out.println( foundItem.getName()+ "for testing purposes");
-                    if (foundItem.getName().equals("red key") ||
-                            foundItem.getName().equals("chocolate bar") ||
-                            foundItem.getName().equals("wallet") ||
-                            foundItem.getName().equals("ladder") ||
-                            foundItem.getName().equals("ladder") ||
-                            foundItem.getName().equals("s cola") ||
-                            foundItem.getName().equals("purple key") ||
-                            foundItem.getName().equals("boss key")) {
-                        if (!playerInv.contains(foundItem.getName())) {
-                            playerInv.addElement(foundItem.getName());
-                          JsonNode  doorNode =node.get("room").get(player.getCurrentLocation()).get("Moves").get(player.getCurrentLocation()).get("door");
-                            door.setLocked(false);
+                    for (Item foundItem : player.getFoundItems()) {
+                        if (foundItem.getName().equals("red key") ||
+                                foundItem.getName().equals("chocolate bar") ||
+                                foundItem.getName().equals("wallet") ||
+                                foundItem.getName().equals("ladder") ||
+                                foundItem.getName().equals("ladder") ||
+                                foundItem.getName().equals("s cola") ||
+                                foundItem.getName().equals("purple key") ||
+                                foundItem.getName().equals("boss key")) {
+                            if (!playerInv.contains(foundItem.getName())) {
+                                playerInv.addElement(foundItem.getName());
+                            }
+
                         }
 
                     }
                 }
-
 
             } catch (Exception ea) {
                 ea.printStackTrace();

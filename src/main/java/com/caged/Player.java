@@ -177,6 +177,15 @@ public class Player {
                                 foundItems.add(foundItem);
                                 //System.out.println(lastName + " " + firstName + " dropped " + foundItem.name + "!");
                                 //TODO: Add this to item list
+                                //TODO: Split found
+                                String[] itemDropped = nodeItem.get("name").textValue().split(" ");
+
+                                if(itemDropped.length>1){
+                                    take(itemDropped[1], itemDropped[0], location);
+                                }
+                                else{
+                                    take(itemDropped[0], itemDropped[0], location);
+                                }
                                 lastAction.add("You won the battle!... " + lastName + " " + firstName + " was knocked out and dropped " + foundItem.name + "!");
                             } catch (Exception ignored) {
 
