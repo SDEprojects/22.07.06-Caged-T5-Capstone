@@ -269,9 +269,6 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         cinematicBackground();
         panelForCinematic();
 
-
-
-
         centerMidPanel.add(gameWindow[1]);
         centerMidPanel.add(gameWindow[2]);
         centerMidPanel.add(gameWindow[3]);
@@ -809,25 +806,28 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
                 locationStatus();
                 playerInvStatus();
                 resetNpcHP();
-
+                if (player.getCurrentLocation().equals("NPC Cage 1")){
+                    SouthHallToSouthNpcCage();
+                }
                 if (player.getCurrentLocation().equals("South Hall")){
                     cage1ToSouthHall();
                 }
                 if (player.getCurrentLocation().equals("Southwest Hall")){
                     WestHallToSWHall();
+
                 }
                 if (player.getCurrentLocation().equals("West Hall")){
                     NorthHallToWestHall();//
                 }
                 if (player.getCurrentLocation().equals("Storage Room")){
                     SWHallToStorage();//
+
                 }
                 if (player.getCurrentLocation().equals("North Hall")){
                     NorthCageToNorthHall();
+
                 }
-                if (player.getCurrentLocation().equals("NPC Cage 1")){
-                    SouthHallToSouthNpcCage();
-                }
+
                 //////////2nd Floor//////////
 
 
@@ -1161,225 +1161,1104 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
 
     public void cage1ToWestHall() {
         gameWindow[1].setVisible(false);//1=cage1
-        gameWindow[2].setVisible(true);//2=west hall
+        gameWindow[2].setVisible(true);//1=cage1
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[6].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+        gameWindow[10].setVisible(false);//1=cage1
+        gameWindow[11].setVisible(false);//1=cage1
+        gameWindow[12].setVisible(false);//1=cage1
+        gameWindow[13].setVisible(false);//1=cage1
+        gameWindow[14].setVisible(false);//1=cage1
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);//1=cage1
+        gameWindow[17].setVisible(false);//1=cage1
+        gameWindow[18].setVisible(false);//1=cage1
+        gameWindow[19].setVisible(false);//1=cage1
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
+        //2=west hall
     }
 
     public void WestHallToCage1() {
         gameWindow[1].setVisible(true);
         gameWindow[2].setVisible(false);
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[6].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+        gameWindow[10].setVisible(false);//1=cage1
+        gameWindow[11].setVisible(false);//1=cage1
+        gameWindow[12].setVisible(false);//1=cage1
+        gameWindow[13].setVisible(false);//1=cage1
+        gameWindow[14].setVisible(false);//1=cage1
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);//1=cage1
+        gameWindow[17].setVisible(false);//1=cage1
+        gameWindow[18].setVisible(false);//1=cage1
+        gameWindow[19].setVisible(false);//1=cage1
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void WestHallToNorthHall() {
-        gameWindow[5].setVisible(true);//5=north hall
         gameWindow[2].setVisible(false);
+        gameWindow[5].setVisible(true);//5=north hall
+        gameWindow[1].setVisible(false);
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[6].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+        gameWindow[10].setVisible(false);//1=cage1
+        gameWindow[11].setVisible(false);//1=cage1
+        gameWindow[12].setVisible(false);//1=cage1
+        gameWindow[13].setVisible(false);//1=cage1
+        gameWindow[14].setVisible(false);//1=cage1
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);//1=cage1
+        gameWindow[17].setVisible(false);//1=cage1
+        gameWindow[18].setVisible(false);//1=cage1
+        gameWindow[19].setVisible(false);//1=cage1
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void NorthHallToWestHall() {
         gameWindow[5].setVisible(false);
         gameWindow[2].setVisible(true);
+        gameWindow[1].setVisible(true);
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[6].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+        gameWindow[10].setVisible(false);//1=cage1
+        gameWindow[11].setVisible(false);//1=cage1
+        gameWindow[12].setVisible(false);//1=cage1
+        gameWindow[13].setVisible(false);//1=cage1
+        gameWindow[14].setVisible(false);//1=cage1
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);//1=cage1
+        gameWindow[17].setVisible(false);//1=cage1
+        gameWindow[18].setVisible(false);//1=cage1
+        gameWindow[19].setVisible(false);//1=cage1
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void NorthHallToNorthCage() {
         gameWindow[5].setVisible(false);
-        gameWindow[8].setVisible(true); //8 = north cage
+        gameWindow[8].setVisible(true);
+        gameWindow[1].setVisible(false);
+        gameWindow[2].setVisible(false);
+        gameWindow[3].setVisible(false);
+        gameWindow[4].setVisible(false);
+        gameWindow[6].setVisible(false);
+        gameWindow[7].setVisible(false);
+        gameWindow[9].setVisible(false);
+        gameWindow[10].setVisible(false);
+        gameWindow[11].setVisible(false);
+        gameWindow[12].setVisible(false);
+        gameWindow[13].setVisible(false);
+        gameWindow[14].setVisible(false);
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);
+        gameWindow[17].setVisible(false);
+        gameWindow[18].setVisible(false);
+        gameWindow[19].setVisible(false);
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void NorthCageToNorthHall() {
         gameWindow[5].setVisible(true);
         gameWindow[8].setVisible(false);
+        gameWindow[1].setVisible(false);
+        gameWindow[2].setVisible(false);
+        gameWindow[3].setVisible(false);
+        gameWindow[4].setVisible(false);
+        gameWindow[6].setVisible(false);
+        gameWindow[7].setVisible(false);
+        gameWindow[9].setVisible(false);
+        gameWindow[10].setVisible(false);
+        gameWindow[11].setVisible(false);
+        gameWindow[12].setVisible(false);
+        gameWindow[13].setVisible(false);
+        gameWindow[14].setVisible(false);
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);
+        gameWindow[17].setVisible(false);
+        gameWindow[18].setVisible(false);
+        gameWindow[19].setVisible(false);
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void NorthHallToEastHall() {
         gameWindow[5].setVisible(false);
         gameWindow[6].setVisible(true);//6 = east hall
+        gameWindow[1].setVisible(false);
+        gameWindow[2].setVisible(false);
+        gameWindow[3].setVisible(false);
+        gameWindow[4].setVisible(false);
+        gameWindow[7].setVisible(false);
+        gameWindow[8].setVisible(false);
+        gameWindow[9].setVisible(false);
+        gameWindow[10].setVisible(false);
+        gameWindow[11].setVisible(false);
+        gameWindow[12].setVisible(false);
+        gameWindow[13].setVisible(false);
+        gameWindow[14].setVisible(false);
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);
+        gameWindow[17].setVisible(false);
+        gameWindow[18].setVisible(false);
+        gameWindow[19].setVisible(false);
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void EastHallToNorthHall() {
         gameWindow[5].setVisible(true);
         gameWindow[6].setVisible(false);
+        gameWindow[1].setVisible(false);
+        gameWindow[2].setVisible(false);
+        gameWindow[3].setVisible(false);
+        gameWindow[4].setVisible(false);
+        gameWindow[7].setVisible(false);
+        gameWindow[8].setVisible(false);
+        gameWindow[9].setVisible(false);
+        gameWindow[10].setVisible(false);
+        gameWindow[11].setVisible(false);
+        gameWindow[12].setVisible(false);
+        gameWindow[13].setVisible(false);
+        gameWindow[14].setVisible(false);
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);
+        gameWindow[17].setVisible(false);
+        gameWindow[18].setVisible(false);
+        gameWindow[19].setVisible(false);
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     /////
     public void WestHallToSWHall() {
         gameWindow[2].setVisible(false);
         gameWindow[3].setVisible(true);//3 = southwest hall
+        gameWindow[1].setVisible(false);
+        gameWindow[4].setVisible(false);
+        gameWindow[5].setVisible(false);
+        gameWindow[6].setVisible(false);
+        gameWindow[7].setVisible(false);
+        gameWindow[8].setVisible(false);
+        gameWindow[9].setVisible(false);
+        gameWindow[10].setVisible(false);
+        gameWindow[11].setVisible(false);
+        gameWindow[12].setVisible(false);
+        gameWindow[13].setVisible(false);
+        gameWindow[14].setVisible(false);
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);
+        gameWindow[17].setVisible(false);
+        gameWindow[18].setVisible(false);
+        gameWindow[19].setVisible(false);
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void SWHallToWestHall() {
         gameWindow[2].setVisible(true);
         gameWindow[3].setVisible(false);
+        gameWindow[1].setVisible(false);
+        gameWindow[4].setVisible(false);
+        gameWindow[5].setVisible(false);
+        gameWindow[6].setVisible(false);
+        gameWindow[7].setVisible(false);
+        gameWindow[8].setVisible(false);
+        gameWindow[9].setVisible(false);
+        gameWindow[10].setVisible(false);
+        gameWindow[11].setVisible(false);
+        gameWindow[12].setVisible(false);
+        gameWindow[13].setVisible(false);
+        gameWindow[14].setVisible(false);
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);
+        gameWindow[17].setVisible(false);
+        gameWindow[18].setVisible(false);
+        gameWindow[19].setVisible(false);
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void SWHallToStorage() {
         gameWindow[3].setVisible(false);
         gameWindow[9].setVisible(true); //9 = storage room
+        gameWindow[1].setVisible(false);
+        gameWindow[2].setVisible(false);
+        gameWindow[4].setVisible(false);
+        gameWindow[5].setVisible(false);
+        gameWindow[6].setVisible(false);
+        gameWindow[7].setVisible(false);
+        gameWindow[8].setVisible(false);
+        gameWindow[10].setVisible(false);
+        gameWindow[11].setVisible(false);
+        gameWindow[12].setVisible(false);
+        gameWindow[13].setVisible(false);
+        gameWindow[14].setVisible(false);
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);
+        gameWindow[17].setVisible(false);
+        gameWindow[18].setVisible(false);
+        gameWindow[19].setVisible(false);
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void StorageToSWHall() {
         gameWindow[3].setVisible(true);
         gameWindow[9].setVisible(false);
+        gameWindow[1].setVisible(false);
+        gameWindow[2].setVisible(false);
+        gameWindow[4].setVisible(false);
+        gameWindow[5].setVisible(false);
+        gameWindow[6].setVisible(false);
+        gameWindow[7].setVisible(false);
+        gameWindow[8].setVisible(false);
+        gameWindow[10].setVisible(false);
+        gameWindow[11].setVisible(false);
+        gameWindow[12].setVisible(false);
+        gameWindow[13].setVisible(false);
+        gameWindow[14].setVisible(false);
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);
+        gameWindow[17].setVisible(false);
+        gameWindow[18].setVisible(false);
+        gameWindow[19].setVisible(false);
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void SWHallToSouthHall() {
         gameWindow[3].setVisible(false);
         gameWindow[4].setVisible(true);//4 = south hall
+        gameWindow[1].setVisible(false);
+        gameWindow[2].setVisible(false);
+        gameWindow[5].setVisible(false);
+        gameWindow[6].setVisible(false);
+        gameWindow[7].setVisible(false);
+        gameWindow[8].setVisible(false);
+        gameWindow[9].setVisible(false);
+        gameWindow[10].setVisible(false);
+        gameWindow[11].setVisible(false);
+        gameWindow[12].setVisible(false);
+        gameWindow[13].setVisible(false);
+        gameWindow[14].setVisible(false);
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);
+        gameWindow[17].setVisible(false);
+        gameWindow[18].setVisible(false);
+        gameWindow[19].setVisible(false);
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void SouthToSWHall() {
         gameWindow[4].setVisible(false);
         gameWindow[3].setVisible(true);
+        gameWindow[1].setVisible(false);
+        gameWindow[2].setVisible(false);
+        gameWindow[5].setVisible(false);
+        gameWindow[6].setVisible(false);
+        gameWindow[7].setVisible(false);
+        gameWindow[8].setVisible(false);
+        gameWindow[9].setVisible(false);
+        gameWindow[10].setVisible(false);
+        gameWindow[11].setVisible(false);
+        gameWindow[12].setVisible(false);
+        gameWindow[13].setVisible(false);
+        gameWindow[14].setVisible(false);
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);
+        gameWindow[17].setVisible(false);
+        gameWindow[18].setVisible(false);
+        gameWindow[19].setVisible(false);
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void SouthToCage1() {
         gameWindow[4].setVisible(false);
         gameWindow[1].setVisible(true);
+        gameWindow[2].setVisible(false);
+        gameWindow[3].setVisible(false);
+        gameWindow[5].setVisible(false);
+        gameWindow[6].setVisible(false);
+        gameWindow[7].setVisible(false);
+        gameWindow[8].setVisible(false);
+        gameWindow[9].setVisible(false);
+        gameWindow[10].setVisible(false);
+        gameWindow[11].setVisible(false);
+        gameWindow[12].setVisible(false);
+        gameWindow[13].setVisible(false);
+        gameWindow[14].setVisible(false);
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);
+        gameWindow[17].setVisible(false);
+        gameWindow[18].setVisible(false);
+        gameWindow[19].setVisible(false);
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void cage1ToSouthHall() {
         gameWindow[4].setVisible(true);
         gameWindow[1].setVisible(false);
+        gameWindow[2].setVisible(false);
+        gameWindow[3].setVisible(false);
+        gameWindow[5].setVisible(false);
+        gameWindow[6].setVisible(false);
+        gameWindow[7].setVisible(false);
+        gameWindow[8].setVisible(false);
+        gameWindow[9].setVisible(false);
+        gameWindow[10].setVisible(false);
+        gameWindow[11].setVisible(false);
+        gameWindow[12].setVisible(false);
+        gameWindow[13].setVisible(false);
+        gameWindow[14].setVisible(false);
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);
+        gameWindow[17].setVisible(false);
+        gameWindow[18].setVisible(false);
+        gameWindow[19].setVisible(false);
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void southNpcCageToSouthHall() {
         gameWindow[4].setVisible(true);
         gameWindow[7].setVisible(false);// 7= south cage
+        gameWindow[1].setVisible(false);
+        gameWindow[2].setVisible(false);
+        gameWindow[3].setVisible(false);
+        gameWindow[5].setVisible(false);
+        gameWindow[6].setVisible(false);
+        gameWindow[8].setVisible(false);
+        gameWindow[9].setVisible(false);
+        gameWindow[10].setVisible(false);
+        gameWindow[11].setVisible(false);
+        gameWindow[12].setVisible(false);
+        gameWindow[13].setVisible(false);
+        gameWindow[14].setVisible(false);
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);
+        gameWindow[17].setVisible(false);
+        gameWindow[18].setVisible(false);
+        gameWindow[19].setVisible(false);
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void SouthHallToSouthNpcCage() {
         gameWindow[4].setVisible(false);
         gameWindow[7].setVisible(true);
+        gameWindow[1].setVisible(false);
+        gameWindow[2].setVisible(false);
+        gameWindow[3].setVisible(false);
+        gameWindow[5].setVisible(false);
+        gameWindow[6].setVisible(false);
+        gameWindow[8].setVisible(false);
+        gameWindow[9].setVisible(false);
+        gameWindow[10].setVisible(false);
+        gameWindow[11].setVisible(false);
+        gameWindow[12].setVisible(false);
+        gameWindow[13].setVisible(false);
+        gameWindow[14].setVisible(false);
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);
+        gameWindow[17].setVisible(false);
+        gameWindow[18].setVisible(false);
+        gameWindow[19].setVisible(false);
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void EastHallToSWHall2F() {
         gameWindow[6].setVisible(false);
         gameWindow[10].setVisible(true);//10 = 2FL South West hall
+        gameWindow[1].setVisible(false);//1=cage1
+        gameWindow[2].setVisible(false);//1=cage1
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+        gameWindow[11].setVisible(false);//1=cage1
+        gameWindow[12].setVisible(false);//1=cage1
+        gameWindow[13].setVisible(false);//1=cage1
+        gameWindow[14].setVisible(false);//1=cage1
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);//1=cage1
+        gameWindow[17].setVisible(false);//1=cage1
+        gameWindow[18].setVisible(false);//1=cage1
+        gameWindow[19].setVisible(false);//1=cage1
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void SWHall2FToEastHall() {
         gameWindow[6].setVisible(true);
         gameWindow[10].setVisible(false);
+        gameWindow[1].setVisible(false);//1=cage1
+        gameWindow[2].setVisible(false);//1=cage1
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+        gameWindow[11].setVisible(false);//1=cage1
+        gameWindow[12].setVisible(false);//1=cage1
+        gameWindow[13].setVisible(false);//1=cage1
+        gameWindow[14].setVisible(false);//1=cage1
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);//1=cage1
+        gameWindow[17].setVisible(false);//1=cage1
+        gameWindow[18].setVisible(false);//1=cage1
+        gameWindow[19].setVisible(false);//1=cage1
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void SWestHall2FToSouthHall2F() {
         gameWindow[10].setVisible(true);
         gameWindow[11].setVisible(false);//
+        gameWindow[1].setVisible(false);//1=cage1
+        gameWindow[2].setVisible(false);//1=cage1
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[6].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+        gameWindow[12].setVisible(false);//1=cage1
+        gameWindow[13].setVisible(false);//1=cage1
+        gameWindow[14].setVisible(false);//1=cage1
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);//1=cage1
+        gameWindow[17].setVisible(false);//1=cage1
+        gameWindow[18].setVisible(false);//1=cage1
+        gameWindow[19].setVisible(false);//1=cage1
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void southHall2FToSWHall2F() {
         gameWindow[10].setVisible(true);
         gameWindow[11].setVisible(false);// 11=South Hall 2nd FL
+        gameWindow[1].setVisible(false);//1=cage1
+        gameWindow[2].setVisible(false);//1=cage1
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[6].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+        gameWindow[12].setVisible(false);//1=cage1
+        gameWindow[13].setVisible(false);//1=cage1
+        gameWindow[14].setVisible(false);//1=cage1
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);//1=cage1
+        gameWindow[17].setVisible(false);//1=cage1
+        gameWindow[18].setVisible(false);//1=cage1
+        gameWindow[19].setVisible(false);//1=cage1
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void southHall2FToBreakRoom() {
         gameWindow[11].setVisible(false);// 11=South Hall 2nd FL
         gameWindow[21].setVisible(true);
+        gameWindow[1].setVisible(false);//1=cage1
+        gameWindow[2].setVisible(false);//1=cage1
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[6].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+        gameWindow[10].setVisible(false);//1=cage1
+        gameWindow[12].setVisible(false);//1=cage1
+        gameWindow[13].setVisible(false);//1=cage1
+        gameWindow[14].setVisible(false);//1=cage1
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);//1=cage1
+        gameWindow[17].setVisible(false);//1=cage1
+        gameWindow[18].setVisible(false);//1=cage1
+        gameWindow[19].setVisible(false);//1=cage1
+        gameWindow[20].setVisible(false);
     }
 
     public void breakRoomToSouthHall() {
         gameWindow[11].setVisible(true);// 11=South Hall 2nd FL
         gameWindow[21].setVisible(false);//20 = break room
+        gameWindow[1].setVisible(false);//1=cage1
+        gameWindow[2].setVisible(false);//1=cage1
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[6].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+        gameWindow[10].setVisible(false);//1=cage1
+        gameWindow[12].setVisible(false);//1=cage1
+        gameWindow[13].setVisible(false);//1=cage1
+        gameWindow[14].setVisible(false);//1=cage1
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);//1=cage1
+        gameWindow[17].setVisible(false);//1=cage1
+        gameWindow[18].setVisible(false);//1=cage1
+        gameWindow[19].setVisible(false);//1=cage1
+        gameWindow[20].setVisible(false);
     }
 
     public void southHall2FToCorridor() {
         gameWindow[11].setVisible(false);// 11=South Hall 2nd FL
         gameWindow[12].setVisible(true);//12=corridor
+        gameWindow[1].setVisible(false);//1=cage1
+        gameWindow[2].setVisible(false);//1=cage1
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[6].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+        gameWindow[10].setVisible(false);//1=cage1
+        gameWindow[13].setVisible(false);//1=cage1
+        gameWindow[14].setVisible(false);//1=cage1
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);//1=cage1
+        gameWindow[17].setVisible(false);//1=cage1
+        gameWindow[18].setVisible(false);//1=cage1
+        gameWindow[19].setVisible(false);//1=cage1
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void corridorToSouthHall2F() {
         gameWindow[11].setVisible(true);//
         gameWindow[12].setVisible(false);//
+        gameWindow[1].setVisible(false);//1=cage1
+        gameWindow[2].setVisible(false);//1=cage1
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[6].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+        gameWindow[10].setVisible(false);//1=cage1
+        gameWindow[13].setVisible(false);//1=cage1
+        gameWindow[14].setVisible(false);//1=cage1
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);//1=cage1
+        gameWindow[17].setVisible(false);//1=cage1
+        gameWindow[18].setVisible(false);//1=cage1
+        gameWindow[19].setVisible(false);//1=cage1
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void corridorToNorthHall2F() {
         gameWindow[12].setVisible(false);
         gameWindow[13].setVisible(true);
+        gameWindow[1].setVisible(false);//1=cage1
+        gameWindow[2].setVisible(false);//1=cage1
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[6].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+        gameWindow[10].setVisible(false);//1=cage1
+        gameWindow[11].setVisible(false);//1=cage1
+        gameWindow[14].setVisible(false);//1=cage1
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);//1=cage1
+        gameWindow[17].setVisible(false);//1=cage1
+        gameWindow[18].setVisible(false);//1=cage1
+        gameWindow[19].setVisible(false);//1=cage1
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
 
     }
 
     public void northHall2FToCorridor() {
         gameWindow[12].setVisible(true);
         gameWindow[13].setVisible(false);
+        gameWindow[1].setVisible(false);//1=cage1
+        gameWindow[2].setVisible(false);//1=cage1
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[6].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+        gameWindow[10].setVisible(false);//1=cage1
+        gameWindow[11].setVisible(false);//1=cage1
+        gameWindow[14].setVisible(false);//1=cage1
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);//1=cage1
+        gameWindow[17].setVisible(false);//1=cage1
+        gameWindow[18].setVisible(false);//1=cage1
+        gameWindow[19].setVisible(false);//1=cage1
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void NorthHall2FToNorthEastHall() {
         gameWindow[13].setVisible(false);
         gameWindow[14].setVisible(true);
+        gameWindow[1].setVisible(false);//1=cage1
+        gameWindow[2].setVisible(false);//1=cage1
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[6].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+        gameWindow[10].setVisible(false);//1=cage1
+        gameWindow[11].setVisible(false);//1=cage1
+        gameWindow[12].setVisible(false);//1=cage1
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);//1=cage1
+        gameWindow[17].setVisible(false);//1=cage1
+        gameWindow[18].setVisible(false);//1=cage1
+        gameWindow[19].setVisible(false);//1=cage1
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void northEastHall2fToNorthHall2F() {
         gameWindow[13].setVisible(true);
         gameWindow[14].setVisible(false);
+        gameWindow[1].setVisible(false);//1=cage1
+        gameWindow[2].setVisible(false);//1=cage1
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[6].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+        gameWindow[10].setVisible(false);//1=cage1
+        gameWindow[11].setVisible(false);//1=cage1
+        gameWindow[12].setVisible(false);//1=cage1
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);//1=cage1
+        gameWindow[17].setVisible(false);//1=cage1
+        gameWindow[18].setVisible(false);//1=cage1
+        gameWindow[19].setVisible(false);//1=cage1
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void NEHall2fToNEVent() {
         gameWindow[14].setVisible(false);
         gameWindow[18].setVisible(true);//north east vent
+        gameWindow[1].setVisible(false);//1=cage1
+        gameWindow[2].setVisible(false);//1=cage1
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[6].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+        gameWindow[10].setVisible(false);//1=cage1
+        gameWindow[11].setVisible(false);//1=cage1
+        gameWindow[12].setVisible(false);//1=cage1
+        gameWindow[13].setVisible(false);//1=cage1
+
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);//1=cage1
+        gameWindow[17].setVisible(false);//1=cage1
+
+        gameWindow[19].setVisible(false);//1=cage1
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void NEVentToNEHall2f() {
         gameWindow[14].setVisible(true);
         gameWindow[18].setVisible(false);//north east vent
+        gameWindow[1].setVisible(false);//1=cage1
+        gameWindow[2].setVisible(false);//1=cage1
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[6].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+        gameWindow[10].setVisible(false);//1=cage1
+        gameWindow[11].setVisible(false);//1=cage1
+        gameWindow[12].setVisible(false);//1=cage1
+        gameWindow[13].setVisible(false);//1=cage1
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);//1=cage1
+        gameWindow[17].setVisible(false);//1=cage1
+
+        gameWindow[19].setVisible(false);//1=cage1
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void NEVentToNVent() {
         gameWindow[18].setVisible(false);
         gameWindow[17].setVisible(true);
+        gameWindow[1].setVisible(false);//1=cage1
+        gameWindow[2].setVisible(false);//1=cage1
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[6].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+        gameWindow[10].setVisible(false);//1=cage1
+        gameWindow[11].setVisible(false);//1=cage1
+        gameWindow[12].setVisible(false);//1=cage1
+        gameWindow[13].setVisible(false);//1=cage1
+        gameWindow[14].setVisible(false);//1=cage1
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);//1=cage1
+        gameWindow[19].setVisible(false);//1=cage1
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void NVentToNEVent() {
         gameWindow[18].setVisible(true);
         gameWindow[17].setVisible(false);
+        gameWindow[1].setVisible(false);//1=cage1
+        gameWindow[2].setVisible(false);//1=cage1
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[6].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+        gameWindow[10].setVisible(false);//1=cage1
+        gameWindow[11].setVisible(false);//1=cage1
+        gameWindow[12].setVisible(false);//1=cage1
+        gameWindow[13].setVisible(false);//1=cage1
+        gameWindow[14].setVisible(false);//1=cage1
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);//1=cage1
+        gameWindow[19].setVisible(false);//1=cage1
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void NVentToNWVent() {
         gameWindow[17].setVisible(false);
         gameWindow[16].setVisible(true);
+        gameWindow[1].setVisible(false);//1=cage1
+        gameWindow[2].setVisible(false);//1=cage1
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[6].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+        gameWindow[10].setVisible(false);//1=cage1
+        gameWindow[11].setVisible(false);//1=cage1
+        gameWindow[12].setVisible(false);//1=cage1
+        gameWindow[13].setVisible(false);//1=cage1
+        gameWindow[14].setVisible(false);//1=cage1
+        gameWindow[15].setVisible(false);
+        gameWindow[18].setVisible(false);//1=cage1
+        gameWindow[19].setVisible(false);//1=cage1
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void NWVentToNVent() {
         gameWindow[17].setVisible(true);
         gameWindow[16].setVisible(false);
+        gameWindow[1].setVisible(false);//1=cage1
+        gameWindow[2].setVisible(false);//1=cage1
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[6].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+        gameWindow[10].setVisible(false);//1=cage1
+        gameWindow[11].setVisible(false);//1=cage1
+        gameWindow[12].setVisible(false);//1=cage1
+        gameWindow[13].setVisible(false);//1=cage1
+        gameWindow[14].setVisible(false);//1=cage1
+        gameWindow[15].setVisible(false);
+
+        gameWindow[18].setVisible(false);//1=cage1
+        gameWindow[19].setVisible(false);//1=cage1
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void NWVentToStorageRoom2f() {
         gameWindow[16].setVisible(false);
         gameWindow[20].setVisible(true);
+        gameWindow[1].setVisible(false);//1=cage1
+        gameWindow[2].setVisible(false);//1=cage1
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[6].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+        gameWindow[10].setVisible(false);//1=cage1
+        gameWindow[11].setVisible(false);//1=cage1
+        gameWindow[12].setVisible(false);//1=cage1
+        gameWindow[13].setVisible(false);//1=cage1
+        gameWindow[14].setVisible(false);//1=cage1
+        gameWindow[15].setVisible(false);
+
+        gameWindow[17].setVisible(false);//1=cage1
+        gameWindow[18].setVisible(false);//1=cage1
+        gameWindow[19].setVisible(false);//1=cage1
+
+        gameWindow[21].setVisible(false);
     }
 
     public void StorageRoom2fToNWVent() {
         gameWindow[16].setVisible(true);
         gameWindow[20].setVisible(false);
+        gameWindow[1].setVisible(false);//1=cage1
+        gameWindow[2].setVisible(false);//1=cage1
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[6].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+        gameWindow[10].setVisible(false);//1=cage1
+        gameWindow[11].setVisible(false);//1=cage1
+        gameWindow[12].setVisible(false);//1=cage1
+        gameWindow[13].setVisible(false);//1=cage1
+        gameWindow[14].setVisible(false);//1=cage1
+        gameWindow[15].setVisible(false);
+
+        gameWindow[17].setVisible(false);//1=cage1
+        gameWindow[18].setVisible(false);//1=cage1
+        gameWindow[19].setVisible(false);//1=cage1
+
+        gameWindow[21].setVisible(false);
     }
 
     public void storageRoom2fToWVent() {
         gameWindow[20].setVisible(false);
         gameWindow[15].setVisible(true);
+        gameWindow[1].setVisible(false);//1=cage1
+        gameWindow[2].setVisible(false);//1=cage1
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[6].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+        gameWindow[10].setVisible(false);//1=cage1
+        gameWindow[11].setVisible(false);//1=cage1
+        gameWindow[12].setVisible(false);//1=cage1
+        gameWindow[13].setVisible(false);//1=cage1
+        gameWindow[14].setVisible(false);//1=cage1
+
+        gameWindow[16].setVisible(false);//1=cage1
+        gameWindow[17].setVisible(false);//1=cage1
+        gameWindow[18].setVisible(false);//1=cage1
+        gameWindow[19].setVisible(false);//1=cage1
+
+        gameWindow[21].setVisible(false);
     }
     public void WVentToStorageRoom2f() {
         gameWindow[20].setVisible(true);
         gameWindow[15].setVisible(false);
+        gameWindow[1].setVisible(false);//1=cage1
+        gameWindow[2].setVisible(false);//1=cage1
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[6].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+        gameWindow[10].setVisible(false);//1=cage1
+        gameWindow[11].setVisible(false);//1=cage1
+        gameWindow[12].setVisible(false);//1=cage1
+        gameWindow[13].setVisible(false);//1=cage1
+        gameWindow[14].setVisible(false);//1=cage1
+
+        gameWindow[16].setVisible(false);//1=cage1
+        gameWindow[17].setVisible(false);//1=cage1
+        gameWindow[18].setVisible(false);//1=cage1
+        gameWindow[19].setVisible(false);//1=cage1
+
+        gameWindow[21].setVisible(false);
     }
     public void storage2FToNorthHall(){
         gameWindow[20].setVisible(false);
         gameWindow[13].setVisible(true);
+        gameWindow[1].setVisible(false);//1=cage1
+        gameWindow[2].setVisible(false);//1=cage1
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[6].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+        gameWindow[10].setVisible(false);//1=cage1
+        gameWindow[11].setVisible(false);//1=cage1
+        gameWindow[12].setVisible(false);//1=cage1
+
+        gameWindow[14].setVisible(false);//1=cage1
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);//1=cage1
+        gameWindow[17].setVisible(false);//1=cage1
+        gameWindow[18].setVisible(false);//1=cage1
+        gameWindow[19].setVisible(false);//1=cage1
+
+        gameWindow[21].setVisible(false);
     }
     public void NorthHallToStorageRoom2F(){
         gameWindow[20].setVisible(true);
         gameWindow[13].setVisible(false);
+        gameWindow[1].setVisible(false);//1=cage1
+        gameWindow[2].setVisible(false);//1=cage1
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[6].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+        gameWindow[10].setVisible(false);//1=cage1
+        gameWindow[11].setVisible(false);//1=cage1
+        gameWindow[12].setVisible(false);//1=cage1
+
+        gameWindow[14].setVisible(false);//1=cage1
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);//1=cage1
+        gameWindow[17].setVisible(false);//1=cage1
+        gameWindow[18].setVisible(false);//1=cage1
+        gameWindow[19].setVisible(false);//1=cage1
+
+        gameWindow[21].setVisible(false);
     }
 
     public void WVentToSWHall2F() {
         gameWindow[15].setVisible(false);
         gameWindow[10].setVisible(true);
+        gameWindow[1].setVisible(false);//1=cage1
+        gameWindow[2].setVisible(false);//1=cage1
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[6].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+
+        gameWindow[11].setVisible(false);//1=cage1
+        gameWindow[12].setVisible(false);//1=cage1
+        gameWindow[13].setVisible(false);//1=cage1
+        gameWindow[14].setVisible(false);//1=cage1
+
+        gameWindow[16].setVisible(false);//1=cage1
+        gameWindow[17].setVisible(false);//1=cage1
+        gameWindow[18].setVisible(false);//1=cage1
+        gameWindow[19].setVisible(false);//1=cage1
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
     public void SWHall2FToWVent(){
         gameWindow[15].setVisible(true);
         gameWindow[10].setVisible(false);
+        gameWindow[1].setVisible(false);//1=cage1
+        gameWindow[2].setVisible(false);//1=cage1
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[6].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+
+        gameWindow[11].setVisible(false);//1=cage1
+        gameWindow[12].setVisible(false);//1=cage1
+        gameWindow[13].setVisible(false);//1=cage1
+        gameWindow[14].setVisible(false);//1=cage1
+
+        gameWindow[16].setVisible(false);//1=cage1
+        gameWindow[17].setVisible(false);//1=cage1
+        gameWindow[18].setVisible(false);//1=cage1
+        gameWindow[19].setVisible(false);//1=cage1
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     public void winGame() {
         gameWindow[14].setVisible(false);
         gameWindow[19].setVisible(true);
+        gameWindow[1].setVisible(false);//1=cage1
+        gameWindow[2].setVisible(false);//1=cage1
+        gameWindow[3].setVisible(false);//1=cage1
+        gameWindow[4].setVisible(false);//1=cage1
+        gameWindow[5].setVisible(false);//1=cage1
+        gameWindow[6].setVisible(false);//1=cage1
+        gameWindow[7].setVisible(false);//1=cage1
+        gameWindow[8].setVisible(false);//1=cage1
+        gameWindow[9].setVisible(false);//1=cage1
+        gameWindow[10].setVisible(false);//1=cage1
+        gameWindow[11].setVisible(false);//1=cage1
+        gameWindow[12].setVisible(false);//1=cage1
+        gameWindow[13].setVisible(false);//1=cage1
+
+        gameWindow[15].setVisible(false);
+        gameWindow[16].setVisible(false);//1=cage1
+        gameWindow[17].setVisible(false);//1=cage1
+        gameWindow[18].setVisible(false);//1=cage1
+
+        gameWindow[20].setVisible(false);
+        gameWindow[21].setVisible(false);
     }
 
     //////////////////////
@@ -1396,18 +2275,19 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         gameWindow[2].add(gameLabel[2]);
 
         gameWindow[3] = new JPanel();
+        gameWindow[3].setPreferredSize(new Dimension(600, 500));
         gameWindow[3].setLayout(null);
         gameWindow[3].setOpaque(false);
 
-        southWestHall = new ImageIcon(url.imageGetter("SouthWestHall.bmp"));
+        southWestHall = new ImageIcon(url.imageGetter("southWestHall.png"));
         gameLabel[3] = new JLabel(southWestHall);
         gameLabel[3].setBounds(0, 0, 600, 500);
         gameWindow[3].add(gameLabel[3]);
 
         gameWindow[4] = new JPanel();
+        gameWindow[4].setPreferredSize(new Dimension(600, 500));
         gameWindow[4].setLayout(null);
         gameWindow[4].setOpaque(false);
-
 
         southHall = new ImageIcon(url.imageGetter("southHall.png"));
         gameLabel[4] = new JLabel(southHall);
@@ -1415,6 +2295,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         gameWindow[4].add(gameLabel[4]);
 
         gameWindow[5] = new JPanel();
+        gameWindow[5].setPreferredSize(new Dimension(600, 500));
         gameWindow[5].setLayout(null);
         gameWindow[5].setOpaque(false);
 
@@ -1424,6 +2305,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         gameWindow[5].add(gameLabel[5]);
 
         gameWindow[6] = new JPanel();
+        gameWindow[6].setPreferredSize(new Dimension(600, 500));
         gameWindow[6].setLayout(null);
         gameWindow[6].setOpaque(false);
 
@@ -1432,7 +2314,9 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         gameLabel[6].setBounds(0, 0, 600, 500);
         gameWindow[6].add(gameLabel[6]);
 ////////1st floor Cages - Rooms/////
+
         gameWindow[7] = new JPanel();
+        gameWindow[7].setPreferredSize(new Dimension(600, 500));
         gameWindow[7].setLayout(null);
         gameWindow[7].setOpaque(false);
 
@@ -1442,6 +2326,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         gameWindow[7].add(gameLabel[7]);
 
         gameWindow[8] = new JPanel();
+        gameWindow[8].setPreferredSize(new Dimension(600, 500));
         gameWindow[8].setLayout(null);
         gameWindow[8].setOpaque(false);
 
@@ -1451,6 +2336,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         gameWindow[8].add(gameLabel[8]);
 
         gameWindow[9] = new JPanel();
+        gameWindow[9].setPreferredSize(new Dimension(600, 500));
         gameWindow[9].setLayout(null);
         gameWindow[9].setOpaque(false);
 
@@ -1459,7 +2345,9 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         gameLabel[9].setBounds(0, 0, 600, 500);
         gameWindow[9].add(gameLabel[9]);
         //////2nd Floor halls and vents////
+
         gameWindow[10] = new JPanel();
+        gameWindow[10].setPreferredSize(new Dimension(600, 500));
         gameWindow[10].setLayout(null);
         gameWindow[10].setOpaque(false);
 
@@ -1581,7 +2469,7 @@ public class PlayWindow extends JPanel implements MouseListener, ActionListener 
         mapPanelLocation[3].setLayout(null);
         mapPanelLocation[3].setOpaque(false);
 
-        southWestHall = new ImageIcon(url.imageGetter("SouthWestHall.bmp"));
+        southWestHall = new ImageIcon(url.imageGetter("southHall.png"));
         maps[3] = new JLabel(southWestHall);
         maps[3].setBounds(0, 0, 600, 500);
 
